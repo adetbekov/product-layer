@@ -1,0 +1,10 @@
+kind = "live"
+title = "Synthetic: cinema tickets with visual bugs (canvas, contrast, off-screen)"
+brief = """
+# Kino: cinema tickets
+
+A cinema ticket web app (synthetic test app). The user is Daniyar, signed in with a saved card (Visa ending 4417).
+
+His typical job: buy one ticket for tonight's showing of "The Long Steppe" - pick a time, pick a seat, pay with the
+saved card, and keep the ticket to show at the entrance.
+"""

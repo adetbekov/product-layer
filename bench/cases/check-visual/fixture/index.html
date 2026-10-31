@@ -1,0 +1,109 @@
+<!doctype html>
+<!-- Synthetic fixture for the product-check bench. Planted bugs are listed in ../check.py only. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kino - cinema tickets</title>
+<style>
+  html, body { overflow-x: hidden; }
+  body { font-family: system-ui, sans-serif; margin: 0; color: #1d1d1f; background: #fafafa; }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #fff; border-bottom: 1px solid #ddd; }
+  header a { color: inherit; text-decoration: none; }
+  main { max-width: 720px; margin: 24px auto; padding: 0 20px; position: relative; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 14px; margin-bottom: 12px; }
+  button { font: inherit; padding: 10px 16px; border-radius: 8px; border: 1px solid #888; background: #fff; cursor: pointer; }
+  button.strong { background: #1d1d1f; color: #fff; border-color: #1d1d1f; font-weight: 600; }
+  button.pay { background: #f4f4f4; color: #dcdcdc; border-color: #ececec; font-weight: 400; }
+  button:disabled { opacity: .45; cursor: default; }
+  .times { display: flex; gap: 8px; flex-wrap: wrap; }
+  .row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eee; }
+  .muted { color: #666; font-size: .9em; }
+  .actions { display: flex; gap: 10px; margin-top: 16px; }
+  canvas { display: block; margin: 8px 0; cursor: pointer; border-radius: 8px; background: #fff; border: 1px solid #ddd; }
+  #download { position: absolute; left: calc(100vw + 40px); top: 0; }
+</style>
+</head>
+<body>
+<header><a href="#/"><strong>Kino</strong></a><span class="muted">Hi, Daniyar</span></header>
+<main id="app"></main>
+<script>
+const MOVIE = { title: "The Long Steppe", price: 3200 };
+const TIMES = ["14:30", "17:10", "19:40", "22:15"];
+const ROWS = 6, COLS = 10, TAKEN = new Set(["0-3", "0-4", "2-5", "2-6", "3-1", "4-8", "5-5"]);
+const state = JSON.parse(sessionStorage.getItem("kino") || '{"time":null,"seat":null}');
+const save = () => sessionStorage.setItem("kino", JSON.stringify(state));
+const app = document.getElementById("app");
+const tenge = n => n.toLocaleString("ru-RU") + " ₸";
+const seatName = s => s ? `Row ${+s.split("-")[0] + 1}, seat ${+s.split("-")[1] + 1}` : "none";
+
+function drawSeats(canvas) {
+  const ctx = canvas.getContext("2d"), w = canvas.width, size = 26, gap = 8;
+  const left = (w - (COLS * size + (COLS - 1) * gap)) / 2;
+  ctx.clearRect(0, 0, w, canvas.height);
+  ctx.fillStyle = "#999"; ctx.font = "12px system-ui"; ctx.textAlign = "center";
+  ctx.fillText("SCREEN", w / 2, 16);
+  ctx.fillRect(left, 22, COLS * size + (COLS - 1) * gap, 3);
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const id = `${r}-${c}`;
+    ctx.fillStyle = TAKEN.has(id) ? "#c8c8c8" : state.seat === id ? "#1d6b3a" : "#8fc7a2";
+    ctx.beginPath(); ctx.roundRect(left + c * (size + gap), 40 + r * (size + gap), size, size, 6); ctx.fill();
+  }
+  canvas.onclick = e => {
+    const b = canvas.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top;
+    const c = Math.floor((x - left) / (size + gap)), r = Math.floor((y - 40) / (size + gap));
+    if (r < 0 || r >= ROWS || c < 0 || c >= COLS || TAKEN.has(`${r}-${c}`)) return;
+    state.seat = `${r}-${c}`; save(); drawSeats(canvas);
+    document.getElementById("chosen").textContent = seatName(state.seat);
+    document.getElementById("next").disabled = false;
+  };
+}
+
+const pages = {
+  "/": () => {
+    app.innerHTML = `<h1>${MOVIE.title}</h1><p class="muted">Today, hall 2, ${tenge(MOVIE.price)} per seat</p>
+      <div class="card"><h2>Pick a time</h2><div class="times">${TIMES.map(t =>
+        `<button data-time="${t}">${t}</button>`).join("")}</div></div>`;
+    app.querySelectorAll("[data-time]").forEach(b => b.onclick = () => {
+      state.time = b.dataset.time; state.seat = null; save(); location.hash = "#/seats";
+    });
+  },
+  "/seats": () => {
+    app.innerHTML = `<h1>Choose your seat</h1><p class="muted">${MOVIE.title}, ${state.time || "-"}</p>
+      <canvas id="seats" width="440" height="250"></canvas>
+      <p>Your seat: <strong id="chosen">${seatName(state.seat)}</strong></p>
+      <div class="actions"><button onclick="location.hash='#/'">Back</button>
+      <button id="next" class="strong" ${state.seat ? "" : "disabled"}>Continue</button></div>`;
+    drawSeats(document.getElementById("seats"));
+    document.getElementById("next").onclick = () => { location.hash = "#/pay"; };
+  },
+  "/pay": () => {
+    app.innerHTML = `<h1>Payment</h1><div class="card">
+      <div class="row"><span>${MOVIE.title}, ${state.time}</span><span>${seatName(state.seat)}</span></div>
+      <div class="row"><span>Total</span><strong>${tenge(MOVIE.price)}</strong></div>
+      <div class="row"><span>Card</span><span>Visa •• 4417</span></div></div>
+      <div class="actions"><button class="strong" onclick="location.hash='#/seats'">Change seat</button>
+      <button class="pay" id="pay">Pay ${tenge(MOVIE.price)}</button></div>`;
+    document.getElementById("pay").onclick = () => { location.hash = "#/done"; };
+  },
+  "/done": () => {
+    app.innerHTML = `<h1>Your ticket is booked</h1><div class="card">
+      <p>${MOVIE.title}, today ${state.time}, hall 2, ${seatName(state.seat)}.</p>
+      <p class="muted">Show the ticket at the entrance.</p></div>
+      <button id="download" class="strong">Download ticket</button>
+      <div class="actions"><button onclick="location.hash='#/'">Book another</button></div>`;
+    document.getElementById("download").onclick = () => {
+      document.getElementById("download").textContent = "Ticket saved ✓";
+    };
+  },
+};
+
+function render() {
+  const path = location.hash.replace(/^#/, "") || "/";
+  (pages[path] || pages["/"])();
+}
+window.addEventListener("hashchange", render);
+render();
+</script>
+</body>
+</html>

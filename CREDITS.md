@@ -50,5 +50,8 @@ Research behind these choices: `docs/research/2026-10-ux-skills-landscape.md`.
 | [neuhai/UXAgent](https://github.com/neuhai/UXAgent) | MIT | batch personas from stratified axes | `personas.py` |
 | vizron (CHI'26 workshop), AgentA/B (arXiv 2504.09723), SimAB (arXiv 2603.01024, ideas only), Park et al. (arXiv 2411.10109) | papers | persona decides, executor clicks; agents are hyper-rational, so explicit patience budgets and hard personas; simulations give direction, not effect size | `personas.md`, `crowd.py` |
 | [microsoft/playwright-cli](https://github.com/microsoft/playwright-cli) | Apache-2.0 | browser engine (pinned 0.1.23), snapshots to files | `scripts/pc.py` |
+| [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser) | Apache-2.0 | second browser engine (0.27.0): `@e` refs, `wait --fn` | `scripts/pc.py` |
+| [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast) | MIT | indexed element table; one decision-model request with an operation question plus speculative target questions; text written by an LLM only when the operation needs it | `scripts/d1.py` |
+| [Liquid AI d1 / systemone API](https://docs.liquid.ai) | docs | choice / noul / score questions, thresholds with an unsure band, images as `data:` URLs | `scripts/d1.py` |
 | borghei/Claude-Skills `qa-browser-automation` | MIT + Commons Clause | reviewed, nothing taken | - |
 | Skyvern | AGPL-3.0 | reviewed, nothing taken | - |

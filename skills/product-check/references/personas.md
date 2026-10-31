@@ -74,16 +74,36 @@ disagrees" separately.
    `personas.py validate`. Same personas on both variants, so the difference
    comes from the variant, not the sample.
 3. **Plan.** `crowd.py plan --personas p.json --flow flow.json --variant
-   A=URL --variant B=URL --out DIR` writes one `prompt.md` and one `act`
-   wrapper per persona and variant.
-4. **Run.** With `ANTHROPIC_API_KEY`: `crowd.py run --out DIR` (Claude Haiku
-   decides each step; personas run in parallel, each in its own browser
-   session). Without a key: run every `prompt.md` in a fresh Haiku session,
-   all in parallel, then `crowd.py record` the tokens each one used.
+   A=URL --variant B=URL --out DIR [--driver mixed]` writes one `prompt.md`
+   and one `act` wrapper per persona and variant. Every action also saves a
+   screenshot of at most 512 px (`--no-look` turns it off).
+4. **Run.** Each step goes to the cheapest model that can take it
+   (`--driver mixed`, the default; see the table below). With
+   `ANTHROPIC_API_KEY` and `LIQUID_AI_API_KEY`: `crowd.py run --out DIR`
+   (personas in parallel, each in its own browser session). Without an
+   Anthropic key: run every `prompt.md` in a fresh Haiku session, all in
+   parallel; in mixed runs that session calls `./act auto` and decides only
+   the steps d1 hands back. Then `crowd.py record` the tokens each session
+   used.
 5. **Aggregate.** `crowd.py aggregate --out DIR` writes `funnel.md` and
    `funnel.json`: stage reach per variant, completion for all and for hard
    personas, the top drop-off stage, clicks that changed nothing, a bootstrap
-   interval for the direction, and the cost.
+   interval for the direction, steps per decision tier and the cost (Claude
+   plus d1) per persona.
+
+### Decision tiers
+
+The model that decides sets the price of a run, not the browser engine.
+
+| Tier | Decides | Takes |
+|---|---|---|
+| light | d1-ultra (`scripts/d1.py`): one request of choice / yes-no / score questions over the persona, the page's controls and the screenshot; the choice is drawn from its probabilities | clicks among visible controls, going back, done, quit |
+| medium | Claude Haiku, tree + screenshot | d1 unsure (choice confidence < 0.5, done or quit between 0.2 and 0.8), text and form input, a control on screen missing from the tree, an error screen |
+| hard | Claude Sonnet, tree + screenshot | the last action changed nothing; the page is not recognised (no controls, confusion score >= 2.5 of 3); walk mode always |
+
+`--driver haiku` or `--driver sonnet` puts every step on one model; use them
+as baselines. `--engine agent-browser` runs the same commands on
+agent-browser instead of Playwright CLI.
 6. **Report.** Cluster drop-off reasons and dead clicks into findings with
    `report.md`; replay the top cluster in walk mode to get steps and a
    screenshot.
