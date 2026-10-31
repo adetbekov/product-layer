@@ -92,8 +92,9 @@ def git(ws, *args, env=None, check=True):
 def load_cases(names=None):
     cases = {}
     for path in sorted(BENCH.glob("cases/*/case.toml")):
-        if not names or path.parent.name in names:
-            cases[path.parent.name] = tomllib.loads(path.read_text()) | {"dir": path.parent}
+        data = tomllib.loads(path.read_text())
+        if data.get("kind") != "live" and (not names or path.parent.name in names):  # live cases: live.py
+            cases[path.parent.name] = data | {"dir": path.parent}
     if names and (unknown := set(names) - set(cases)):
         sys.exit(f"unknown cases {sorted(unknown)}")
     return cases

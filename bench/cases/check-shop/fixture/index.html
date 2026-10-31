@@ -1,0 +1,126 @@
+<!doctype html>
+<!-- Synthetic fixture for the product-check bench. Planted bugs are listed in ../check.py only. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pantry - groceries in 30 minutes</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 0; color: #1d1d1f; background: #fafafa; }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #fff; border-bottom: 1px solid #ddd; }
+  header a { color: inherit; text-decoration: none; margin-left: 16px; }
+  main { max-width: 720px; margin: 24px auto; padding: 0 20px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 14px; }
+  button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid #888; background: #fff; cursor: pointer; }
+  button.primary { background: #1d6b3a; color: #fff; border-color: #1d6b3a; }
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; }
+  label { display: block; margin: 10px 0 4px; }
+  input, select { font: inherit; padding: 8px; width: 100%; box-sizing: border-box; }
+  .err { color: #b00020; }
+  .muted { color: #666; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<header id="top">
+  <a href="#/" style="margin:0"><strong>Pantry</strong></a>
+  <nav><span class="muted">Hi, Aigerim</span><a href="#/cart" id="cart-link">Cart (0)</a></nav>
+</header>
+<main id="app"></main>
+<script>
+const VARIANT = new URLSearchParams(location.search).get("variant") === "b" ? "b" : "a";
+const USER = { name: "Aigerim", email: "aigerim@example.com", address: "Abay ave 10, apt 5, Almaty" };
+const PRODUCTS = [
+  { id: "oat", name: "Oat milk 1 L", price: 1290 },
+  { id: "bread", name: "Rye bread", price: 650 },
+  { id: "eggs", name: "Eggs, 10 pcs", price: 990 },
+  { id: "apples", name: "Green apples 1 kg", price: 890 },
+];
+const state = JSON.parse(sessionStorage.getItem("pantry") || '{"cart":{}}');
+const save = () => sessionStorage.setItem("pantry", JSON.stringify(state));
+const count = () => Object.values(state.cart).reduce((a, b) => a + b, 0);
+const total = () => Object.entries(state.cart).reduce((s, [id, q]) => s + q * PRODUCTS.find(p => p.id === id).price, 0);
+const app = document.getElementById("app");
+const topBar = document.getElementById("top");
+const cartLink = document.getElementById("cart-link");
+const tenge = n => n.toLocaleString("ru-RU") + " ₸";
+
+function badge() { cartLink.textContent = `Cart (${count()})`; }
+
+const pages = {
+  "/": () => {
+    app.innerHTML = `<h1>Groceries</h1><div class="grid">${PRODUCTS.map(p => `
+      <div class="card"><div>${p.name}</div><div class="muted">${tenge(p.price)}</div>
+      <button data-add="${p.id}" aria-label="Add ${p.name} to cart">Add to cart</button></div>`).join("")}</div>`;
+    app.querySelectorAll("[data-add]").forEach(b => b.onclick = () => {
+      state.cart[b.dataset.add] = (state.cart[b.dataset.add] || 0) + 1; save(); badge();
+      b.textContent = "Added ✓";
+    });
+  },
+  "/cart": () => {
+    const ids = Object.keys(state.cart).filter(id => state.cart[id] > 0);
+    if (!ids.length) { app.innerHTML = `<h1>Your cart</h1><p>Your cart is empty.</p><a href="#/">Back to groceries</a>`; return; }
+    app.innerHTML = `<h1>Your cart</h1>${ids.map(id => { const p = PRODUCTS.find(x => x.id === id); return `
+      <div class="row"><span>${p.name}</span><span>
+      <button data-dec="${id}" aria-label="Fewer ${p.name}">−</button> <span>${state.cart[id]}</span>
+      <button data-inc="${id}" aria-label="More ${p.name}">+</button></span><span>${tenge(p.price * state.cart[id])}</span></div>`; }).join("")}
+      <p><strong>Total: <span id="total">${tenge(total())}</span></strong></p>
+      <label for="promo">Promo code</label><div style="display:flex;gap:8px"><input id="promo" placeholder="e.g. FRESH10"><button id="apply">Apply</button></div>
+      <p><a href="#/">Continue shopping</a></p>
+      <button class="primary" id="go">Checkout</button>`;
+    app.querySelectorAll("[data-inc],[data-dec]").forEach(b => b.onclick = () => {
+      const id = b.dataset.inc || b.dataset.dec;
+      state.cart[id] = Math.max(0, state.cart[id] + (b.dataset.inc ? 1 : -1)); save();
+      pages["/cart"]();  // the header counter is not refreshed here
+    });
+    document.getElementById("apply").onclick = () => {};
+    document.getElementById("go").onclick = () => location.hash = VARIANT === "a" ? "#/confirm" : "#/checkout";
+  },
+  "/confirm": () => {
+    app.innerHTML = `<h1>Confirm your account</h1><p class="muted">For your security, please re-enter your account details to continue.</p>
+      <form id="f"><label for="em">Email</label><input id="em" type="email" autocomplete="off">
+      <label for="pw">Password</label><input id="pw" type="password">
+      <p class="err" id="e"></p><button class="primary">Continue</button></form>`;
+    document.getElementById("f").onsubmit = e => {
+      e.preventDefault();
+      const em = document.getElementById("em").value.trim().toLowerCase();
+      const pw = document.getElementById("pw").value;
+      if (em !== USER.email) { document.getElementById("e").textContent = "Email does not match your account."; return; }
+      if (pw.length < 6) { document.getElementById("e").textContent = "Enter your password (at least 6 characters)."; return; }
+      location.hash = "#/checkout";
+    };
+  },
+  "/checkout": () => {
+    if (!count()) { location.hash = "#/cart"; return; }
+    app.innerHTML = `<h1>Checkout</h1>
+      <label for="addr">Delivery address</label><input id="addr" value="${USER.address}">
+      <label for="slot">Delivery time</label><select id="slot"><option>As soon as possible (30 min)</option><option>Today 18:00-20:00</option></select>
+      <label for="pay">Payment</label><select id="pay"><option>Card •••• 4242</option><option>Cash to courier</option></select>
+      <p class="muted"><a href="#/delivery-terms">Delivery terms</a></p>
+      <p><strong>Total: ${tenge(total())}</strong></p>
+      <button class="primary" id="place">Place order</button>`;
+    document.getElementById("place").onclick = () => { state.cart = {}; save(); location.hash = "#/done"; };
+  },
+  "/delivery-terms": () => {
+    topBar.style.display = "none";
+    app.innerHTML = `<h1>Delivery terms</h1><p>We deliver every day from 8:00 to 23:00 within Almaty. Orders over 5 000 ₸ are delivered free;
+      smaller orders cost 490 ₸. A courier waits up to 10 minutes. Perishable goods can be returned at the door.</p>`;
+  },
+  "/done": () => {
+    app.innerHTML = `<h1>Order placed</h1><p>Thanks, ${USER.name}! Your courier arrives in about 30 minutes.</p><a href="#/">Back to groceries</a>`;
+    badge();
+  },
+};
+
+function route() {
+  topBar.style.display = "";
+  const path = location.hash.replace(/^#/, "") || "/";
+  (pages[path] || pages["/"])();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+badge();
+route();
+</script>
+</body>
+</html>

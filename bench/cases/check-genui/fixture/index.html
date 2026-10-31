@@ -1,0 +1,170 @@
+<!doctype html>
+<!-- Synthetic fixture for the product-check bench: a scripted chat with generative UI. No LLM behind it.
+     Planted bugs are listed in ../check.py only. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glow - skincare assistant</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 0; background: #f5f3f0; color: #222; }
+  #log { max-width: 640px; margin: 0 auto; padding: 20px 16px 120px; }
+  .msg { margin: 12px 0; padding: 12px 14px; border-radius: 14px; max-width: 85%; }
+  .assistant { background: #fff; border: 1px solid #e3ddd6; }
+  .user { background: #2f5d50; color: #fff; margin-left: auto; width: fit-content; }
+  .card { margin-top: 10px; padding: 10px; border: 1px solid #e3ddd6; border-radius: 10px; }
+  .chips button, .card button { font: inherit; margin: 4px 4px 0 0; padding: 6px 12px; border-radius: 16px; border: 1px solid #2f5d50; background: #fff; cursor: pointer; }
+  .track { position: relative; height: 8px; background: #ddd; border-radius: 4px; margin: 18px 6px 8px; cursor: pointer; }
+  .fill { position: absolute; left: 0; top: 0; bottom: 0; background: #2f5d50; border-radius: 4px; }
+  .knob { position: absolute; top: -6px; width: 20px; height: 20px; margin-left: -10px; border-radius: 50%; background: #2f5d50; }
+  form#composer { position: fixed; bottom: 0; left: 0; right: 0; display: flex; gap: 8px; padding: 12px; background: #fff; border-top: 1px solid #ddd; }
+  form#composer input { flex: 1; font: inherit; padding: 10px; }
+  .muted { color: #777; font-size: 0.9em; }
+  .tools { margin-top: 8px; }
+  .tools button { font-size: 0.85em; border: none; background: none; color: #2f5d50; cursor: pointer; padding: 0; }
+</style>
+</head>
+<body>
+<h1 style="text-align:center;font-size:1.1em;margin:16px 0 0">Glow · skincare assistant</h1>
+<div id="log" role="log" aria-live="polite"></div>
+<form id="composer"><input id="text" placeholder="Ask about your skin…" aria-label="Message"><button>Send</button></form>
+<script>
+const log = document.getElementById("log");
+const S = { skin: null, budget: 15000, step: "skin", routine: [] };
+const PICKS = {
+  Oily: ["Gel cleanser with niacinamide", "Light oil-free moisturiser", "Clay mask"],
+  Dry: ["Cream cleanser", "Ceramide moisturiser", "Hydrating serum"],
+  Combination: ["Gentle foam cleanser", "Balancing toner", "Light moisturiser"],
+  "Not sure": ["Gentle cleanser", "Universal moisturiser", "SPF 50 fluid"],
+};
+let msgId = 0;
+
+function addUser(text) {
+  const d = document.createElement("div");
+  d.className = "msg user"; d.textContent = text; log.appendChild(d); scrollDown();
+}
+function scrollDown() { window.scrollTo(0, document.body.scrollHeight); }
+
+// Streams text into a new assistant message, then renders its component. aria-busy marks the stream.
+function assistant(text, render) {
+  const d = document.createElement("div");
+  d.className = "msg assistant"; d.dataset.msg = ++msgId;
+  d.setAttribute("aria-busy", "true"); d.dataset.streaming = "true";
+  const p = document.createElement("p"); p.style.margin = "0"; d.appendChild(p);
+  log.appendChild(d);
+  const words = text.split(" ");
+  let i = 0;
+  setTimeout(function tick() {
+    p.textContent = words.slice(0, ++i).join(" ");
+    scrollDown();
+    if (i < words.length) return setTimeout(tick, 90);
+    if (render) render(d);
+    d.setAttribute("aria-busy", "false"); d.dataset.streaming = "false";
+    scrollDown();
+  }, 700);
+  return d;
+}
+
+function skinCard(d) {
+  const c = document.createElement("div");
+  c.className = "card chips";
+  c.innerHTML = `<div class="muted">Skin type</div>` +
+    Object.keys(PICKS).map(k => `<button type="button">${k}</button>`).join("");
+  c.querySelectorAll("button").forEach(b => b.onclick = () => {
+    if (S.step !== "skin") return;  // answered: the old card keeps looking active but ignores clicks
+    S.skin = b.textContent; S.step = "budget";
+    addUser(S.skin);
+    askBudget();
+  });
+  d.appendChild(c);
+}
+
+function askBudget() {
+  assistant(`Got it, ${S.skin.toLowerCase()} skin. What's your monthly budget for skincare?`, budgetCard);
+}
+
+function budgetCard(d, live = true) {
+  const c = document.createElement("div");
+  c.className = "card";
+  c.innerHTML = `<div class="muted">Monthly budget</div>
+    <div class="track"><div class="fill"></div><div class="knob"></div></div>
+    <div><span class="val"></span></div>
+    <button type="button" class="show">Show picks</button>`;
+  const track = c.querySelector(".track"), fill = c.querySelector(".fill"), knob = c.querySelector(".knob"), val = c.querySelector(".val");
+  const min = 5000, max = 50000;
+  const paint = () => {
+    const pct = (S.budget - min) / (max - min) * 100;
+    fill.style.width = pct + "%"; knob.style.left = pct + "%";
+    val.textContent = S.budget.toLocaleString("ru-RU") + " ₸ per month";
+  };
+  const setFromX = x => {
+    const r = track.getBoundingClientRect();
+    const t = Math.min(1, Math.max(0, (x - r.left) / r.width));
+    S.budget = Math.round((min + t * (max - min)) / 1000) * 1000; paint();
+  };
+  if (live) {
+    let drag = false;
+    track.addEventListener("mousedown", e => { drag = true; setFromX(e.clientX); });
+    window.addEventListener("mousemove", e => { if (drag) setFromX(e.clientX); });
+    window.addEventListener("mouseup", () => { drag = false; });
+  }
+  paint();
+  c.querySelector(".show").onclick = () => {
+    if (S.step !== "budget") return;
+    S.step = "picks";
+    addUser(`Up to ${S.budget.toLocaleString("ru-RU")} ₸`);
+    showPicks();
+  };
+  d.appendChild(c);
+  const tools = document.createElement("div");
+  tools.className = "tools";
+  tools.innerHTML = `<button type="button">↻ Regenerate</button>`;
+  tools.querySelector("button").onclick = () => {
+    if (S.step !== "budget") return;
+    d.remove();
+    assistant(`Let's set a budget for your ${S.skin.toLowerCase()} skin routine. How much per month?`, nd => budgetCard(nd, false));
+  };
+  d.appendChild(tools);
+}
+
+function showPicks() {
+  assistant(`Here are three picks for ${S.skin.toLowerCase()} skin within ${S.budget.toLocaleString("ru-RU")} ₸.`, d => {
+    const c = document.createElement("div");
+    c.className = "card";
+    const price = Math.round(S.budget / 3 / 100) * 100;
+    c.innerHTML = PICKS[S.skin].map(n => `<div style="margin:6px 0">${n} · ${price.toLocaleString("ru-RU")} ₸
+      <button type="button">Add to routine</button></div>`).join("");
+    c.querySelectorAll("button").forEach(b => b.onclick = () => {
+      b.textContent = "Added ✓"; b.disabled = true;
+      S.routine.push(b.parentElement.firstChild.textContent.split(" · ")[0].trim());
+    });
+    d.appendChild(c);
+    const f = document.createElement("form");
+    f.className = "card";
+    f.innerHTML = `<label for="em" class="muted">Send my routine by email</label><br>
+      <input id="em" type="email" placeholder="you@example.com" style="font:inherit;padding:6px;width:60%">
+      <button>Send routine</button>`;
+    f.onsubmit = e => {
+      e.preventDefault();
+      const em = f.querySelector("input").value.trim();
+      if (!em.includes("@")) return;
+      assistant(`Done! Your routine (${S.routine.length || 3} products) was sent to ${em}.`);
+    };
+    d.appendChild(f);
+  });
+}
+
+document.getElementById("composer").onsubmit = e => {
+  e.preventDefault();
+  const t = document.getElementById("text").value.trim();
+  if (!t) return;
+  document.getElementById("text").value = "";
+  addUser(t);
+  if (S.step === "skin") assistant("I can build a routine once I know your skin type. Pick one above or tell me.", skinCard);
+  else assistant("Thanks! Use the card above to continue, or ask me anything about skincare.");
+};
+
+assistant("Hi! I'm Glow. I'll pick a skincare routine for you in a minute. First, what's your skin type?", skinCard);
+</script>
+</body>
+</html>
