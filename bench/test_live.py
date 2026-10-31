@@ -215,6 +215,8 @@ def test_d1_samples_by_probability_not_argmax():
     rng = random.Random(1)
     draws = [d1.sample({"choice": "a", "probabilities": {"a": 0.7, "b": 0.3}}, rng) for _ in range(400)]
     assert 80 < draws.count("b") < 160
+    tail = {"choice": "a", "probabilities": {"a": 0.94, "b": 0.05, "c": 0.01}}
+    assert {d1.sample(tail, rng) for _ in range(400)} == {"a"}
 
 
 def test_d1_ask_sends_data_url_and_model(monkeypatch):

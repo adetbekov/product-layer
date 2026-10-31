@@ -67,13 +67,13 @@ PROMPT = """You are role-playing one user in a usability simulation. Stay in cha
 ## How you use the site
 You see and touch the site only through `./act` in `{run}` (run every command from that folder):
 
-- `./act open` - once, first. It prints the page as an accessibility tree with refs like `e12`.
+{start}
 - `./act do --note "<what you think right now, first person, one short line>" -- <action>`, where the action is
   one of: {actions}. Put text in quotes. After each action it prints what changed on the page and the path of the
   full page snapshot; read that file when the change is not enough to decide.
 - `./act end --outcome done|quit --reason "<one line in your own words>"` - when you reached your goal, or decided
   to leave.
-{look}{auto}
+{look}
 Rules:
 - Decide as {name} would with what is on the screen now, not as a tester or developer. Do not explore features you
   do not need. If something is confusing, say so in the note.
@@ -88,10 +88,11 @@ LOOK = """- Every `./act` call also prints `screen: <path>`, a small screenshot 
   the tree leaves you unsure, when a control seems missing, or when something may look different from what the tree
   says. Judge as {name} sees the page: notice what stands out, as this person would, not everything in the tree.
 """
-AUTO = """- Start with `./act auto` instead of `./act open`. A fast assistant plays the steps that are obvious for you and
-  stops at `YOUR TURN`, with the reason, the page and the screen. Then decide that one step yourself with
-  `./act do --note ... -- <action>` (or `./act end`), and call `./act auto` again. Repeat until the run has ended.
-"""
+OPEN = "- `./act open` - once, first. It prints the page as an accessibility tree with refs like `e12`."
+AUTO = """- `./act auto` - first, and again after every step you take yourself. A fast assistant plays the steps that are
+  obvious for you and stops at `YOUR TURN` with the reason and the page as an accessibility tree with refs like `e12`;
+  decide that one step with `./act do` or `./act end`, then call `./act auto` again. It may also end the run for
+  you; then just reply."""
 
 SYSTEM = """You simulate one user of a website in a usability study. Stay in character. Each turn you get the \
 page as an accessibility tree with refs (e12) and your memory. Reply with JSON only:
@@ -147,7 +148,7 @@ def plan(args):
                 actions=ACTIONS, name=p["name"], steps=p["patience"]["steps"],
                 facts=f"\nWhat you already know:\n{facts}" if facts else "",
                 look="" if args.no_look else LOOK.format(name=p["name"]),
-                auto=AUTO if args.driver == "mixed" else ""))
+                start=AUTO if args.driver == "mixed" else OPEN))
             (run / "meta.json").write_text(json.dumps({"variant": name, "url": url, "persona": p, "driver": args.driver,
                                                        "engine": args.engine, "look": not args.no_look},
                                                       ensure_ascii=False))

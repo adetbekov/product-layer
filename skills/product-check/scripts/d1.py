@@ -32,6 +32,7 @@ PRICE_IN = 0.042  # $ per MTok of input; output is free. Used only when the API 
 # Escalation thresholds (JEB-2058): below CONFIDENT a choice goes to the medium tier; a yes/no inside BAND is unsure.
 CONFIDENT = 0.5
 BAND = (0.2, 0.8)
+FLOOR = 0.1  # choices below this probability are never drawn
 
 CLICKABLE = {"button", "link", "checkbox", "radio", "switch", "tab", "menuitem", "option"}
 TYPABLE = {"textbox", "searchbox", "combobox", "spinbutton", "slider"}
@@ -171,11 +172,13 @@ def vision(cs, each=False):
     return qs
 
 
-def sample(answer, rng):
-    """Draw a choice from its probabilities instead of taking the argmax: personas differ."""
+def sample(answer, rng, floor=FLOOR):
+    """Draw a choice from its probabilities instead of taking the argmax: personas differ where d1 sees real
+    alternatives. Options under `floor` are dropped first; drawn from the tail they were noise (a click on the logo
+    at p=0.01 when Checkout had 0.99), not a different person."""
     probs = answer.get("probabilities") or {answer["choice"]: 1.0}
-    keys = list(probs)
-    return rng.choices(keys, weights=[max(probs[k], 0.0) for k in keys])[0]
+    keys = [k for k in probs if probs[k] >= floor] or [answer["choice"]]
+    return rng.choices(keys, weights=[probs.get(k, 1.0) for k in keys])[0]
 
 
 def route(ans, clicks, types, last_changed=True, rng=None):
