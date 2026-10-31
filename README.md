@@ -7,6 +7,10 @@ It runs before visual / animation skills (Apple-style design, taste, motion) and
 
 Status: **v0.1 — first draft.** Usable, not yet benchmarked. Changes reach `main` only after winning the A/B bench (`bench/`, in progress).
 
+Companion skill: **[`skills/product-check`](skills/product-check/README.md)** checks the built interface afterwards by
+using it like its user - a QA walk in a real browser (pages and generative UI in chat) or a crowd of personas on two
+variants - and reports dead ends, extra steps and silent controls with rule ids from this skill.
+
 ## Install
 
 Copy `skills/product-layer/` into your agent's skills folder, for example `~/.claude/skills/product-layer/`.

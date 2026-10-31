@@ -33,3 +33,22 @@ Research behind these choices: `docs/research/2026-10-ux-skills-landscape.md`.
 | borghei/Claude-Skills product-designer | MIT + Commons Clause | reviewed, nothing taken | - |
 | Steve Krug, *Don't Make Me Think*; Jakob Nielsen, 10 usability heuristics; Larry Tesler, law of conservation of complexity | books / articles | heuristic pass; ask only what only the user knows | `review.md`, `step-reduction.md` |
 | [Telegram Bot API](https://core.telegram.org/bots/api) | docs | platform facts: bots cannot message users first, edited messages do not notify, 64-byte callback data, deep-link start parameter | `telegram-bot.md` |
+
+## product-check
+
+`skills/product-check` is also written from scratch. Research behind it: JEB-2036,
+`docs/research/2026-10-qa-user-simulation.md`. Text from borghei (Commons Clause), SimAB (CC BY-NC-ND) and Skyvern
+(AGPL) is not copied; where their ideas overlap ours they are re-expressed below.
+
+| Source | License | Ideas used | Where |
+|---|---|---|---|
+| [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser) `dogfood` | Apache-2.0 | reproduce before recording; evidence matched to the bug type; record each issue when found; never read the app's source; 5-10 well-evidenced findings; do not wait for network idle on streams | `walk.md`, `genui-walk.md`, `SKILL.md`; bench arm |
+| [jezweb/claude-skills](https://github.com/jezweb/claude-skills) `ux-audit` | MIT | persona lock and drift check; clicks against the optimum; round trip A to B to A; "a click that changed nothing is a bug"; five questions per step; fresh-subagent dedup with KEEP / GENERIC / DUPLICATE; no pass without an artifact | `walk.md`, `report.md`, `personas.md` |
+| [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent) `adversarial-ux-test` | MIT | RED / YELLOW / WHITE / GREEN filter for persona complaints; "would a busy competent adult complain too" | `report.md` RP-2 |
+| [garrytan/gstack](https://github.com/garrytan/gstack) `/qa-only` | MIT | exact repro before a bug counts | `walk.md` |
+| [ncklrs/claude-chrome-user-testing](https://github.com/ncklrs/claude-chrome-user-testing) | MIT | persona as a JSON card with patience and frustration triggers | `personas.md` |
+| [neuhai/UXAgent](https://github.com/neuhai/UXAgent) | MIT | batch personas from stratified axes | `personas.py` |
+| vizron (CHI'26 workshop), AgentA/B (arXiv 2504.09723), SimAB (arXiv 2603.01024, ideas only), Park et al. (arXiv 2411.10109) | papers | persona decides, executor clicks; agents are hyper-rational, so explicit patience budgets and hard personas; simulations give direction, not effect size | `personas.md`, `crowd.py` |
+| [microsoft/playwright-cli](https://github.com/microsoft/playwright-cli) | Apache-2.0 | browser engine (pinned 0.1.23), snapshots to files | `scripts/pc.py` |
+| borghei/Claude-Skills `qa-browser-automation` | MIT + Commons Clause | reviewed, nothing taken | - |
+| Skyvern | AGPL-3.0 | reviewed, nothing taken | - |

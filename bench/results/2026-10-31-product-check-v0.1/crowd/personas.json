@@ -1,0 +1,416 @@
+[
+ {
+  "id": "p09",
+  "name": "Sam",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "high",
+  "patience": {
+   "label": "patient",
+   "steps": 15
+  },
+  "ai_trust": "low",
+  "device": {
+   "type": "desktop",
+   "network": "fast"
+  },
+  "lang": "en",
+  "constraints": [],
+  "traits": [],
+  "hard": false,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p20",
+  "name": "Сергей",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "mid",
+  "patience": {
+   "label": "normal",
+   "steps": 10
+  },
+  "ai_trust": "high",
+  "device": {
+   "type": "mobile",
+   "network": "fast"
+  },
+  "lang": "ru",
+  "constraints": [],
+  "traits": [],
+  "hard": false,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p15",
+  "name": "Omar",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "mid",
+  "patience": {
+   "label": "normal",
+   "steps": 10
+  },
+  "ai_trust": "low",
+  "device": {
+   "type": "mobile",
+   "network": "slow"
+  },
+  "lang": "en",
+  "constraints": [],
+  "traits": [],
+  "hard": false,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p14",
+  "name": "Бауыржан",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "high",
+  "patience": {
+   "label": "normal",
+   "steps": 10
+  },
+  "ai_trust": "mid",
+  "device": {
+   "type": "desktop",
+   "network": "fast"
+  },
+  "lang": "kk",
+  "constraints": [],
+  "traits": [],
+  "hard": false,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p11",
+  "name": "Ольга",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "low",
+  "patience": {
+   "label": "hurried",
+   "steps": 6
+  },
+  "ai_trust": "low",
+  "device": {
+   "type": "mobile",
+   "network": "slow"
+  },
+  "lang": "ru",
+  "constraints": [],
+  "traits": [],
+  "hard": true,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p17",
+  "name": "Sam",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "mid",
+  "patience": {
+   "label": "hurried",
+   "steps": 6
+  },
+  "ai_trust": "mid",
+  "device": {
+   "type": "desktop",
+   "network": "slow"
+  },
+  "lang": "en",
+  "constraints": [],
+  "traits": [],
+  "hard": true,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p01",
+  "name": "Sam",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "high",
+  "patience": {
+   "label": "hurried",
+   "steps": 6
+  },
+  "ai_trust": "high",
+  "device": {
+   "type": "mobile",
+   "network": "slow"
+  },
+  "lang": "en",
+  "constraints": [],
+  "traits": [
+   "hurried"
+  ],
+  "hard": true,
+  "voice": "Has two minutes between tasks; skims, taps the first thing that looks right, leaves when blocked."
+ },
+ {
+  "id": "p08",
+  "name": "Павел",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "low",
+  "patience": {
+   "label": "patient",
+   "steps": 15
+  },
+  "ai_trust": "low",
+  "device": {
+   "type": "mobile",
+   "network": "slow"
+  },
+  "lang": "ru",
+  "constraints": [],
+  "traits": [],
+  "hard": true,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p10",
+  "name": "Ерлан",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "low",
+  "patience": {
+   "label": "hurried",
+   "steps": 6
+  },
+  "ai_trust": "high",
+  "device": {
+   "type": "desktop",
+   "network": "slow"
+  },
+  "lang": "kk",
+  "constraints": [],
+  "traits": [],
+  "hard": true,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p18",
+  "name": "Ерлан",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "low",
+  "patience": {
+   "label": "hurried",
+   "steps": 6
+  },
+  "ai_trust": "mid",
+  "device": {
+   "type": "mobile",
+   "network": "fast"
+  },
+  "lang": "kk",
+  "constraints": [],
+  "traits": [],
+  "hard": true,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p19",
+  "name": "Дана",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "mid",
+  "patience": {
+   "label": "patient",
+   "steps": 15
+  },
+  "ai_trust": "high",
+  "device": {
+   "type": "desktop",
+   "network": "fast"
+  },
+  "lang": "kk",
+  "constraints": [],
+  "traits": [],
+  "hard": false,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p12",
+  "name": "Сергей",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "high",
+  "patience": {
+   "label": "normal",
+   "steps": 10
+  },
+  "ai_trust": "low",
+  "device": {
+   "type": "mobile",
+   "network": "fast"
+  },
+  "lang": "ru",
+  "constraints": [],
+  "traits": [],
+  "hard": false,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p03",
+  "name": "Дана",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "high",
+  "patience": {
+   "label": "patient",
+   "steps": 15
+  },
+  "ai_trust": "high",
+  "device": {
+   "type": "desktop",
+   "network": "fast"
+  },
+  "lang": "kk",
+  "constraints": [],
+  "traits": [
+   "quitter"
+  ],
+  "hard": true,
+  "voice": "Gives up at the first error or anything that feels like paperwork."
+ },
+ {
+  "id": "p05",
+  "name": "Марина",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "mid",
+  "patience": {
+   "label": "hurried",
+   "steps": 6
+  },
+  "ai_trust": "mid",
+  "device": {
+   "type": "mobile",
+   "network": "slow"
+  },
+  "lang": "ru",
+  "constraints": [],
+  "traits": [
+   "doubter"
+  ],
+  "hard": true,
+  "voice": "Reads labels twice, hesitates at anything that asks for data or money, wants to know why."
+ },
+ {
+  "id": "p13",
+  "name": "Марина",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "mid",
+  "patience": {
+   "label": "normal",
+   "steps": 10
+  },
+  "ai_trust": "low",
+  "device": {
+   "type": "desktop",
+   "network": "fast"
+  },
+  "lang": "ru",
+  "constraints": [],
+  "traits": [],
+  "hard": false,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p07",
+  "name": "Omar",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "mid",
+  "patience": {
+   "label": "hurried",
+   "steps": 6
+  },
+  "ai_trust": "mid",
+  "device": {
+   "type": "desktop",
+   "network": "slow"
+  },
+  "lang": "en",
+  "constraints": [],
+  "traits": [
+   "hurried"
+  ],
+  "hard": true,
+  "voice": "Has two minutes between tasks; skims, taps the first thing that looks right, leaves when blocked."
+ },
+ {
+  "id": "p02",
+  "name": "Дмитрий",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "low",
+  "patience": {
+   "label": "patient",
+   "steps": 15
+  },
+  "ai_trust": "mid",
+  "device": {
+   "type": "desktop",
+   "network": "fast"
+  },
+  "lang": "ru",
+  "constraints": [],
+  "traits": [
+   "doubter"
+  ],
+  "hard": true,
+  "voice": "Reads labels twice, hesitates at anything that asks for data or money, wants to know why."
+ },
+ {
+  "id": "p16",
+  "name": "Арман",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "high",
+  "patience": {
+   "label": "patient",
+   "steps": 15
+  },
+  "ai_trust": "low",
+  "device": {
+   "type": "mobile",
+   "network": "slow"
+  },
+  "lang": "kk",
+  "constraints": [],
+  "traits": [],
+  "hard": false,
+  "voice": "Ordinary user: reads headings, follows the obvious button, tolerates one small detour."
+ },
+ {
+  "id": "p04",
+  "name": "Нурлан",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "low",
+  "patience": {
+   "label": "hurried",
+   "steps": 6
+  },
+  "ai_trust": "high",
+  "device": {
+   "type": "mobile",
+   "network": "fast"
+  },
+  "lang": "kk",
+  "constraints": [],
+  "traits": [
+   "hurried"
+  ],
+  "hard": true,
+  "voice": "Has two minutes between tasks; skims, taps the first thing that looks right, leaves when blocked."
+ },
+ {
+  "id": "p06",
+  "name": "Lena",
+  "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+  "tech": "low",
+  "patience": {
+   "label": "hurried",
+   "steps": 6
+  },
+  "ai_trust": "mid",
+  "device": {
+   "type": "desktop",
+   "network": "slow"
+  },
+  "lang": "en",
+  "constraints": [],
+  "traits": [
+   "quitter"
+  ],
+  "hard": true,
+  "voice": "Gives up at the first error or anything that feels like paperwork."
+ }
+]
