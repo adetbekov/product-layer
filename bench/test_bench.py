@@ -1,6 +1,8 @@
 """Tests for the bench and its hidden checks: python -m pytest bench"""
 
+import importlib.util
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -16,6 +18,13 @@ from report import build
 
 BENCH = Path(__file__).resolve().parent
 CASES = sorted(p.name for p in (BENCH / "cases").iterdir() if (p / "case.toml").exists())
+
+
+def load_rules(case):
+    spec = importlib.util.spec_from_file_location(f"check_{case}", BENCH / "cases" / case / "check.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.RULES
 
 
 def run_check(case, tmp_path, spec=None):
@@ -96,6 +105,14 @@ def test_dead_ends_and_unknown_targets(tmp_path):
     assert res["steps"] is None  # the case does not use it
 
 
+def test_terminal_screen_is_not_a_dead_end(tmp_path):
+    data = spec()
+    data["screens"][2] |= {"actions": [], "terminal": True}  # "account deleted": the journey ends here on purpose
+    assert check(tmp_path, data, {})["dead_ends"] == []
+    data["screens"][2]["terminal"] = "yes"  # only an explicit boolean counts
+    assert check(tmp_path, data, {})["dead_ends"] == ["c has no way out"]
+
+
 def test_broken_yaml_fails_structure_only(tmp_path):
     path = tmp_path / "flow.yaml"
     path.write_text("screens: [unclosed")
@@ -142,6 +159,10 @@ def test_approving_a_shown_value_is_not_asking_for_it(tmp_path):
     assert check(tmp_path, data, {"forbid_asks": ["price"]})["asks"] == []
     data["screens"][0]["asks"] = [{"field": "price you want to pay"}]
     assert check(tmp_path, data, {"forbid_asks": ["price"]})["asks"] == ["a asks known `price you want to pay`"]
+    data["screens"][0]["asks"] = [{"field": "Confirm the price you want to pay"}]
+    assert check(tmp_path, data, {"forbid_asks": ["price"]})["asks"] == [
+        "a asks known `confirm the price you want to pay`"
+    ]
 
 
 def test_nav_and_min_actions(tmp_path):
@@ -276,3 +297,15 @@ def test_report_without_verdicts():
     text, tsv = build(rows, {}, ["a", "b"])
     assert "No verdicts yet." in text and "| Solved, hidden checks | 1/1 | 0/0 |" in text
     assert tsv.splitlines()[1].split("\t")[:5] == ["w", "c", "a", "1", "P1"]
+
+
+def test_warmplace_student_may_pick_a_tutors_slot(tmp_path):
+    rules = load_rules("warmplace-onboarding")["forbid_asks"]["student"]
+    for field, bad in [
+        ("one of the tutor's open slots", False),
+        ("name the tutor will see", False),
+        ("tutor", True),
+        ("which subject", True),
+        ("subjects", True),
+    ]:
+        assert any(re.search(p, field) for p in rules) is bad, field

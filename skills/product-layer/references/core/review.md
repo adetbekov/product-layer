@@ -70,5 +70,11 @@ Before handing a spec to visual skills, check:
 - Every flow has a result, branches and a steps-to-value number.
 - No step lacks a verdict from the step test.
 - Every screen has one primary action and a filled state matrix.
+- Every action reaches a real, different screen: no self-loops, no stub or
+  placeholder targets, no button whose result is undefined. Final screens
+  offer the next task or are marked as the intended end.
+- Nothing the brief did not ask for: no invented features, policies, numbers,
+  extra sections. Assumptions sit in one list, one line each.
+- No rule ids in the spec or the reply; they are for audit findings only.
 - No colour, font, size, spacing or animation timing appears in the spec.
 - Assumptions and open questions are listed, not hidden in prose.

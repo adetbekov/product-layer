@@ -5,7 +5,9 @@ isolated sessions with no skill, with product-layer and with popular UX skills, 
 checks and a blind X/Y review. The protocol follows [lab-forge's bench](https://github.com/adetbekov/lab-forge/tree/main/bench),
 adapted to UX: the agent writes a flow-and-screens spec instead of code.
 
-Latest results: [`results/2026-10-31-v0.1`](results/2026-10-31-v0.1/report.md) (full run of v0.1: 6 cases, 2 repeats, 6 arms, 84 blind verdicts).
+Latest results: [`results/2026-10-31-v0.2`](results/2026-10-31-v0.2/report.md) (v0.2 against szilu and bare: 6 cases,
+2 repeats, 32 blind verdicts; [notes](results/2026-10-31-v0.2/notes.md)). Full v0.1 run with every arm:
+[`results/2026-10-31-v0.1`](results/2026-10-31-v0.1/report.md).
 
 ## Run it
 
@@ -65,7 +67,7 @@ The agent's answer is `spec/flow.yaml` in the format of [`spec-format.md`](spec-
 screens, and per screen what it shows, asks, its states and its actions. `ux.py` runs the deterministic checks:
 
 - `structure`: valid YAML, known targets, every screen reachable from a flow entry;
-- `dead_ends`: every screen has a way out;
+- `dead_ends`: every screen has a way out, except one marked `terminal: true` (an intended end such as "account deleted");
 - `steps`: user actions on the shortest path entry -> done are at most the reference (`by: system` costs nothing);
 - `states`: the case's moments describe empty / loading / error where the reference needs them;
 - `render`: text-or-block decisions match the reference markup (genui case);

@@ -15,6 +15,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: python tests/test_skill.py
+      - run: python tests/test_install.py
 
   pytest:
     runs-on: ubuntu-latest

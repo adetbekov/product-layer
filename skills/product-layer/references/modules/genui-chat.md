@@ -37,8 +37,9 @@ typing.
 
 **Rule.** The agent picks only from a fixed list of components. Each entry
 states when to use it, its required fields and its actions; the product code
-renders it. Unknown shapes fall back to text. Spec new components as product
-work, not as agent improvisation.
+renders it. Before speccing a block, check that the product's catalogue has
+it (chips, cards, a photo button); if it does not, use text or list the block
+as product work in open questions, never as agent improvisation.
 **Why.** Free-form generated layouts are inconsistent and untestable.
 - Bad: the agent invents a "timeline widget" the app cannot render.
 - Good: the agent picks `steps` from the catalogue; unknown shape falls back to text.
@@ -56,10 +57,13 @@ one tap only when wrong.
 ## GC-4 · Buttons, not suggestions · HIGH
 
 **Rule.** Next actions are tappable (chips, card actions), never prose like
-"you could ask me to...". At most 3-4 next-action chips per reply.
+"you could ask me to...". At most 3-4 next-action chips per reply, and each
+one says what it does: which turn or block it produces. A chip without a
+defined result is cut.
 **Why.** Users act on buttons; they rarely retype suggestions.
 - Bad: "You can also ask me to compare these."
-- Good: chips "Compare" and "Cheaper options" under the cards.
+- Good: chips "Compare these" (comparison table) and "Under 10 000 ₸" (new
+  card stack) under the cards.
 
 ## GC-5 · No blank chat · HIGH
 
@@ -91,11 +95,13 @@ the model for what arithmetic can do.
 
 ## GC-8 · Questionnaires: one question per card, all before the result · HIGH
 
-**Rule.** In chat, ask one question per card with chips, show progress
+**Rule.** When the result cannot exist without answers (a skin quiz, a fit
+quiz), the questionnaire is the path to value: keep only questions that
+change the result (usually 2-4), one per card with chips, show progress
 ("2 of 4"), allow skip and back, keep answers on interruption (FL-6). Use a
-photo when the answer is visual. Every question the result needs is in the
-questionnaire; none is added as text after the result (ON-2). Answers are
-saved to the profile and shown on its page.
+photo when the answer is visual. ON-2's limit then counts questions outside
+this quiz. None is added as text after the result. Answers are saved to the
+profile and shown on its page.
 **Why.** A text question after the result means the result was guessed.
 - Bad: skin-type question appears in the first reply, after "Build my plan".
 - Good: skin type is chip question 2; the plan arrives with nothing to ask.
@@ -134,6 +140,15 @@ failures are explained in one line with a retry, never silent.
 **Why.** A silent agent looks stuck; tool names look like errors.
 - Bad: "Calling tool compute_verdict…"
 - Good: "Checking ingredients…", then the verdict card.
+
+## GC-13 · Actions follow the result · HIGH
+
+**Rule.** A block's actions depend on what it says. A poor verdict or a
+mismatch offers an alternative or a way to skip, not the same "Add" a good
+result gets; an empty result offers a wider search.
+**Why.** "Add to shelf" under a 2/10 verdict pushes a wrong choice.
+- Bad: every verdict card's main action is "Add to shelf".
+- Good: 8/10: "Add to shelf"; 2/10: "Show alternatives" and "Skip".
 
 ## Output additions
 
