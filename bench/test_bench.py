@@ -96,6 +96,14 @@ def test_dead_ends_and_unknown_targets(tmp_path):
     assert res["steps"] is None  # the case does not use it
 
 
+def test_terminal_screen_is_not_a_dead_end(tmp_path):
+    data = spec()
+    data["screens"][2] |= {"actions": [], "terminal": True}  # "account deleted": the journey ends here on purpose
+    assert check(tmp_path, data, {})["dead_ends"] == []
+    data["screens"][2]["terminal"] = "yes"  # only an explicit boolean counts
+    assert check(tmp_path, data, {})["dead_ends"] == ["c has no way out"]
+
+
 def test_broken_yaml_fails_structure_only(tmp_path):
     path = tmp_path / "flow.yaml"
     path.write_text("screens: [unclosed")
@@ -142,6 +150,10 @@ def test_approving_a_shown_value_is_not_asking_for_it(tmp_path):
     assert check(tmp_path, data, {"forbid_asks": ["price"]})["asks"] == []
     data["screens"][0]["asks"] = [{"field": "price you want to pay"}]
     assert check(tmp_path, data, {"forbid_asks": ["price"]})["asks"] == ["a asks known `price you want to pay`"]
+    data["screens"][0]["asks"] = [{"field": "Confirm the price you want to pay"}]
+    assert check(tmp_path, data, {"forbid_asks": ["price"]})["asks"] == [
+        "a asks known `confirm the price you want to pay`"
+    ]
 
 
 def test_nav_and_min_actions(tmp_path):

@@ -27,6 +27,7 @@ screens:
       empty: ...
       loading: ...
       error: ...              # include the way out (retry, edit, contact)
+    terminal: false           # true only when the journey ends here on purpose ("account deleted"); then no actions needed
     actions:                  # every way out of this screen
       - label: Continue
         to: result            # id of the next screen
@@ -36,5 +37,6 @@ screens:
 Rules the spec must follow:
 
 - Every `to` names a screen in `screens`; every screen is reachable from some flow's `entry`.
+- Every screen has a way out, except one marked `terminal: true`, where the journey ends on purpose.
 - A step is one `by: user` action; `by: system` transitions (a job finishing, a timer) cost the user nothing.
 - Each screen that can be waited on, fail or have nothing to show describes that state in `states`.

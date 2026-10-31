@@ -26,6 +26,7 @@ import yaml
 SPEC = Path("spec/flow.yaml")
 MISSING = {"", "n/a", "na", "none", "-", "null"}
 DECISION = r"(approv|confirm|consent|agree|accept)"
+VALUE = r"\b(enter|type|input|you want|your own|set|choose|pick)\b"  # "confirm the price you want" still asks for it
 CHECKS = ("structure", "dead_ends", "steps", "states", "render", "asks", "nav", "actions")
 
 
@@ -123,11 +124,14 @@ def check_structure(spec, rules):
 
 
 def check_dead_ends(spec, rules):
-    """Screens with no action, or whose every action leads back to the same screen."""
+    """Screens with no action, or whose every action leads back to the same screen.
+
+    A screen marked `terminal: true` ends the journey on purpose ("account deleted", "bill settled") and needs no exit.
+    """
     return [
         f"{s['id']} has no way out"
         for s in spec["screens"]
-        if all(str(a.get("to")) == str(s["id"]) for a in s["actions"])
+        if s.get("terminal") is not True and all(str(a.get("to")) == str(s["id"]) for a in s["actions"])
     ]
 
 
@@ -173,7 +177,7 @@ def check_asks(spec, rules):
     problems = []
     asked = [(str(s["id"]), str(a.get("field", "")).lower()) for s in spec["screens"] for a in s["asks"]]
     # "approve the plan and price" is a decision on a value the product shows, not a request for that value
-    decisions = [(sid, f) for sid, f in asked if re.match(DECISION, f)]
+    decisions = [(sid, f) for sid, f in asked if re.match(DECISION, f) and not re.search(VALUE, f)]
     forbid = rules.get("forbid_asks", [])
     for flow, patterns in forbid.items() if isinstance(forbid, dict) else [(None, forbid)]:
         path_ids = happy(spec, flow)
