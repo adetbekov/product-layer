@@ -1,0 +1,21 @@
+product: Clip engine
+flows:
+  - {id: create, entry: params, done: ready}
+screens:
+  - id: params
+    surface: page
+    asks: [{field: length}, {field: aspect}, {field: model}, {field: seed}]
+    actions: [{label: Next, to: brief}]
+  - id: brief
+    surface: page
+    moment: brief
+    asks: [{field: brief}]
+    actions: [{label: Next, to: plan}]
+  - id: plan
+    surface: page
+    moment: plan
+    states: {loading: Spinner}
+    actions: [{label: Approve, to: lyrics}]
+  - {id: lyrics, surface: page, actions: [{label: Approve lyrics, to: storyboard}]}
+  - {id: storyboard, surface: page, moment: storyboard, states: {loading: Spinner}, actions: [{label: Continue, to: ready}]}
+  - {id: ready, surface: page, moment: ready, actions: [{label: Home, to: params}]}

@@ -1,0 +1,20 @@
+product: Grocery shop
+flows:
+  - {id: reorder, entry: cart, done: confirmed}
+screens:
+  - {id: cart, surface: page, moment: cart, actions: [{label: Checkout, to: signin}]}
+  - {id: signin, surface: page, actions: [{label: Continue, to: contact}]}
+  - id: contact
+    surface: page
+    asks: [{field: email}, {field: phone}]
+    actions: [{label: Next, to: address}]
+  - id: address
+    surface: page
+    asks: [{field: country}, {field: street}]
+    actions: [{label: Next, to: payment}]
+  - id: payment
+    surface: page
+    moment: checkout
+    asks: [{field: card number}]
+    actions: [{label: Place order, to: confirmed}]
+  - {id: confirmed, surface: page, moment: confirmed, actions: [{label: Home, to: cart}]}

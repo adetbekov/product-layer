@@ -1,0 +1,71 @@
+product: Split the bill bot
+flows:
+  - {id: payer, entry: group-chat, done: split-post}
+  - {id: participant, entry: split-post, done: payment-sent}
+screens:
+  - id: group-chat
+    surface: chat
+    purpose: The group; the payer sends a receipt photo mentioning the bot
+    actions:
+      - {label: Send photo with @bot, to: parsing}
+  - id: parsing
+    surface: bot-message
+    moment: parse
+    purpose: One message that is edited in place, not a stream of messages
+    states:
+      loading: "Reading the receipt... (same message, edited)"
+      error: "Couldn't read the receipt: photo is blurry. Send another photo / Enter items by hand"
+    actions:
+      - {label: parsed, to: parsed-check, by: system}
+      - {label: Send another photo, to: group-chat}
+  - id: parsed-check
+    surface: bot-message
+    purpose: Payer sees items and total, confirms or fixes before sharing
+    shows: [items with prices, service charge, total]
+    actions:
+      - {label: Looks right, to: split-post}
+      - {label: Fix an item, to: fix-items}
+  - id: fix-items
+    surface: mini-app
+    purpose: Edit a misread item
+    asks: [{field: corrected item price, why: only when the model misread it}]
+    actions: [{label: Save, to: parsed-check}]
+  - id: split-post
+    surface: bot-message
+    purpose: Single pinned message in the group; shows who has picked and paid, updated in place
+    shows: [total, who picked, who paid]
+    actions:
+      - {label: Pick my items, to: select}
+      - {label: payer opens confirmations, to: confirm}
+  - id: select
+    surface: mini-app
+    moment: select
+    purpose: Friend taps what they ate; no private chat needed
+    asks: [{field: items I ate, why: only the friend knows}]
+    states:
+      empty: "Nothing picked yet. Tap the dishes you had"
+      error: "Couldn't save. Retry"
+    actions:
+      - {label: Done, to: share}
+      - {label: Close, to: split-post}
+  - id: share
+    surface: mini-app
+    moment: share
+    purpose: Friend's amount with service charge, payer's payment details, one button
+    shows: [my amount, payer's transfer details]
+    actions:
+      - {label: I've paid, to: payment-sent}
+      - {label: Change items, to: select}
+  - id: payment-sent
+    surface: bot-message
+    purpose: The pinned split message ticks the friend as paid (pending payer)
+    actions: [{label: back to group, to: split-post}]
+  - id: confirm
+    surface: mini-app
+    moment: confirm
+    purpose: Payer sees who marked paid and confirms each
+    states:
+      empty: "No payments marked yet"
+    actions:
+      - {label: Confirm received, to: split-post}
+      - {label: Remind unpaid, to: split-post}

@@ -1,0 +1,24 @@
+title = "Synthetic: checkout for a returning customer"
+review = "The current checkout is 7 screens and re-asks saved data. Judge whether a returning customer can order in a few taps, whether changing a saved address or card stays possible, and whether empty cart and payment failure are handled."
+brief = """
+# Online shop: checkout today
+
+A grocery delivery web shop. Most orders (80%) come from signed-in returning customers who already have a saved
+delivery address, a saved card and a phone number. Checkout today:
+
+1. Cart -> "Checkout"
+2. "Sign in or continue as guest" (shown even when signed in)
+3. Contact form: email, phone (pre-filled with nothing)
+4. Delivery address form: country, city, street, flat, entrance
+5. Delivery slot: a calendar, then a time list
+6. Payment: card number, expiry, CVC; "same billing address" checkbox, unchecked by default
+7. Review page -> "Place order"
+8. Order confirmation
+
+Payment sometimes fails (card declined, 3-D Secure timeout). The cart can be empty when the user opens it.
+"""
+
+[[steps]]
+id = "P1"
+kind = "spec"
+prompt = "Redesign checkout for our grocery shop (context in BRIEF.md). Name the flow for a signed-in returning customer going from the cart to a placed order `reorder`. Tag screens with these moments: `cart`, `checkout` (where the order is reviewed and paid), `confirmed`."

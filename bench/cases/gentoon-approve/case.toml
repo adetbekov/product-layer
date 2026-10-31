@@ -1,0 +1,21 @@
+title = "AI video pipeline with human approval: brief -> plan -> approve -> generate"
+review = "Generation is slow and paid per finished clip, so approvals guard the expensive steps. Judge whether approvals sit before the costly work and not after every trivial step, whether the user can revise instead of only approve, whether long jobs and per-shot failures are visible on the storyboard, and whether the user is asked only for the creative input."
+brief = """
+# AI music-video engine
+
+A web app that turns a short brief into a finished music clip. The pipeline: the user writes a brief; an LLM drafts a
+plan (concept, scenes, lyrics); the user approves the plan; images and video shots are generated per scene (minutes
+per shot, some shots fail and can be regenerated); the clips are assembled into an MP4. Each finished clip is priced
+per clip; the price depends on length and is computed by the system before generation starts.
+
+Users: creators who want a clip fast and do not want to tune parameters; some want control over the plan and the
+lyrics. Defaults exist for length (30 s), aspect ratio (9:16) and style (picked by the plan).
+
+Today the prototype asks for every parameter up front (length, aspect, style, model, seed), shows the plan as raw
+JSON, and generates everything with no progress except a spinner; a failed shot fails the whole clip.
+"""
+
+[[steps]]
+id = "P1"
+kind = "spec"
+prompt = "Design the clip creation flow of our AI music-video app (context in BRIEF.md). Name the flow from a new clip to a finished, downloadable clip `create`. Tag screens with these moments: `brief`, `plan` (the plan the user approves), `storyboard` (generation progress per scene), `ready` (the finished clip)."

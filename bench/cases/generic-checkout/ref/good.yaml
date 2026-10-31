@@ -1,0 +1,46 @@
+product: Grocery shop
+flows:
+  - {id: reorder, entry: cart, done: confirmed}
+screens:
+  - id: cart
+    surface: page
+    moment: cart
+    purpose: Items and total
+    states:
+      empty: "Your cart is empty. Repeat last order / Go to catalog"
+      error: "Couldn't load the cart. Retry"
+    actions:
+      - {label: Checkout, to: checkout}
+      - {label: Go to catalog, to: catalog}
+  - id: catalog
+    surface: page
+    purpose: Products
+    actions: [{label: Cart, to: cart}]
+  - id: checkout
+    surface: page
+    moment: checkout
+    purpose: One review page with saved address, earliest slot, saved card, total
+    shows: [saved address, earliest free slot, saved card ending, total]
+    states:
+      loading: "Paying... (button locked, no double charge)"
+      error: "Card declined. Try again or use another card"
+    actions:
+      - {label: Place order, to: confirmed}
+      - {label: Change slot, to: slot}
+      - {label: Change address, to: address}
+      - {label: Back to cart, to: cart}
+  - id: slot
+    surface: sheet
+    purpose: Pick another delivery slot
+    asks: [{field: delivery slot, why: only the user knows when they are home}]
+    actions: [{label: Done, to: checkout}]
+  - id: address
+    surface: sheet
+    purpose: Pick or add an address
+    asks: [{field: new address, why: optional, a place not saved yet}]
+    actions: [{label: Done, to: checkout}]
+  - id: confirmed
+    surface: page
+    moment: confirmed
+    purpose: Order number, slot, track order
+    actions: [{label: Track order, to: catalog}]

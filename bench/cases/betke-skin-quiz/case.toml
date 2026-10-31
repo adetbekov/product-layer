@@ -1,0 +1,27 @@
+title = "Chat-first cosmetics advisor: skin quiz to product picks (generative UI)"
+review = "The whole product is a chat in which the assistant may answer with plain text or with a UI block (choice chips, cards, steps, a form). Judge each text-or-block call: blocks where the user picks among a few options or compares items, text where a block adds nothing. Judge the number of turns to the first picks, and whether the assistant asks only what the user alone knows."
+brief = """
+# Chat-first cosmetics advisor
+
+A mobile app (iOS, Android, web) whose main screen is a chat with an AI skincare advisor. The user signs in by phone
+number; the app knows the phone, the app language and nothing else about the person yet. The assistant can reply
+with plain text or with UI blocks rendered inside the chat: choice chips (single or multiple), product cards, a
+comparison table, a step list, a short form, a photo request button. Products come from a catalog with prices,
+ingredients and skin-type tags. A selfie photo can be analysed but is optional.
+
+First-session goal: from opening the chat to the first 3 personalised product picks. Later the user asks follow-up
+questions in free text.
+
+Moments in the first session, in order:
+1. `greet`: the assistant's first message.
+2. `skin-type`: learning the skin type (dry, oily, combination, normal, sensitive, "not sure").
+3. `concerns`: learning the main concerns (acne, dark spots, wrinkles, redness, dryness; several allowed).
+4. `picks`: the 3 recommended products.
+5. `routine`: how to use them morning and evening, in order.
+6. `followup`: the answer to a short free-text question such as "can I use this with retinol?".
+"""
+
+[[steps]]
+id = "P1"
+kind = "spec"
+prompt = "Design the first session of our chat-first skincare advisor (context in BRIEF.md). Name the flow from opening the chat to the first picks `onboarding`. Use one chat-message screen per moment listed in BRIEF.md, tagged with that moment id, and decide `render: text` or `render: block` for each."

@@ -1,0 +1,57 @@
+product: Notes
+flows:
+  - {id: digest, entry: notes, done: digest-saved}
+screens:
+  - id: notes
+    surface: page
+    purpose: The user's notes; settings sit in the avatar menu
+    actions:
+      - {label: Settings, to: settings}
+  - id: settings
+    surface: page
+    moment: settings
+    purpose: One page, most used first
+    shows: [email digest with its current value, export notes, password, account email (read-only), delete account at the bottom]
+    states:
+      loading: skeleton rows in the final layout
+      error: "Couldn't load settings. Retry"
+    actions:
+      - {label: "Email digest: Weekly", to: digest}
+      - {label: Export notes, to: export}
+      - {label: Delete account, to: delete}
+      - {label: Back to notes, to: notes}
+  - id: digest
+    surface: sheet
+    moment: digest
+    purpose: Pick a frequency; the choice saves itself
+    shows: [Daily, Weekly, Off, current value checked]
+    states:
+      error: "Not saved. Try again"
+    actions:
+      - {label: Weekly, to: digest-saved}
+      - {label: Close, to: settings}
+  - id: digest-saved
+    surface: notification
+    purpose: Confirms the new value, with undo
+    actions:
+      - {label: Undo, to: digest}
+      - {label: dismiss, to: settings, by: system}
+  - id: export
+    surface: page
+    moment: export
+    purpose: Build and download a notes archive
+    states:
+      loading: "Preparing your archive, we'll email a link if you leave"
+      error: "Export failed. Try again"
+    actions:
+      - {label: Download, to: settings}
+      - {label: Back, to: settings}
+  - id: delete
+    surface: modal
+    moment: delete
+    purpose: Deliberate deletion; destructive styling, type DELETE to confirm
+    asks:
+      - {field: confirmation word, why: proves intent}
+    actions:
+      - {label: Delete forever, to: notes}
+      - {label: Cancel, to: settings}

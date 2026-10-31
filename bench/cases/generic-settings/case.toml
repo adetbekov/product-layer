@@ -1,0 +1,28 @@
+title = "Synthetic: settings page with extra steps"
+review = "The current flow is 8 taps to change the email digest and re-asks data the app already has. Judge whether the redesign removes steps without hiding things people need, keeps account deletion safe, and handles loading and errors."
+brief = """
+# Notes app: settings today
+
+A notes app (web and mobile web). The user is signed in; the app knows their name, email, avatar and the device time
+zone. Analytics: 70% of settings visits change the email digest (daily, weekly, off), 15% export their notes, 5% change
+the password, under 1% delete the account.
+
+Today, changing the email digest takes this path:
+
+1. Avatar menu -> "Account"
+2. "Edit profile" (a form with name, email, time zone; the user must re-enter the email to continue)
+3. Tab "Notifications"
+4. Section "Email"
+5. "Frequency" opens a dropdown
+6. Pick a value
+7. "Save" at the bottom of the whole profile form
+8. A confirm dialog "Save all changes?" -> "Yes"
+
+Export lives under Account -> Privacy -> Data -> "Request export"; the file is built in the background (up to a few
+minutes) and then offered as a download. Delete account sits next to "Save" with the same style.
+"""
+
+[[steps]]
+id = "P1"
+kind = "spec"
+prompt = "Redesign the settings of our notes app (context in BRIEF.md). Name the flow for changing the email digest `digest`. Tag screens with these moments: `settings` (the settings home), `digest` (where the digest is changed), `export` (data export), `delete` (account deletion)."
