@@ -1,0 +1,41 @@
+ws	case	arm	rep	step	mode	tokens	weighted_tokens	reported_tokens	input_tokens	output_tokens	cache_read_tokens	cache_write_tokens	tools	ms	cost_usd	solved	check	c_structure	c_dead_ends	c_steps	c_states	c_render	c_asks	c_nav	c_actions	n_screens	n_steps	n_asks	spec_lines	n_files	out_of_scope	questions	reply_words
+betke-skin-quiz-314083	betke-skin-quiz	bare	1	P1	agent	27730	—	—	—	—	—	—	3	25044	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	94	1	0	0	172
+betke-skin-quiz-3166da	betke-skin-quiz	v0.2	1	P1	agent	37643	—	—	—	—	—	—	6	38262	—	True	ok	True	True	True	True	True	True	—	—	6	2	2	111	2	0	0	197
+betke-skin-quiz-5848a9	betke-skin-quiz	szilu	1	P1	agent	41066	—	—	—	—	—	—	5	40677	—	False	dead_ends: followup has no way out	True	False	True	True	True	True	—	—	6	2	2	127	2	0	0	183
+betke-skin-quiz-8d9683	betke-skin-quiz	szilu	2	P1	agent	39095	—	—	—	—	—	—	7	37580	—	False	dead_ends: followup has no way out	True	False	True	True	True	True	—	—	6	2	2	125	2	0	0	189
+betke-skin-quiz-90a955	betke-skin-quiz	v0.2	2	P1	agent	41090	—	—	—	—	—	—	6	42884	—	True	ok	True	True	True	True	True	True	—	—	6	2	2	120	2	0	0	232
+betke-skin-quiz-9c2f65	betke-skin-quiz	bare	2	P1	agent	28355	—	—	—	—	—	—	5	29397	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	100	2	0	0	154
+betke-skin-quiz-b3039c	betke-skin-quiz	v0.2-rc3	1	P1	agent	44558	—	—	—	—	—	—	6	42373	—	True	ok	True	True	True	True	True	True	—	—	6	2	2	127	2	0	0	212
+betke-skin-quiz-f6ac5a	betke-skin-quiz	v0.2-rc3	2	P1	agent	40865	—	—	—	—	—	—	5	37354	—	True	ok	True	True	True	True	True	True	—	—	6	2	2	127	2	0	0	172
+generic-checkout-0649c8	generic-checkout	szilu	1	P1	agent	35112	—	—	—	—	—	—	6	45255	—	True	ok	True	True	True	True	—	True	—	True	12	1	0	228	1	0	0	258
+generic-checkout-089a96	generic-checkout	szilu	2	P1	agent	38910	—	—	—	—	—	—	7	51051	—	True	ok	True	True	True	True	—	True	—	True	10	1	0	248	2	0	0	167
+generic-checkout-19cf86	generic-checkout	bare	2	P1	agent	28971	—	—	—	—	—	—	3	36387	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	204	2	0	0	171
+generic-checkout-2ba9ea	generic-checkout	bare	1	P1	agent	28602	—	—	—	—	—	—	3	32475	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	190	2	0	0	198
+generic-checkout-3a694d	generic-checkout	v0.2	2	P1	agent	41216	—	—	—	—	—	—	7	44087	—	True	ok	True	True	True	True	—	True	—	True	7	2	0	150	2	0	0	215
+generic-checkout-b936ec	generic-checkout	v0.2	1	P1	agent	42068	—	—	—	—	—	—	5	44471	—	True	ok	True	True	True	True	—	True	—	True	9	1	0	151	2	0	0	179
+generic-settings-4a08d5	generic-settings	v0.2	1	P1	agent	40336	—	—	—	—	—	—	7	46845	—	True	ok	True	True	True	True	—	True	—	True	5	1	1	111	2	0	0	220
+generic-settings-4ce825	generic-settings	bare	1	P1	agent	29326	—	—	—	—	—	—	3	31973	—	True	ok	True	True	True	True	—	True	—	True	9	2	1	164	2	0	0	161
+generic-settings-7e53e1	generic-settings	v0.2-rc3	2	P1	agent	39333	—	—	—	—	—	—	5	40710	—	True	ok	True	True	True	True	—	True	—	True	9	1	0	139	2	0	0	176
+generic-settings-816ddf	generic-settings	v0.2	2	P1	agent	39975	—	—	—	—	—	—	6	44360	—	False	states: settings lacks ['loading', 'error']	True	True	True	False	—	True	—	True	7	2	0	115	2	0	0	214
+generic-settings-a5cc1d	generic-settings	bare	2	P1	agent	28878	—	—	—	—	—	—	3	33858	—	True	ok	True	True	True	True	—	True	—	True	9	2	0	148	2	0	0	179
+generic-settings-b07be0	generic-settings	szilu	2	P1	agent	37110	—	—	—	—	—	—	4	47012	—	True	ok	True	True	True	True	—	True	—	True	9	2	1	169	2	0	0	164
+generic-settings-f5c5ad	generic-settings	v0.2-rc3	1	P1	agent	42116	—	—	—	—	—	—	6	53730	—	True	ok	True	True	True	True	—	True	—	True	10	2	0	179	2	0	0	213
+generic-settings-fbcc44	generic-settings	szilu	1	P1	agent	37170	—	—	—	—	—	—	4	46941	—	True	ok	True	True	True	True	—	True	—	True	11	2	1	184	2	0	0	174
+gentoon-approve-031673	gentoon-approve	szilu	2	P1	agent	36546	—	—	—	—	—	—	4	41868	—	True	ok	True	True	True	True	—	True	—	True	7	2	1	155	2	0	0	225
+gentoon-approve-143210	gentoon-approve	bare	2	P1	agent	28849	—	—	—	—	—	—	4	32363	—	True	ok	True	True	True	True	—	True	—	True	5	2	2	108	2	0	0	178
+gentoon-approve-505807	gentoon-approve	bare	1	P1	agent	29151	—	—	—	—	—	—	4	37849	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	153	2	0	0	206
+gentoon-approve-8235a6	gentoon-approve	szilu	1	P1	agent	35612	—	—	—	—	—	—	4	39599	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a block mapping	False	—	—	—	—	—	—	—	—	—	—	178	2	0	0	195
+gentoon-approve-abd041	gentoon-approve	v0.2	1	P1	agent	42087	—	—	—	—	—	—	7	42187	—	True	ok	True	True	True	True	—	True	—	True	4	2	2	96	2	0	0	232
+gentoon-approve-b0177a	gentoon-approve	v0.2	2	P1	agent	41206	—	—	—	—	—	—	6	46092	—	True	ok	True	True	True	True	—	True	—	True	5	2	2	121	2	0	0	211
+stb-split-flow-142bd7	stb-split-flow	szilu	1	P1	agent	48406	—	—	—	—	—	—	8	113131	—	True	ok	True	True	True	True	—	True	—	—	15	3	1	313	2	0	0	225
+stb-split-flow-3702bb	stb-split-flow	v0.2	2	P1	agent	50259	—	—	—	—	—	—	10	116238	—	False	structure: unreachable ['payer-ping'] | asks: never asks /item|dish|ate|position|order|what/	False	True	True	True	—	False	—	—	14	1	0	227	2	0	0	211
+stb-split-flow-3757ed	stb-split-flow	bare	2	P1	agent	35241	—	—	—	—	—	—	8	46819	—	False	asks: never asks /item|dish|ate|position|order|what/	True	True	True	True	—	False	—	—	9	3	1	148	2	0	0	148
+stb-split-flow-74ac89	stb-split-flow	v0.2	1	P1	agent	47389	—	—	—	—	—	—	7	78789	—	False	asks: never asks /item|dish|ate|position|order|what/	True	True	True	True	—	False	—	—	11	2	1	215	2	0	0	229
+stb-split-flow-82f6ea	stb-split-flow	bare	1	P1	agent	29869	—	—	—	—	—	—	4	44841	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	211	2	0	0	214
+stb-split-flow-dfbfc4	stb-split-flow	szilu	2	P1	agent	38403	—	—	—	—	—	—	4	62576	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	206	2	0	0	196
+warmplace-onboarding-1f8de7	warmplace-onboarding	bare	2	P1	agent	38503	—	—	—	—	—	—	8	76053	—	False	asks: tutor-sign-up asks known `role (tutor / student)`	True	True	True	True	—	False	True	—	15	7	7	234	2	0	0	268
+warmplace-onboarding-288974	warmplace-onboarding	szilu	2	P1	agent	38377	—	—	—	—	—	—	7	73328	—	False	nav: tutor: 7 top-level sections > 5	True	True	True	True	—	True	False	—	17	8	4	256	2	0	0	252
+warmplace-onboarding-9b997e	warmplace-onboarding	bare	1	P1	agent	30554	—	—	—	—	—	—	4	46338	—	False	asks: tutor-signup asks known `role` | nav: tutor: 6 top-level sections > 5	True	True	True	True	—	False	False	—	15	8	8	214	1	0	0	206
+warmplace-onboarding-b1491c	warmplace-onboarding	v0.2	2	P1	agent	44658	—	—	—	—	—	—	6	69283	—	True	ok	True	True	True	True	—	True	True	—	12	7	7	222	2	0	0	233
+warmplace-onboarding-dd477b	warmplace-onboarding	v0.2	1	P1	agent	49369	—	—	—	—	—	—	6	100263	—	True	ok	True	True	True	True	—	True	True	—	13	8	9	277	2	0	0	235
+warmplace-onboarding-f3d450	warmplace-onboarding	szilu	1	P1	agent	43319	—	—	—	—	—	—	6	81913	—	False	steps: student: 6 steps > 4 | asks: never asks /slot|availab|time|schedule/ | nav: tutor: 6 top-level sections > 5	True	True	False	True	—	False	False	—	18	10	9	360	1	0	0	363
