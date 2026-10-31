@@ -13,14 +13,17 @@ marks actions that changed nothing on the page.
     pc.py end --outcome done|quit|blocked [--reason TEXT]     # crowd personas close their run with this
     pc.py close [--session S]
 
-Engine: --engine or $PC_ENGINE, `playwright` (default) or `agent-browser`. Commands after `do --` use Playwright CLI
-names (click, fill, select, check, press, go-back, ...); pc.py translates them for agent-browser. Session:
+Engine: --engine or $PC_ENGINE, `playwright` (default), `agent-browser` or `cdp` (direct DevTools session through
+cdp.py: one daemon per session holds Chrome, a step is a few socket round trips instead of CLI processes). Commands
+after `do --` use Playwright CLI names (click, fill, select, check, press, go-back, ...); pc.py translates them for
+the other engines. Session:
 $PC_SESSION, else one per working folder. Run folder: $PC_RUN or ./pc-run/<session> (log.jsonl, snapshots, looks,
 end.json). $PC_BUDGET caps the number of actions (a persona's patience): past it, `do` refuses and asks the persona
 to end. $PC_LOOK=1 takes a look after every open / do and prints its path. $PC_TIER labels who decided each action
 (d1, haiku, sonnet; crowd.py sets it). Binaries: $PC_PLAYWRIGHT_CLI, else `playwright-cli` on PATH, else
 `npx -y @playwright/cli@0.1.23`; $PC_AGENT_BROWSER, else `agent-browser` on PATH, else
-`npx -y agent-browser@0.27.0`.
+`npx -y agent-browser@0.27.0`; cdp: $PC_CHROME, else an installed Chrome / Chromium (see cdp.py). Every log entry
+carries `ms`, the engine time of that command.
 """
 
 import argparse
@@ -123,6 +126,11 @@ PW_LOOK = """async page => {
 }""" % LOOK_PX
 REF = re.compile(r"@?(e\d+)")
 AB_NAMES = {"go-back": "back", "go-forward": "forward"}
+
+
+def bare(ref):
+    """e12 from e12 or @e12."""
+    return REF.sub(r"\1", ref)
 
 
 def run_dir(session):
@@ -290,7 +298,190 @@ class AgentBrowser:
         return json.dumps(self.cli("close")[1])
 
 
-ENGINES = {"playwright": Playwright, "agent-browser": AgentBrowser}
+class CDP:
+    """Direct DevTools session (cdp.py): one daemon per session holds Chrome, each call is a unix-socket round trip
+    instead of a browser CLI process. Refs are e12 as in Playwright CLI; commands use Playwright CLI names."""
+
+    name = "cdp"
+
+    def __init__(self, session):
+        import cdp
+
+        self.cdp, self.session = cdp, session
+        self.client = cdp.Client(session)
+
+    def call(self, method, params=None, timeout=60):
+        return self.client.call(method, params, timeout)
+
+    def eval(self, expr, timeout=60):
+        """Value of a page expression; raises CDPError on a page exception."""
+        r = self.call("Runtime.evaluate", {"expression": expr, "returnByValue": True, "awaitPromise": True},
+                      timeout)
+        if "exceptionDetails" in r:
+            d = r["exceptionDetails"]
+            raise self.cdp.CDPError((d.get("exception") or {}).get("description") or d.get("text", "page error"))
+        return r.get("result", {}).get("value")
+
+    def open(self, url, mobile=False):
+        self.client.start()
+        if mobile:
+            self.call("Emulation.setDeviceMetricsOverride", self.cdp.MOBILE)
+            self.call("Emulation.setTouchEmulationEnabled", {"enabled": True, "maxTouchPoints": 5})
+            self.call("Emulation.setUserAgentOverride", {"userAgent": self.cdp.MOBILE_UA})
+        r = self.call("Page.navigate", {"url": url})
+        if r.get("errorText"):
+            return False, f"navigation to {url} failed: {r['errorText']}"
+        return True, json.dumps(r)
+
+    def target(self, ref):
+        info = self.eval(f"{self.cdp.TARGET}({json.dumps(bare(ref))})")
+        if info.get("error"):
+            raise self.cdp.CDPError(info["error"])
+        if info.get("covered"):
+            raise self.cdp.CDPError(info["covered"])
+        return info
+
+    def mouse(self, x, y, clicks=1):
+        self.call("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": x, "y": y})
+        for n in range(1, clicks + 1):
+            for kind in ("mousePressed", "mouseReleased"):
+                self.call("Input.dispatchMouseEvent", {"type": kind, "x": x, "y": y, "button": "left",
+                                                       "clickCount": n})
+
+    def act(self, cmd):
+        """(ok, error or None, raw output) of one Playwright-CLI-style command."""
+        name, *args = cmd
+        try:
+            out = self.run(name, args)
+        except self.cdp.CDPError as e:
+            return False, str(e), str(e)
+        except (IndexError, ValueError) as e:
+            return False, f"bad arguments for {name}: {e}", ""
+        return True, None, json.dumps(out, ensure_ascii=False)
+
+    def run(self, name, args):
+        if name in ("click", "dblclick"):
+            t = self.target(args[0])
+            if t["disabled"]:
+                raise self.cdp.CDPError("element is disabled")
+            self.mouse(t["x"], t["y"], 2 if name == "dblclick" else 1)
+            return {"clicked": args[0]}
+        if name == "hover":
+            t = self.target(args[0])
+            self.call("Input.dispatchMouseEvent", {"type": "mouseMoved", "x": t["x"], "y": t["y"]})
+            return {"hovered": args[0]}
+        if name in ("check", "uncheck"):
+            t = self.target(args[0])
+            if bool(t["checked"]) != (name == "check"):
+                self.mouse(t["x"], t["y"])
+            return {name: args[0]}
+        if name == "fill":
+            ref, text = args[0], " ".join(args[1:])
+            t = self.target(ref)
+            if not t["editable"]:
+                raise self.cdp.CDPError("Element is not an <input>, <textarea> or [contenteditable] element")
+            self.eval(f"{self.cdp.FOCUS}({json.dumps(bare(ref))})")
+            if text:
+                self.call("Input.insertText", {"text": text})
+            else:
+                self.eval("document.execCommand('delete')")
+            return {"filled": ref}
+        if name == "select":
+            self.target(args[0])
+            r = self.eval(f"{self.cdp.SELECT}({json.dumps(bare(args[0]))}, {json.dumps(args[1:])})")
+            if r.get("error"):
+                raise self.cdp.CDPError(r["error"])
+            return r
+        if name == "type":
+            self.call("Input.insertText", {"text": " ".join(args)})
+            return {"typed": len(" ".join(args))}
+        if name == "press":
+            for event in self.cdp.key_events(args[0]):
+                self.call("Input.dispatchKeyEvent", event)
+            return {"pressed": args[0]}
+        if name in ("go-back", "go-forward"):
+            h = self.call("Page.getNavigationHistory")
+            i = h["currentIndex"] + (-1 if name == "go-back" else 1)
+            if 0 <= i < len(h["entries"]):
+                self.call("Page.navigateToHistoryEntry", {"entryId": h["entries"][i]["id"]})
+            return {"history": i}
+        if name == "reload":
+            return self.call("Page.reload")
+        if name == "goto":
+            return self.call("Page.navigate", {"url": args[0]})
+        if name == "console":
+            return self.client.op("errors")
+        raise self.cdp.CDPError(f"unknown command '{name}' for --engine cdp; use: click, dblclick, hover, fill, type, "
+                                "select, check, uncheck, press, go-back, go-forward, reload, goto, console")
+
+    def js(self, fn, timeout=120):
+        try:
+            value = self.eval(f"({fn})()", timeout)
+        except self.cdp.CDPError as e:
+            return f"error: {e}"
+        return value if isinstance(value, str) else json.dumps(value)
+
+    def retry(self, fn, tries=40):
+        """Run a page call again while a navigation replaces the document under it."""
+        for _ in range(tries):
+            try:
+                return fn()
+            except self.cdp.CDPError as e:
+                if not any(g in str(e) for g in self.cdp.GONE):
+                    raise
+            time.sleep(0.1)
+        return fn()
+
+    def snapshot(self):
+        data = self.retry(lambda: self.eval(f"({self.cdp.SNAPSHOT})()"))
+        return data["url"], self.cdp.yaml(data["nodes"]), self.client.op("state")["errors"]
+
+    def settle(self, timeout_ms):
+        t = time.time()
+        try:
+            wait = self.retry(lambda: self.eval(self.cdp.SETTLE % (timeout_ms, OBSERVER), timeout_ms / 1000 + 30))
+            while self.client.op("state")["loading"] and time.time() - t < timeout_ms / 1000:
+                time.sleep(0.05)
+            if self.eval("document.readyState") != "complete":  # a navigation started after the first wait
+                wait = self.retry(lambda: self.eval(self.cdp.SETTLE % (timeout_ms, OBSERVER), timeout_ms / 1000 + 30))
+        except self.cdp.CDPError:
+            return None
+        return wait
+
+    def capture(self, fmt, scale_px=None, ref=None, quality=None):
+        if ref:
+            t = self.target(ref)
+            clip = {"x": t["left"], "y": t["top"], "width": t["w"], "height": t["h"], "scale": 1}
+        else:
+            w, h, dpr = self.eval("[innerWidth, innerHeight, devicePixelRatio]")
+            s = min(1, scale_px / max(w, h)) / dpr if scale_px else 1
+            clip = {"x": 0, "y": 0, "width": w, "height": h, "scale": s}
+        params = {"format": fmt, "clip": clip, **({"quality": quality} if quality else {})}
+        return base64.b64decode(self.call("Page.captureScreenshot", params)["data"])
+
+    def screenshot(self, dest, ref=None):
+        try:
+            Path(dest).write_bytes(self.capture("png", ref=ref))
+        except self.cdp.CDPError as e:
+            return False, str(e)
+        return True, str(dest)
+
+    def look(self):
+        try:
+            return self.capture("jpeg", LOOK_PX, quality=70)
+        except self.cdp.CDPError:
+            return b""
+
+    def slow(self):
+        self.call("Network.enable")
+        self.call("Network.emulateNetworkConditions",
+                  {"offline": False, "latency": 400, "downloadThroughput": 50000, "uploadThroughput": 25000})
+
+    def close(self):
+        return self.cdp.stop(self.session)
+
+
+ENGINES = {"playwright": Playwright, "agent-browser": AgentBrowser, "cdp": CDP}
 
 
 def engine(a):
@@ -387,11 +578,17 @@ def print_look(file, seen):
             print("in the tree but hard to see on screen: " + "; ".join(unseen) + " - open the screenshot and check")
 
 
+def ms(start):
+    """Engine time of this command so far, for step-time benchmarks."""
+    return round((time.time() - start) * 1000)
+
+
 def want_look():
     return os.environ.get("PC_LOOK") in ("1", "ask")
 
 
 def cmd_open(a):
+    start = time.time()
     eng = engine(a)
     ok, text = eng.open(a.url, a.mobile)
     if not ok:
@@ -405,7 +602,7 @@ def cmd_open(a):
         None, None)
     log(a.session, {"i": 0, "t": time.time(), "cmd": ["open", a.url], "url": url, "ok": True, "changed": True,
                     "snapshot": file, "wait_ms": wait, "console_errors": errors, "engine": eng.name,
-                    "look": look and str(look.relative_to(run_dir(a.session)))})
+                    "look": look and str(look.relative_to(run_dir(a.session))), "ms": ms(start)})
     print(f"url: {url}\nsnapshot: {run_dir(a.session) / file}\n{snap}")
     if want_look():
         print_look(look, seen)
@@ -418,6 +615,7 @@ def cmd_do(a):
     if (limit := os.environ.get("PC_BUDGET")) and done >= int(limit):
         print(f"out of patience: {done} of {limit} actions used. End now: pc.py end --outcome quit --reason '...'")
         sys.exit(3)
+    start = time.time()
     eng = engine(a)
     before = recall(a.session)
     eng.js("() => { if (window.__pc) window.__pc.t0 = Date.now(); }")
@@ -432,7 +630,7 @@ def cmd_do(a):
     log(a.session, {"i": steps, "t": time.time(), "cmd": a.cmd, "url": url, "ok": ok, "changed": changed,
                     "error": error, "snapshot": file, "wait_ms": wait, "console_errors": errors, "note": a.note,
                     "engine": eng.name, "tier": a.tier,
-                    "look": look and str(look.relative_to(run_dir(a.session)))})
+                    "look": look and str(look.relative_to(run_dir(a.session))), "ms": ms(start)})
     remember(a.session, url, snap, errors)
     print(f"step {steps}: {' '.join(a.cmd)} -> {'ok' if ok else 'ERROR'}")
     if error:
@@ -538,7 +736,10 @@ def main(argv=None):
     a = p.parse_args(argv)
     if getattr(a, "cmd", None) and a.cmd[0] == "--":
         a.cmd = a.cmd[1:]
-    a.fn(a)
+    try:
+        a.fn(a)
+    except RuntimeError as e:  # cdp engine: no browser for this session, Chrome missing
+        sys.exit(f"error: {e}")
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # d1.py next to this file

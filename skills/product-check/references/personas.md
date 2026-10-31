@@ -103,7 +103,8 @@ The model that decides sets the price of a run, not the browser engine.
 
 `--driver haiku` or `--driver sonnet` puts every step on one model; use them
 as baselines. `--engine agent-browser` runs the same commands on
-agent-browser instead of Playwright CLI.
+agent-browser instead of Playwright CLI; `--engine cdp` on a direct DevTools
+session, about 0.5 s a step instead of about 5 s, with the same funnel.
 6. **Report.** Cluster drop-off reasons and dead clicks into findings with
    `report.md`; replay the top cluster in walk mode to get steps and a
    screenshot.

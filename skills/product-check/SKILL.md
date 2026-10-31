@@ -9,8 +9,9 @@ product-layer decides what to show and where, before visual work. This skill
 runs after the UI is built: it walks the real interface and reports where the
 product fails its user. It never edits the product and never judges looks.
 
-Engine: Playwright CLI or agent-browser through `scripts/pc.py`, one
-interface (setup in `README.md`). Decisions: Liquid d1-ultra for easy crowd
+Engine: Playwright CLI, agent-browser or a direct DevTools session
+(`--engine cdp`, about 10 times faster per step, the choice for crowd runs)
+through `scripts/pc.py`, one interface (setup in `README.md`). Decisions: Liquid d1-ultra for easy crowd
 steps, Claude Haiku for the rest, Sonnet for walk and stuck steps.
 
 ## Fixed principles
@@ -64,7 +65,8 @@ steps, Claude Haiku for the rest, Sonnet for walk and stuck steps.
 
 **crowd** - many personas, one isolated browser each.
 1. `scripts/personas.py sample` builds personas, at least a third of them hard.
-2. `scripts/crowd.py plan` writes one persona prompt per persona and variant.
+2. `scripts/crowd.py plan --engine cdp` writes one persona prompt per persona
+   and variant.
 3. Run them: `crowd.py run` (d1-ultra first, Haiku and Sonnet on escalation,
    parallel) or one fresh Haiku subagent per prompt when no Anthropic key is
    set; it calls `./act auto` and decides only the steps d1 hands back.

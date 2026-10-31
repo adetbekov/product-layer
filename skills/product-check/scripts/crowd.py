@@ -2,7 +2,7 @@
 """Crowd runs for product-check: many personas, one isolated browser each, funnel and drop-off per variant.
 
     crowd.py plan --personas personas.json --flow flow.json --variant A=URL --variant B=URL --out DIR \
-        [--driver mixed|haiku|sonnet] [--engine playwright|agent-browser] [--no-look]
+        [--driver mixed|haiku|sonnet] [--engine playwright|agent-browser|cdp] [--no-look]
     crowd.py run --out DIR [--workers 10]                  # over the API: d1-ultra, Claude Haiku / Sonnet on escalation
     crowd.py auto RUN_DIR                                  # agent-driven mixed runs: d1 plays steps until escalation
     crowd.py record --out DIR RUN --input-tokens N --output-tokens N    # agent-driven runs: log what a session used
@@ -498,7 +498,7 @@ def main(argv=None):
     p.add_argument("--variant", action="append", required=True, help="NAME=URL, repeat for each variant")
     p.add_argument("--out", required=True)
     p.add_argument("--driver", choices=["mixed", "haiku", "sonnet"], default="mixed")
-    p.add_argument("--engine", choices=["playwright", "agent-browser"], default="playwright")
+    p.add_argument("--engine", choices=["playwright", "agent-browser", "cdp"], default="playwright")
     p.add_argument("--no-look", action="store_true", help="no screenshots: decide from the accessibility tree only")
     r = sub.add_parser("run")
     r.add_argument("--out", required=True)

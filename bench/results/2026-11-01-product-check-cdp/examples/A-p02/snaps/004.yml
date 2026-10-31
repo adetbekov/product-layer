@@ -1,0 +1,18 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Pantry" [ref=e3]:
+      - /url: "#/"
+    - navigation [ref=e5]:
+      - text: Hi, Aigerim
+      - link "Cart (2)" [ref=e7]:
+        - /url: "#/cart"
+  - main [ref=e8]:
+    - heading "Confirm your account" [level=1] [ref=e52]
+    - paragraph [ref=e53]: For your security, please re-enter your account details to continue.
+    - form [ref=e54]:
+      - generic [ref=e55]: Email
+      - textbox "Email" [ref=e56]
+      - generic [ref=e57]: Password
+      - textbox "Password" [ref=e58]
+      - paragraph [ref=e59]
+      - button "Continue" [ref=e60]

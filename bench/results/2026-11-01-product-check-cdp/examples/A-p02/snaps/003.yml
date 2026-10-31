@@ -1,0 +1,35 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - link "Pantry" [ref=e3]:
+      - /url: "#/"
+    - navigation [ref=e5]:
+      - text: Hi, Aigerim
+      - link "Cart (2)" [active] [ref=e7]:
+        - /url: "#/cart"
+  - main [ref=e8]:
+    - heading "Your cart" [level=1] [ref=e27]
+    - generic [ref=e28]:
+      - generic [ref=e29]: Oat milk 1 L
+      - generic [ref=e30]:
+        - button "Fewer Oat milk 1 L" [ref=e31]: −
+        - text: "1"
+        - button "More Oat milk 1 L" [ref=e33]: +
+      - generic [ref=e34]: 1 290 ₸
+    - generic [ref=e35]:
+      - generic [ref=e36]: Rye bread
+      - generic [ref=e37]:
+        - button "Fewer Rye bread" [ref=e38]: −
+        - text: "1"
+        - button "More Rye bread" [ref=e40]: +
+      - generic [ref=e41]: 650 ₸
+    - paragraph [ref=e42]:
+      - strong [ref=e43]: "Total: 1 940 ₸"
+    - generic [ref=e45]: Promo code
+    - generic [ref=e46]:
+      - textbox "Promo code" [ref=e47]:
+        - /placeholder: e.g. FRESH10
+      - button "Apply" [ref=e48]
+    - paragraph [ref=e49]:
+      - link "Continue shopping" [ref=e50]:
+        - /url: "#/"
+    - button "Checkout" [ref=e51]

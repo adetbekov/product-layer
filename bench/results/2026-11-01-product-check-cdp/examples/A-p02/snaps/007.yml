@@ -1,0 +1,26 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Pantry" [ref=e3]:
+      - /url: "#/"
+    - navigation [ref=e5]:
+      - text: Hi, Aigerim
+      - link "Cart (2)" [ref=e7]:
+        - /url: "#/cart"
+  - main [ref=e8]:
+    - heading "Checkout" [level=1] [ref=e61]
+    - generic [ref=e62]: Delivery address
+    - textbox "Delivery address" [ref=e63]: Abay ave 10, apt 5, Almaty
+    - generic [ref=e64]: Delivery time
+    - combobox "Delivery time" [ref=e65]:
+      - option "As soon as possible (30 min)" [selected]
+      - option "Today 18:00-20:00"
+    - generic [ref=e66]: Payment
+    - combobox "Payment" [ref=e67]:
+      - option "Card •••• 4242" [selected]
+      - option "Cash to courier"
+    - paragraph [ref=e68]:
+      - link "Delivery terms" [ref=e69]:
+        - /url: "#/delivery-terms"
+    - paragraph [ref=e70]:
+      - strong [ref=e71]: "Total: 1 940 ₸"
+    - button "Place order" [ref=e72]

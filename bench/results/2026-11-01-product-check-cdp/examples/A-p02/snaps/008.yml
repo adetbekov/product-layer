@@ -1,0 +1,13 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Pantry" [ref=e3]:
+      - /url: "#/"
+    - navigation [ref=e5]:
+      - text: Hi, Aigerim
+      - link "Cart (0)" [ref=e7]:
+        - /url: "#/cart"
+  - main [ref=e8]:
+    - heading "Order placed" [level=1] [ref=e73]
+    - paragraph [ref=e74]: Thanks, Aigerim! Your courier arrives in about 30 minutes.
+    - link "Back to groceries" [ref=e75]:
+      - /url: "#/"

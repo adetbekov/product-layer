@@ -1,0 +1,57 @@
+engine	run	step	command	ms	wall_ms
+playwright	A-p01	0	open	4984	5049
+playwright	A-p01	1	click e14	4758	4818
+playwright	A-p01	2	click e18	4640	4715
+playwright	A-p01	3	click e7	4656	4725
+playwright	A-p01	4	click e51	4666	4740
+playwright	A-p01	5	fill e56 aigerim@example.com	4027	4102
+playwright	A-p01	6	fill e58 oatmilk42	4013	4104
+playwright	A-p02	0	open	4105	4172
+playwright	A-p02	1	click e14	4702	4776
+playwright	A-p02	2	click e18	4572	4638
+playwright	A-p02	3	click e7	4575	4651
+playwright	A-p02	4	click e51	4632	4707
+playwright	A-p02	5	fill e56 aigerim@example.com	4070	4143
+playwright	A-p02	6	fill e58 oatmilk42	4160	4227
+playwright	A-p02	7	click e60	4501	4561
+playwright	A-p02	8	click e72	4607	4681
+playwright	B-p01	0	open	5110	5160
+playwright	B-p01	1	click e14	4668	4728
+playwright	B-p01	2	click e18	4567	4628
+playwright	B-p01	3	click e7	4729	4802
+playwright	B-p01	4	click e51	4327	4398
+playwright	B-p01	5	click e63	4642	4727
+playwright	B-p05	0	open	5041	5111
+playwright	B-p05	1	click e14	4511	4569
+playwright	B-p05	2	click e18	4510	4580
+playwright	B-p05	3	click e7	4594	4644
+playwright	B-p05	4	click e51	4413	4480
+playwright	B-p05	5	click e63	4529	4618
+cdp	A-p01	0	open	899	952
+cdp	A-p01	1	click e14	384	457
+cdp	A-p01	2	click e18	385	463
+cdp	A-p01	3	click e7	351	430
+cdp	A-p01	4	click e51	371	459
+cdp	A-p01	5	fill e56 aigerim@example.com	369	445
+cdp	A-p01	6	fill e58 oatmilk42	400	481
+cdp	A-p02	0	open	951	1035
+cdp	A-p02	1	click e14	364	433
+cdp	A-p02	2	click e18	379	456
+cdp	A-p02	3	click e7	370	437
+cdp	A-p02	4	click e51	368	478
+cdp	A-p02	5	fill e56 aigerim@example.com	366	460
+cdp	A-p02	6	fill e58 oatmilk42	370	459
+cdp	A-p02	7	click e60	376	500
+cdp	A-p02	8	click e72	364	438
+cdp	B-p01	0	open	911	991
+cdp	B-p01	1	click e14	373	469
+cdp	B-p01	2	click e18	350	428
+cdp	B-p01	3	click e7	399	464
+cdp	B-p01	4	click e51	377	459
+cdp	B-p01	5	click e63	362	419
+cdp	B-p05	0	open	1033	1110
+cdp	B-p05	1	click e14	354	430
+cdp	B-p05	2	click e18	355	425
+cdp	B-p05	3	click e7	371	443
+cdp	B-p05	4	click e51	376	455
+cdp	B-p05	5	click e63	365	447
