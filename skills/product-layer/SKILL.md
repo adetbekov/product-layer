@@ -77,7 +77,10 @@ Plus one module by product type (two if the product mixes them):
    leads somewhere real and different; no loops back to the same screen, no
    stub or "coming soon" targets; every final screen has a next step, or is
    marked as the intended end of the journey ("account deleted"). Delete
-   anything the brief did not ask for.
+   anything the brief did not ask for. A YAML or JSON spec must parse: a
+   value that holds quoted copy plus more text is quoted as a whole
+   (`error: 'Not saved - retry'`, not `error: "Not saved" - retry`); if you
+   can run code, load the file once to prove it.
 9. **Hand off.** Fill the visual brief context, pick the visual skill by
    product type (`handoff.md` table) and pass the spec with a concrete
    request, not a bare skill call. Telegram bots without a Mini App need no
