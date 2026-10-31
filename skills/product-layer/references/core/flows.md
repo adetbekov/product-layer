@@ -101,7 +101,8 @@ with an undo (toast or edit in place) for at least ~10 seconds.
 **Why.** Confirmations on routine actions train users to click through the
 dangerous ones.
 - Bad: "Are you sure you want to add this item?"
-- Good: item added, "Undo" visible; "Delete project" asks, naming what is lost.
+- Good: item added, "Undo" visible; "Delete project" asks, naming what is lost,
+  as its own step (a dialog or typed name), not one tap on a page.
 
 ## FL-9 · Back and cancel are always defined · MEDIUM
 

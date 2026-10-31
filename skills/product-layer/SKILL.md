@@ -31,7 +31,9 @@ visual, taste and motion skills take as input. Run it first; call them after.
 8. **Design what was asked, nothing more.** No features, policies, numbers or
    screens the brief does not need (retention windows, budgets, extra nav,
    placeholder screens). An assumption you had to make goes to the notes in
-   one line, not into the product.
+   one line, not into the product. This limits new things only: a redesign
+   keeps every capability the product already has reachable (it may move a
+   level deeper); dropping one is a decision you state, never a silence.
 
 ## Router
 
@@ -76,8 +78,10 @@ Plus one module by product type (two if the product mixes them):
 8. **Check before handing off** (`review.md`, self-review). Every action
    leads somewhere real and different; no loops back to the same screen, no
    stub or "coming soon" targets; every final screen has a next step, or is
-   marked as the intended end of the journey ("account deleted"). Delete
-   anything the brief did not ask for. A YAML or JSON spec must parse: a
+   marked as the intended end of the journey ("account deleted"); a chat or a
+   list is never an end. Every screen that waits on the server after a tap,
+   each quiz question included, has loading and error. A tap is a user step,
+   never a system one. Delete anything new the brief did not ask for. A YAML or JSON spec must parse: a
    value that holds quoted copy plus more text is quoted as a whole
    (`error: 'Not saved - retry'`, not `error: "Not saved" - retry`); if you
    can run code, load the file once to prove it.
