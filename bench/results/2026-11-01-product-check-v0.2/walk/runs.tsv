@@ -1,0 +1,8 @@
+case	arm	rep	ws	recall	recall_evidence	precision	n_findings	n_matched	found	tokens	tools	ms
+check-genui	product-check	2	check-genui-7c3854	1.0	1.0	0.778	9	7	dead_old_buttons,double_submit,regen_slider,slider_no_role	60880	31	539473
+check-genui	product-check	1	check-genui-ca9e6f	1.0	1.0	0.75	8	6	dead_old_buttons,double_submit,regen_slider,slider_no_role	64833	34	462484
+check-shop	product-check	1	check-shop-15a036	1.0	1.0	0.667	6	4	dead_end,dead_promo,extra_step,stale_badge	58413	31	612980
+check-shop	product-check	2	check-shop-7d1078	1.0	1.0	0.571	7	4	dead_end,dead_promo,extra_step,stale_badge	52072	25	156102
+check-visual	product-check	2	check-visual-029edf	0.667	0.667	0.667	6	4	canvas_seats,offscreen_download	60892	32	301587
+check-visual	product-check	1	check-visual-9583cc	1.0	1.0	0.429	7	3	canvas_seats,low_contrast_pay,offscreen_download	66525	38	321421check-visual	product-check-v0.1	1	check-visual-15e9cb	0.667	0.667	0.5	4	2	low_contrast_pay,offscreen_download	54964	25	225908
+check-visual	product-check-v0.1	2	check-visual-f5d93c	0.667	0.667	0.75	4	3	canvas_seats,offscreen_download	60394	32	358189

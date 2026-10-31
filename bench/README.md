@@ -66,6 +66,8 @@ python bench/live.py score --out /tmp/plc                        # report.md + r
 
 Sessions need Playwright CLI 0.1.23 and agent-browser 0.27.0 on `PATH`. `cases/check-shop/flow.json` is the funnel
 file for a crowd run on the shop's two variants (`/check-shop/` and `/check-shop/?variant=b`). Latest results:
+[`results/2026-11-01-product-check-v0.2`](results/2026-11-01-product-check-v0.2/notes.md) (decision tiers d1-ultra /
+Haiku / Sonnet, vision, `check-visual`); earlier:
 [`results/2026-10-31-product-check-v0.1`](results/2026-10-31-product-check-v0.1/notes.md).
 
 ## Cases
