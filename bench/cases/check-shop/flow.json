@@ -1,0 +1,15 @@
+{
+ "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+ "optimal": 5,
+ "facts": [
+  "You are already signed in to Pantry with your household account (it greets you as Aigerim); it has your address and card.",
+  "Your account email is aigerim@example.com and your password is oatmilk42, if anything asks."
+ ],
+ "stages": [
+  {"id": "catalog", "url": "check-shop/(\\?variant=[ab])?(#/?)?$"},
+  {"id": "cart", "url": "#/cart"},
+  {"id": "confirm_account", "url": "#/confirm", "only": ["A"]},
+  {"id": "checkout", "url": "#/checkout"},
+  {"id": "done", "text": "Order placed"}
+ ]
+}

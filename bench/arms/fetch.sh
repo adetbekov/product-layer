@@ -11,6 +11,7 @@ ARMS=(
   "szilu https://github.com/szilu/ux-designer-skill c869d32fd8df7bd7fcd1db68e93bd3e89eed5161 ."
   "design-for-ai https://github.com/ryanthedev/design-for-ai 37d7ae63d1afa45eb57ec90bc246cef6dd60c033 references"
   "kortix-genui https://github.com/kortix-ai/suna 04b2abdc9161e1f820f7482c0d22358f416a6a79 packages/starter/templates/managed/skills/kortix-genui"
+  "dogfood https://github.com/vercel-labs/agent-browser c830d1b67dc18b754e305859f0ae587f858a1447 skill-data/dogfood"
 )
 
 checkout() {  # repo sha path dest: sparse, shallow checkout of one commit
@@ -44,6 +45,8 @@ for line in "${ARMS[@]}"; do
         desc=$(sed -n '1p' "$dest.src/references/$sub/$sub.md" | cut -c1-300 | tr -d '"')
         frontmatter "$sub" "\"$desc\"" "$dest.src/references/$sub/$sub.md" > "$dest/$sub/SKILL.md"
       done ;;
+    dogfood)  # Apache-2.0, agent-browser v0.27.0; needs the agent-browser CLI at the same version
+      cp -r "$dest.src/$path" "$dest/dogfood" ;;
     kortix-genui)  # Elastic-2.0: used as an external path only, never copied into this repo
       cp -r "$dest.src/$path" "$dest/kortix-genui" ;;
   esac

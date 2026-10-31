@@ -16,6 +16,10 @@ It decides *what* the user sees and *where*: page, card, form, bot message or ap
 *how it looks*. Run it before visual and animation skills (Apple-style design, taste, motion) and pass them its spec,
 not a design.
 
+Companion skill: **[`skills/product-check`](skills/product-check/README.md)** checks the built interface afterwards by
+using it like its user - a QA walk in a real browser (pages and generative UI in chat) or a crowd of personas on two
+variants - and reports dead ends, extra steps and silent controls with rule ids from this skill.
+
 ## Proof
 
 The bench gives the same product tasks to fresh, isolated sessions (Sonnet 5.5) and scores the answers with hidden

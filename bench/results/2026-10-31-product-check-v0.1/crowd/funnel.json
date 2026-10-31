@@ -1,0 +1,984 @@
+{
+ "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+ "optimal": 5,
+ "variants": {
+  "A": {
+   "n": 20,
+   "funnel": {
+    "catalog": 20,
+    "cart": 20,
+    "confirm_account": 20,
+    "checkout": 11,
+    "done": 11
+   },
+   "completed": 11,
+   "completed_hard": 3,
+   "hard": 12,
+   "dropoff": [
+    [
+     "confirm_account",
+     9
+    ]
+   ],
+   "median_actions_done": 8,
+   "dead_clicks": [],
+   "claims_vs_page": 0,
+   "personas": [
+    {
+     "persona": "p01",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Out of patience at the sign-in re-check step before payment; I still have not reached delivery or the saved card.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "Cart looks right, total 1 940 tenge. Hitting checkout",
+      "It wants me to sign in again, fine, I have the email",
+      "Now the password"
+     ]
+    },
+    {
+     "persona": "p02",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: овсяное молоко и ржаной хлеб, доставка за 30 минут, оплата картой 4242, итог 1 940 ₸.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль.",
+      "Ввёл email и пароль, жму Continue.",
+      "Адрес Abay ave 10 верный, доставка как можно скорее (30 мин), оплата картой •••• 4242, итог 1 940 ₸. Всё как я хотел, нажимаю Place order."
+     ]
+    },
+    {
+     "persona": "p03",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Order placed: oat milk and rye bread, delivery in about 30 minutes, paid by saved card.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Now the password.",
+      "Both filled in, pressing Continue.",
+      "Checkout has the right address, ASAP delivery and my saved card selected. Placing the order."
+     ]
+    },
+    {
+     "persona": "p04",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Положил молоко и хлеб в корзину, но на Checkout попросили заново ввести email и пароль, хотя я уже вошел как Aigerim. Терпение кончилось, доставку не оформил.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "Корзина: молоко и хлеб, итого 1 940 ₸. Нажимаю Checkout",
+      "Просит ввести email и пароль, хотя я уже вошел. Ладно, ввожу aigerim@example.com",
+      "Теперь пароль oatmilk42"
+     ]
+    },
+    {
+     "persona": "p05",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Потерпение вышло: после корзины магазин попросил повторно ввести почту и пароль 'для безопасности', а кнопка Continue не дала ни подтверждения, ни заказа.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "Корзина: молоко и хлеб, итого 1 940 ₸. Нажимаю Checkout.",
+      "Просят войти заново, 'для безопасности'. Странно, но ладно, введу почту которая у меня есть.",
+      "Теперь пароль, он у меня записан."
+     ]
+    },
+    {
+     "persona": "p06",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Cart was easy, but checkout asked me to re-enter email and password, and I ran out of patience before reaching delivery.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "Cart has oat milk and rye bread, total 1 940 tenge. Going to checkout.",
+      "Ugh, it wants me to log in again. Fine, my email is aigerim@example.com.",
+      "Now the password. It's oatmilk42."
+     ]
+    },
+    {
+     "persona": "p07",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Ran out of patience on the forced re-login step before checkout finished; I was in a hurry and it's not clear the order went through.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "Cart looks right, total 1 940 tenge, hitting Checkout",
+      "Annoying, but it wants my login again, so I'll type my email",
+      "Now the password"
+     ]
+    },
+    {
+     "persona": "p08",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко овсяное и ржаной хлеб, доставка через 30 минут, оплата картой",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль",
+      "Нажимаю Continue",
+      "Адрес верный, доставка как можно скорее, оплата картой уже выбрана. Нажимаю Place order"
+     ]
+    },
+    {
+     "persona": "p09",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Oat milk and rye bread ordered for ASAP delivery (about 30 min) on my saved card; order confirmed.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Now the password.",
+      "Both filled in, continuing.",
+      "Address is right, delivery is ASAP, card 4242 is selected. Placing the order."
+     ]
+    },
+    {
+     "persona": "p10",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Ушёл из-за лимита терпения: до оплаты не дошёл, на шаге подтверждения аккаунта ещё нужно нажать Continue, а процесс затянулся.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "Корзина правильная: молоко и хлеб, итого 1 940 ₸. Нажимаю Checkout.",
+      "Просят подтвердить аккаунт. Ну ладно, для безопасности введу почту и пароль.",
+      "Пароль тоже введу, как у меня записано."
+     ]
+    },
+    {
+     "persona": "p11",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Положила молоко и хлеб, дошла до оформления, но сайт попросил заново ввести почту и пароль, хотя я уже вошла. Терпение закончилось, заказ не оформлен.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "Все на месте, 1 940 тенге, нажимаю оформить",
+      "Почему опять вход? Я же уже вошла. Ладно, введу почту, которую знаю",
+      "Теперь пароль"
+     ]
+    },
+    {
+     "persona": "p12",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и хлеб, доставка через 30 минут, оплата картой; единственное неудобство - повторный ввод пароля при оформлении.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль.",
+      "Жму Continue, посмотрим что дальше.",
+      "Адрес верный, доставка как можно скорее, оплата картой уже выбрана. Нажимаю Place order."
+     ]
+    },
+    {
+     "persona": "p13",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и ржаной хлеб, доставка за 30 минут, оплата картой 4242.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль от аккаунта.",
+      "Почту и пароль ввела, нажму Continue.",
+      "Адрес мой, доставка как можно скорее, оплата картой 4242. Нажимаю Place order."
+     ]
+    },
+    {
+     "persona": "p14",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и ржаной хлеб, доставка за 30 минут, оплата картой 4242.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль.",
+      "Нажимаю Continue, чтобы продолжить оформление.",
+      "Адрес верный, доставка как можно быстрее, оплата картой 4242 уже выбрана. Оформляю заказ."
+     ]
+    },
+    {
+     "persona": "p15",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Ordered oat milk and rye bread for ASAP delivery with the saved card; order placed, courier in about 30 minutes.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Now my password",
+      "Both filled in, clicking Continue",
+      "Checkout shows my address, ASAP delivery and card 4242 already selected. Looks right, placing the order"
+     ]
+    },
+    {
+     "persona": "p16",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и ржаной хлеб, доставка через 30 минут, оплата картой 4242.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль.",
+      "Нажимаю Continue, чтобы продолжить оформление.",
+      "Адрес верный, доставка как можно скорее, оплата картой 4242 уже выбрана. Нажимаю Place order."
+     ]
+    },
+    {
+     "persona": "p17",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Out of patience: after adding oat milk and rye bread and starting checkout, I was asked to re-enter my email and password and the Continue step was not reached within my patience budget.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "Cart looks right: oat milk and rye bread, total 1 940 tenge. Clicking Checkout.",
+      "It wants me to sign in again, which is a bit annoying since I'm already signed in. I'll enter my email.",
+      "Now my password."
+     ]
+    },
+    {
+     "persona": "p18",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "После корзины просят повторно ввести email и пароль для подтверждения аккаунта, и на этом я застрял без доставки и оплаты картой; терпение кончилось.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "Корзина правильная, итого 1 940 ₸. Нажимаю Checkout.",
+      "Просят ввести email и пароль для безопасности, ну ладно, мои данные есть.",
+      "Теперь пароль."
+     ]
+    },
+    {
+     "persona": "p19",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и ржаной хлеб, доставка через 30 минут, оплата картой 4242",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль",
+      "Нажму Continue, подтвержу аккаунт",
+      "Адрес верный, доставка как можно скорее, оплата картой 4242 - то что нужно. Оформляю заказ"
+     ]
+    },
+    {
+     "persona": "p20",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и хлеб, доставка за 30 минут, оплата картой 4242",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь введу пароль",
+      "Нажимаю Continue, чтобы подтвердить и продолжить",
+      "На checkout адрес, доставка как можно скорее и оплата картой 4242 уже выбраны. Нажимаю Place order"
+     ]
+    }
+   ]
+  },
+  "B": {
+   "n": 20,
+   "funnel": {
+    "catalog": 20,
+    "cart": 20,
+    "checkout": 20,
+    "done": 19
+   },
+   "completed": 19,
+   "completed_hard": 11,
+   "hard": 12,
+   "dropoff": [
+    [
+     "checkout",
+     1
+    ]
+   ],
+   "median_actions_done": 5,
+   "dead_clicks": [],
+   "claims_vs_page": 0,
+   "personas": [
+    {
+     "persona": "p01",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Oat milk and rye bread ordered for ASAP delivery (about 30 min) on the saved card; order placed.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Both are in. Going to the cart to check out.",
+      "Cart has oat milk and rye bread, total 1 940 ₸. Checkout.",
+      "Address, ASAP delivery and saved card are already set. Placing the order."
+     ]
+    },
+    {
+     "persona": "p02",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "В итоге 1 940 ₸, но по условиям доставки до 5 000 ₸ стоит 490 ₸, и этой суммы в итоге нет. Не понимаю, сколько спишется с карты, поэтому не оформляю заказ.",
+     "actions": 6,
+     "last_stage": "checkout",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/checkout",
+     "dead_clicks": [],
+     "notes": [
+      "В корзине оба товара, итого 1 940 ₸. Нажимаю Checkout (оформить).",
+      "Адрес правильный, доставка как можно скорее, карта 4242 уже выбрана. Но перед оплатой хочу понять, нет ли скрытых платежей за доставку, открою условия.",
+      "Условия: заказы до 5 000 ₸ доставляются за 490 ₸. А в моём итоге 1 940 ₸ этой доставки нет. Вернусь в оформление и посмотрю итог ещё раз."
+     ]
+    },
+    {
+     "persona": "p03",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: оат милк и ржаной хлеб, доставка через ~30 минут, оплата картой",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Ссылка на корзину сменилась, нажму на Cart (2)",
+      "В корзине оба товара, итого 1 940 ₸, нажимаю оформить",
+      "Адрес верный, доставка как можно скорее, оплата картой уже выбрана. Оформляю"
+     ]
+    },
+    {
+     "persona": "p04",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Купил овсяное молоко и ржаной хлеб, оплатил сохранённой картой, доставка через 30 минут",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Ссылка на корзину теперь другая, нажимаю Cart (2)",
+      "Корзина: молоко и хлеб, итого 1 940 ₸. Жму Checkout оформить",
+      "Адрес верный, доставка как можно скорее, оплата картой уже выбрана. Нажимаю оформить"
+     ]
+    },
+    {
+     "persona": "p05",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и хлеб, доставка за 30 минут, оплата картой 4242.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Оба товара в корзине, корзина 2. Открываю корзину, чтобы оформить.",
+      "В корзине молоко и хлеб, итого 1 940 ₸. Нажимаю оформить.",
+      "Адрес верный, доставка как можно скорее, оплата картой 4242 уже выбрана. Нажимаю оформить заказ."
+     ]
+    },
+    {
+     "persona": "p06",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Ordered oat milk and rye bread, paid with saved card, courier in about 30 minutes.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Both are in, now I want to check out. I'll open the cart.",
+      "Cart looks right, both items and total 1 940 tenge. I'll hit Checkout.",
+      "Address, ASAP delivery and the saved card are already selected. Placing the order."
+     ]
+    },
+    {
+     "persona": "p07",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Oat milk and rye bread ordered for ASAP delivery on my saved card, courier in about 30 minutes.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Both in, now I'll open the cart to check out",
+      "Cart looks right, total 1 940 tenge. Hitting Checkout",
+      "Address, ASAP delivery and saved card are already set. Placing the order"
+     ]
+    },
+    {
+     "persona": "p08",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и ржаной хлеб, доставка через 30 минут, оплата картой 4242.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Оба товара в корзине, открою корзину через ссылку Cart (2).",
+      "В корзине оба товара, итого 1 940 ₸. Нажму Checkout (оформить).",
+      "Адрес правильный, доставка как можно скорее, оплата картой 4242 уже выбрана. Нажимаю Place order."
+     ]
+    },
+    {
+     "persona": "p09",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Oat milk and rye bread ordered for ASAP delivery (about 30 min) paid by the saved card.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Both items are in. I'll open the cart to check out.",
+      "Cart looks right, two items, total 1 940 tenge. Checkout.",
+      "Address is mine, delivery is as soon as possible, and payment is already the card. Place the order."
+     ]
+    },
+    {
+     "persona": "p10",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: овсяное молоко и ржаной хлеб, доставка за 30 минут, оплата картой.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Ссылка на корзину сменилась, нажимаю на Cart (2) в шапке.",
+      "Корзина: молоко и хлеб, итого 1 940 ₸. Нажимаю Оформить.",
+      "Адрес верный, доставка как можно скорее, оплата картой уже выбрана. Нажимаю Оформить заказ."
+     ]
+    },
+    {
+     "persona": "p11",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и хлеб, доставка за 30 минут, оплата картой 4242",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Оба товара в корзине, открываю корзину, чтобы оформить доставку",
+      "В корзине молоко и хлеб, итого 1 940 ₸. Нажимаю Оформить",
+      "Адрес верный, доставка как можно скорее, оплата картой уже выбрана. Нажимаю Оформить заказ"
+     ]
+    },
+    {
+     "persona": "p12",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко овсяное и ржаной хлеб, доставка ASAP через 30 минут, оплата картой 4242",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Ссылка на корзину теперь с другим номером, но всё ещё Cart (2), нажимаю",
+      "В корзине молоко и хлеб, итого 1 940 ₸. Жму Checkout",
+      "Адрес мой, доставка как можно скорее, оплата картой 4242 уже выбрана. Оформляю"
+     ]
+    },
+    {
+     "persona": "p13",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и ржаной хлеб, доставка через 30 минут, оплата картой.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Корзина вверху теперь показывает 2, нажму на неё, чтобы оформить.",
+      "В корзине оба товара и итого 1 940 ₸. Нажму Checkout, чтобы оформить заказ.",
+      "Адрес правильный, доставка как можно скорее, оплата картой 4242 уже выбрана. Нажимаю Place order."
+     ]
+    },
+    {
+     "persona": "p14",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Order placed: oat milk and rye bread, ASAP delivery to my address, paid with saved card 4242.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Both items are in, cart says 2. I'll open the cart to check out.",
+      "Cart looks right: oat milk and rye bread, total 1 940 ₸. Checkout next.",
+      "Address is mine, delivery is as soon as possible and payment is the saved card 4242. Placing the order."
+     ]
+    },
+    {
+     "persona": "p15",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Oat milk and rye bread ordered as soon as possible on the saved card; courier in about 30 minutes.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Both items are added. I will open the cart to check out.",
+      "Cart has oat milk and rye bread, total 1 940 tenge. Going to checkout.",
+      "Address is right, delivery is as soon as possible, card is selected. Placing the order."
+     ]
+    },
+    {
+     "persona": "p16",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: овсяное молоко и ржаной хлеб, доставка через 30 минут, оплата картой 4242.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Ссылка на корзину сменилась, нажимаю Cart (2) наверху.",
+      "В корзине оба товара, итого 1 940 ₸. Нажимаю Checkout.",
+      "Адрес мой, доставка как можно скорее, оплата картой уже выбрана. Оформляю заказ."
+     ]
+    },
+    {
+     "persona": "p17",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Added oat milk and rye bread, checked out with saved card and ASAP delivery; order placed, courier in about 30 min.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Both are in the cart now. I'll open the cart to check out.",
+      "Cart looks right, total 1 940 tenge. Going to checkout.",
+      "Address, ASAP delivery and saved card are already set. Placing the order."
+     ]
+    },
+    {
+     "persona": "p18",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: овсяное молоко и ржаной хлеб, доставка через 30 минут, оплата картой 4242.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Ref старый, открываю корзину по ссылке Cart (2).",
+      "Корзина ок, 1 940 ₸. Жму Checkout, хочу оформить быстро.",
+      "Адрес верный, доставка как можно скорее, оплата картой 4242 уже выбрана. Нажимаю Place order."
+     ]
+    },
+    {
+     "persona": "p19",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: овсяное молоко и ржаной хлеб, доставка через 30 минут, оплата картой 4242.",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Оба в корзине, Cart (2). Открываю корзину оформить.",
+      "Корзина: молоко и хлеб, итого 1 940 ₸. Жму оформить.",
+      "Адрес верный, доставка как можно скорее, оплата картой 4242 уже выбрана. Жму оформить заказ."
+     ]
+    },
+    {
+     "persona": "p20",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: овсяное молоко и ржаной хлеб, доставка за 30 минут, оплата картой 4242",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8700/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Корзина 2 товара. Открываю корзину, чтобы оформить доставку",
+      "В корзине оба товара, итого 1 940 ₸. Нажимаю Checkout",
+      "Адрес верный, доставка как можно скорее, оплата картой 4242 уже выбрана. Нажимаю Place order"
+     ]
+    }
+   ]
+  }
+ },
+ "direction": {
+  "better": "B",
+  "interval90": [
+   0.2,
+   0.6
+  ],
+  "note": "direction only; simulated completion is not a conversion forecast"
+ },
+ "cost_usd": 0.1122,
+ "sessions_with_usage": 40
+}

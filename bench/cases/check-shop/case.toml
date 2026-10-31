@@ -1,0 +1,12 @@
+kind = "live"
+title = "Synthetic: grocery shop checkout (regular pages)"
+brief = """
+# Pantry: groceries in 30 minutes
+
+A grocery delivery web app (synthetic test app). The user is Aigerim, a returning customer who is already signed in
+(the app knows her name, email aigerim@example.com and delivery address). Her account password is `oatmilk42`.
+
+Her typical job: buy a few groceries - for example oat milk and rye bread - and get them delivered as soon as
+possible, paying with her saved card. She also sometimes checks the delivery terms and uses promo codes from
+newsletters (the current one is FRESH10).
+"""

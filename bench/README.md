@@ -48,6 +48,26 @@ When `claude -p` is not available, an orchestrating agent runs each step in a fr
 
 If a hidden check turns out to be wrong, fix it and run `bench.py recheck --out DIR`; no session needs to rerun.
 
+## Live UI bench (product-check)
+
+`live.py` benchmarks [`skills/product-check`](../skills/product-check/README.md): agents test a served fixture with
+planted bugs, and a hidden `check.py` scores their `report.md` (recall and precision against the planted bugs, and
+whether each matched issue has numbered steps and a screenshot that exists). Live cases are `cases/check-*/` with
+`kind = "live"`, a `fixture/` and `ref/good.md`, `ref/bad.md`; `bench.py` skips them.
+
+```bash
+bash bench/arms/fetch.sh dogfood                                 # vercel-labs/agent-browser dogfood at v0.27.0
+python bench/live.py serve &                                     # fixtures at http://127.0.0.1:8700/<case>/
+python bench/live.py prepare --out /tmp/plc --arm bare= --arm product-check=skills/product-check \
+  --arm dogfood=bench/arms/.cache/dogfood --reps 2
+# run every printed prompt in a fresh session, then: live.py record --out /tmp/plc WS --tokens N --tools N --ms N
+python bench/live.py score --out /tmp/plc                        # report.md + runs.tsv
+```
+
+Sessions need Playwright CLI 0.1.23 and agent-browser 0.27.0 on `PATH`. `cases/check-shop/flow.json` is the funnel
+file for a crowd run on the shop's two variants (`/check-shop/` and `/check-shop/?variant=b`). Latest results:
+[`results/2026-10-31-product-check-v0.1`](results/2026-10-31-product-check-v0.1/notes.md).
+
 ## Cases
 
 Each case is `cases/<name>/case.toml` (title, `brief` written to the workspace as `BRIEF.md`, steps, reviewer notes),
@@ -86,6 +106,7 @@ workspace failing.
 | `product-layer` | `skills/product-layer` (JEB-2030), stub until then | MIT | copied into each session's `HOME` |
 | `szilu` | [szilu/ux-designer-skill](https://github.com/szilu/ux-designer-skill) | MIT | `arms/fetch.sh`, pinned SHA |
 | `design-for-ai` | [ryanthedev/design-for-ai](https://github.com/ryanthedev/design-for-ai), `ai-native` and `journey` only | none stated (not redistributed) | `arms/fetch.sh`, pinned SHA, each part wrapped as a skill |
+| `dogfood` | [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser) `dogfood`, live bench only | Apache-2.0 | `arms/fetch.sh`, pinned v0.27.0 |
 | `kortix-genui` | [kortix-ai/suna](https://github.com/kortix-ai/suna) `kortix-genui` skill, genui case only | Elastic 2.0 | `arms/fetch.sh`, external path only, never vendored |
 | `product-layer+visual` | product-layer plus visual skills given by path | theirs | `--arm` with comma-separated paths; the visual skills stay out of this repo |
 

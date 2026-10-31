@@ -1,0 +1,13 @@
+case	arm	rep	ws	recall	recall_evidence	precision	n_findings	n_matched	found	tokens	tools	ms
+check-genui	dogfood	1	check-genui-0cc105	0.75	0.75	0.625	8	5	dead_old_buttons,double_submit,slider_no_role	43218	29	142443
+check-genui	dogfood	2	check-genui-18ab5d	0.75	0.75	0.833	6	5	dead_old_buttons,double_submit,slider_no_role	37943	27	118659
+check-genui	product-check	2	check-genui-19d8ee	1.0	1.0	0.857	7	6	dead_old_buttons,double_submit,regen_slider,slider_no_role	48108	27	288393
+check-genui	bare	2	check-genui-296c63	0.75	0.75	0.571	7	4	dead_old_buttons,regen_slider,slider_no_role	43022	39	203527
+check-genui	bare	1	check-genui-6fb030	0.75	0.75	0.5	8	4	dead_old_buttons,double_submit,slider_no_role	37698	24	198260
+check-genui	product-check	1	check-genui-eec485	0.75	0.75	0.625	8	5	dead_old_buttons,double_submit,slider_no_role	47368	21	230216
+check-shop	product-check	2	check-shop-1424b3	0.75	0.75	0.8	5	4	dead_end,dead_promo,extra_step	48910	25	291596
+check-shop	bare	2	check-shop-3ecfa2	0.75	0.75	0.429	7	3	dead_end,dead_promo,extra_step	39659	24	149951
+check-shop	dogfood	1	check-shop-53f46a	0.75	0.75	0.6	5	3	dead_end,dead_promo,extra_step	37576	18	93772
+check-shop	product-check	1	check-shop-619853	1.0	1.0	1.0	5	5	dead_end,dead_promo,extra_step,stale_badge	53716	27	345251
+check-shop	dogfood	2	check-shop-653037	1.0	1.0	0.667	6	4	dead_end,dead_promo,extra_step,stale_badge	39630	24	136703
+check-shop	bare	1	check-shop-8fa235	0.75	0.75	0.5	6	3	dead_end,dead_promo,extra_step	39110	24	145110

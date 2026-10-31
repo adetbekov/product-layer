@@ -1,0 +1,12 @@
+kind = "live"
+title = "Synthetic: skincare chat assistant with generative UI"
+brief = """
+# Glow: skincare assistant in a chat
+
+A chat-first web app (synthetic test app). The assistant streams its answers and puts components inside its
+messages: choice chips, a budget slider, product cards with buttons, a small form. There is no sign-in.
+
+The typical user is a woman of 20-35 on her phone who wants a simple skincare routine within her budget: she tells
+the assistant her skin type and monthly budget, adds the suggested products to her routine and sends the routine to
+her email. She often changes her mind halfway (another skin type, another budget) and scrolls back up to do it.
+"""

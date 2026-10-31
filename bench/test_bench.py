@@ -17,7 +17,8 @@ import ux
 from report import build
 
 BENCH = Path(__file__).resolve().parent
-CASES = sorted(p.name for p in (BENCH / "cases").iterdir() if (p / "case.toml").exists())
+CASES = sorted(p.name for p in (BENCH / "cases").iterdir()
+               if (p / "case.toml").exists() and 'kind = "live"' not in (p / "case.toml").read_text())
 
 
 def load_rules(case):
