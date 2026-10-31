@@ -86,7 +86,9 @@ The whole run fails only if the result is impossible.
 ## AP-8 · Every gate action responds at once · HIGH
 
 **Rule.** Approve, reject and regenerate switch to a pending state immediately
-and name what is running ("Rewriting the plan"). No double submits.
+and name what is running ("Rewriting the plan"). While the request runs,
+the gate's buttons are locked; an error unlocks them and keeps the user's
+edits. No double submits.
 **Why.** Silent buttons during model calls get pressed again.
 - Bad: "Approve" looks unchanged for 20 s and gets clicked twice.
 - Good: "Approve" turns pending at once: "Writing lyrics…".
@@ -127,3 +129,14 @@ still be done (edit downstream items, new version from this brief) (FL-2).
 **Why.** "Locked" with no way forward ends the session.
 - Bad: "Brief is locked." with no action.
 - Good: "Brief is locked after scenes are split. Edit a scene, or start a new version."
+
+## AP-13 · Stale results say so, one action fixes it · HIGH
+
+**Rule.** When an input changes after a later stage used it (a scene added,
+a line edited), mark the affected output as out of date, list what changed,
+and offer one action that brings it up to date ("Update clip · 2 scenes
+changed"). The final result always shows which items it contains, so nothing
+drops out silently. Nothing costly runs on a variant the user has not seen.
+**Why.** Silent drift ships a clip without the scene the user just added.
+- Bad: a new scene never reaches the assembled clip, and nothing says so.
+- Good: "Clip is out of date: scene 5 added · Update clip"; the clip lists its 5 scenes.

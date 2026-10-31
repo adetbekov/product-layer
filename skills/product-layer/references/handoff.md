@@ -77,7 +77,7 @@ Platform: <web desktop / mobile web / iOS / Android / Telegram>
 | From | To | Meaning | Trigger | Interruptible | Frequency |
 
 ## Steps to value
-| Flow | Actor | Now | Proposed | Rules applied |
+| Flow | Actor | Now | Proposed | What removed the steps |
 
 ## Assumptions and open questions
 ```
@@ -143,6 +143,10 @@ rank is expressed.
 
 ## Forbidden in a spec
 
+- Rule ids (`SR-2`, `TG-6`): say the decision in words. Ids are for audits.
+- Features, policies or numbers the brief did not ask for; put a needed
+  assumption in "Assumptions and open questions" in one line.
+- Actions without a real target, or targets that loop back or are stubs.
 - Colour names or values, font names, sizes, weights.
 - Pixel, rem or grid values, spacing, radius, shadows.
 - Animation durations, easing, spring parameters.
