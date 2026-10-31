@@ -52,10 +52,12 @@ Report as a table and compare before / after:
 
 | Flow | Actor | Steps now | Steps proposed | Cut by |
 |---|---|---|---|---|
-| Split receipt | payer, new | 11 | 6 | SR-2 language, SR-5 share on card |
+| Split receipt | payer, new | 10+N | 7+N | SR-1 language, SR-5 share on card |
 
 Repeated per-item actions count once with "+N" (select items: 1 + N).
 **Why.** Without a number, "simpler" is opinion and regressions go unnoticed.
+- Bad: "The new flow is simpler." with no numbers.
+- Good: "Split receipt, new payer: 10+N → 7+N steps (SR-1, SR-5)."
 
 ## FL-5 · Diagrams stay readable · MEDIUM
 
@@ -63,6 +65,8 @@ Repeated per-item actions count once with "+N" (select items: 1 + N).
 split into sub-flows linked by name. Decisions are diamonds with labelled
 exits; every branch ends at a result or rejoins.
 **Why.** Large diagrams stop being read and stop being checked.
+- Bad: one 45-node diagram covering sign-up, payment and refunds.
+- Good: three diagrams of 12-15 nodes linked as "→ Payment flow".
 
 ## FL-6 · Long flows survive interruption · HIGH
 
@@ -100,6 +104,8 @@ dangerous ones.
 **Rule.** For each step state what back and cancel do and what is kept.
 Cancel never silently destroys user input that took effort to produce.
 **Why.** Undefined back behaviour is where data loss bugs live.
+- Bad: Back on the payment step resets the cart.
+- Good: "Back: returns to cart, items kept. Cancel: closes, draft saved."
 
 ## Output: flow block
 

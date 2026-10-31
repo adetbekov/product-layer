@@ -40,6 +40,8 @@ states when to use it, its required fields and its actions; the product code
 renders it. Unknown shapes fall back to text. Spec new components as product
 work, not as agent improvisation.
 **Why.** Free-form generated layouts are inconsistent and untestable.
+- Bad: the agent invents a "timeline widget" the app cannot render.
+- Good: the agent picks `steps` from the catalogue; unknown shape falls back to text.
 
 ## GC-3 · Answer first, assume the typical case · HIGH
 
@@ -48,18 +50,24 @@ for it at once, state the assumption in one line, and offer chips to switch
 ("For oily skin · change").
 **Why.** A clarifying question costs a full turn; a stated assumption costs
 one tap only when wrong.
+- Bad: "Which skin type do you have?" before any answer.
+- Good: a routine for the typical case plus "For combination skin · change".
 
 ## GC-4 · Buttons, not suggestions · HIGH
 
 **Rule.** Next actions are tappable (chips, card actions), never prose like
 "you could ask me to...". At most 3-4 next-action chips per reply.
 **Why.** Users act on buttons; they rarely retype suggestions.
+- Bad: "You can also ask me to compare these."
+- Good: chips "Compare" and "Cheaper options" under the cards.
 
 ## GC-5 · No blank chat · HIGH
 
 **Rule.** A new or empty conversation shows 2-4 starter actions tied to the
 product's main jobs, and the user's own context if known (ON-4).
 **Why.** An empty input box makes users guess what the product can do.
+- Bad: an empty chat with only an input box.
+- Good: three chips: "Check my product", "Build a routine", "Scan my skin".
 
 ## GC-6 · One main block per turn, text does not repeat it · HIGH
 
@@ -68,6 +76,8 @@ Accompanying text adds what the block cannot (why, caveat), in 1-2
 sentences, and never restates the block's contents. Superseded blocks of the
 same kind collapse to the latest.
 **Why.** Several competing blocks and echoed text bury the answer.
+- Bad: a plan card, a product carousel and a table in one reply, text repeating the plan.
+- Good: one plan card plus one sentence on why step 2 matters.
 
 ## GC-7 · Controls are local until committed · HIGH
 
@@ -76,6 +86,8 @@ client immediately. Only an explicit action (Apply, Add, Send) sends a
 message to the agent and starts a turn.
 **Why.** Sending each slider move to the agent floods the chat and waits on
 the model for what arithmetic can do.
+- Bad: every slider move sends "budget 12 000" to the agent.
+- Good: the slider filters cards locally; "Show these" sends one message.
 
 ## GC-8 · Questionnaires: one question per card, all before the result · HIGH
 
@@ -95,18 +107,24 @@ or return to (plan, profile, shelf, order, saved comparison) has a page, and
 the chat shows a compact card linking to it. Changes made on the page are
 visible to the agent; changes made by the agent update the page.
 **Why.** Important things scroll away in chat; pages give them a home (IA-3).
+- Bad: the user's routine lives only in an old chat message.
+- Good: the routine is a Plan page; chat shows a card "Open plan".
 
 ## GC-10 · Editable previews over upfront forms · MEDIUM
 
 **Rule.** When the agent can draft (a routine, an order, a message), show the
 draft as an editable block with Confirm, not a form to fill first (SR-8).
 **Why.** Correcting a draft takes fewer steps than specifying everything.
+- Bad: a form "morning steps, evening steps, products" before any suggestion.
+- Good: a drafted routine with editable steps and Confirm.
 
 ## GC-11 · Free text always works · MEDIUM
 
 **Rule.** Every block can be answered by typing as well; the agent maps the
 text to the same action.
 **Why.** Users mix tapping and typing; a block must not trap them.
+- Bad: typing "the second one" under cards gets "Please tap a button".
+- Good: typing "the second one" adds the second card's product.
 
 ## GC-12 · Agent progress in user words · MEDIUM
 
@@ -114,6 +132,8 @@ text to the same action.
 terms ("Checking ingredients"), streaming partial blocks when useful. Tool
 failures are explained in one line with a retry, never silent.
 **Why.** A silent agent looks stuck; tool names look like errors.
+- Bad: "Calling tool compute_verdict…"
+- Good: "Checking ingredients…", then the verdict card.
 
 ## Output additions
 

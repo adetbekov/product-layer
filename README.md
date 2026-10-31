@@ -32,19 +32,19 @@ Budgets: `SKILL.md` ≤ 1.5k, all core references together ≤ 12k, each module 
 |---|---|---|
 | `skills/product-layer/SKILL.md` | principles, router, workflow | 1.0k |
 | `references/core/ia.md` | top tasks, navigation, placement (inline / overlay / page) | 1.3k |
-| `references/core/flows.md` | use cases, dead ends, step counting, multi-actor flows | 1.1k |
-| `references/core/step-reduction.md` | step test, ask only what only the user knows | 1.1k |
-| `references/core/states.md` | state matrix, screen spec template | 1.1k |
-| `references/core/onboarding.md` | first value, invited users, progressive profile | 0.9k |
+| `references/core/flows.md` | use cases, dead ends, step counting, multi-actor flows | 1.2k |
+| `references/core/step-reduction.md` | step test, ask only what only the user knows | 1.3k |
+| `references/core/states.md` | state matrix, screen spec template | 1.3k |
+| `references/core/onboarding.md` | first value, invited users, progressive profile | 1.1k |
 | `references/core/review.md` | audit procedure, finding format, scorecard | 0.7k |
-| **core total** | | **6.3k** |
-| `references/modules/genui-chat.md` | block router: text / card / choice / slider / page | 1.3k |
-| `references/modules/telegram-bot.md` | edit vs new message, groups vs DM, deep links | 1.1k |
-| `references/modules/ai-pipeline.md` | gates vs auto, price before commit, long generation | 1.1k |
-| `references/modules/saas-roles.md` | role matrix, invite loop, marketplace paths | 1.0k |
-| `references/handoff.md` | contract and spec format for visual skills | 1.0k |
+| **core total** | | **6.8k** |
+| `references/modules/genui-chat.md` | block router: text / card / choice / slider / page | 1.6k |
+| `references/modules/telegram-bot.md` | edit vs new message, groups vs DM, deep links | 1.5k |
+| `references/modules/ai-pipeline.md` | gates vs auto, price before commit, long generation | 1.4k |
+| `references/modules/saas-roles.md` | role matrix, invite loop, marketplace paths | 1.4k |
+| `references/handoff.md` | contract with visual skills: brief context, which skill per product type, transitions, spec format | 1.7k |
 
-A typical run loads `SKILL.md` + 2-3 core files + one module + `handoff.md`: about 5-6k tokens.
+A typical run loads `SKILL.md` + 2-3 core files + one module + `handoff.md`: about 6-7k tokens.
 
 ## Tests
 
@@ -52,7 +52,9 @@ A typical run loads `SKILL.md` + 2-3 core files + one module + `handoff.md`: abo
 python tests/test_skill.py      # or: python -m pytest tests/
 ```
 
-Checks budgets, unique rule ids, that every referenced rule and file exists, that every rule has a reason, and that no visual values (px, ms, hex colours, easing) slip into the skill.
+CI runs the same script on every pull request (`.github/workflows/tests.yml`).
+
+Checks budgets, unique rule ids, that every referenced rule and file exists, that every rule has a reason and a bad / good example, and that no visual values (px, ms, hex colours, easing) slip into the skill.
 
 ## Bench
 

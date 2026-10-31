@@ -24,6 +24,8 @@ For each screen fill one row per state. "n/a" needs a reason.
 **Rule.** A screen spec is incomplete until every row of the matrix is filled
 or marked n/a with a reason.
 **Why.** Undesigned states ship anyway, as blank screens and raw errors.
+- Bad: a spec with only the ideal state of the dashboard.
+- Good: dashboard spec with first-use, loading, error and no-access rows filled.
 
 ## ST-2 · Empty states start the task · HIGH
 
@@ -72,6 +74,8 @@ mistakes.
 **Rule.** Success shows what happened (object, amount, recipients) and the
 next likely action. Minor successes are inline (toast, check), not screens.
 **Why.** A success screen with only "OK" is a dead end (FL-2).
+- Bad: full-screen "Success!" with a single OK button.
+- Good: "Booked for Tue 18:00" with "Add to calendar" and "Open room".
 
 ## ST-7 · Never show internals · HIGH
 
@@ -88,6 +92,8 @@ values are omitted or asked for.
 state shows what will happen and its cost. After it, offer undo when
 possible (FL-8).
 **Why.** Users must be able to predict irreversible outcomes.
+- Bad: "Delete?" with Yes / No.
+- Good: "Delete project 'Spring promo' and its 12 clips? This cannot be undone."
 
 ## ST-9 · Stale actions are handled · MEDIUM
 
@@ -95,6 +101,8 @@ possible (FL-8).
 another tab, an expired link) act on current state or explain why not, and
 show the current state.
 **Why.** Acting on stale data silently corrupts results.
+- Bad: an old "Pay" button charges a bill that was already closed.
+- Good: the old button answers "This bill is closed" and links to the current one.
 
 ## Screen spec template
 

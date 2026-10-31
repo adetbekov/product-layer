@@ -67,12 +67,13 @@ def test_no_visual_values():
         assert not hits, f"{f.name}: {hits}"
 
 
-def test_rule_has_why():
+def test_rule_has_why_and_examples():
     for f in [*CORE, *MODULES]:
         parts = RULE_HEADING.split(f.read_text(encoding="utf-8"))[1:]
         for i in range(0, len(parts), 3):
             body = parts[i + 2].split("\n## ")[0]
-            assert "**Rule.**" in body and "**Why.**" in body, f"{f.name}: {parts[i]}-{parts[i + 1]}"
+            for field in ("**Rule.**", "**Why.**", "Bad:", "Good:"):
+                assert field in body, f"{f.name}: {parts[i]}-{parts[i + 1]} lacks {field}"
 
 
 if __name__ == "__main__":

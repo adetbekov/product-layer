@@ -64,8 +64,10 @@ Plus one module by product type (two if the product mixes them):
 6. **States.** Fill the state matrix for every screen or message (`states.md`).
 7. **Spec.** Write the product spec in the `handoff.md` format. End with the
    steps-to-value table (before / after) and open questions.
-8. **Hand off.** Name the next skill (visual, taste, motion) and pass the spec.
-   Do not pick colours or layout grids yourself.
+8. **Hand off.** Fill the visual brief context, pick the visual skill by
+   product type (`handoff.md` table) and pass the spec with a concrete
+   request, not a bare skill call. Telegram bots without a Mini App need no
+   visual step. Do not pick colours or layout grids yourself.
 
 For an audit, run steps 1-2 and 6, then `review.md`; output findings, not a
 redesign, unless asked.

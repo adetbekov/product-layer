@@ -31,6 +31,8 @@ after "here is your result" means the result was premature.
 what the product remembers and let users edit or delete it.
 **Why.** Questions with an obvious payoff get answered; visible memory builds
 trust.
+- Bad: a 12-field profile form on day one.
+- Good: "To pick products, what's your budget?" asked the first time products are suggested.
 
 ## ON-4 · Never start empty · HIGH
 
@@ -56,6 +58,8 @@ drop out and block the inviter (FL-7).
 **Rule.** "Sign in" and "Start" are separate entries; returning users land
 where they left off (FL-6), new users go to the first-value path.
 **Why.** Sending both through one door makes one of them take wrong steps.
+- Bad: "Sign in" and "Open app" both lead to the same welcome form.
+- Good: "Sign in" returns to the last open lesson; "Start" opens the first-value path.
 
 ## ON-7 · Teach in context, not with tours · MEDIUM
 
@@ -64,6 +68,8 @@ is first needed: empty states, a one-line hint next to the control, an
 example in the first reply.
 **Why.** Tours are skipped and forgotten; contextual hints are read when
 relevant.
+- Bad: a 5-slide tour before the first screen.
+- Good: an empty plan says "Your routine appears here after a short chat" with one action.
 
 ## ON-8 · Permissions and accounts at the moment of need · HIGH
 
@@ -71,6 +77,8 @@ relevant.
 account only when the user triggers the feature that needs it, with a
 one-line reason. If refused, offer the fallback path (type instead of photo).
 **Why.** Upfront requests without context get denied and are hard to undo.
+- Bad: notification permission asked on first launch.
+- Good: asked after the first booking: "Remind you 15 minutes before?" with Allow / Not now.
 
 ## ON-9 · Role and setup choices are inferred or deferred · HIGH
 
@@ -79,6 +87,8 @@ teacher signup page). Ask once only if unknown, and allow changing it later.
 Workspace setup (name, team, settings) is defaulted and editable later.
 **Why.** A wrong irreversible role choice at sign-up locks users out of
 their main task.
+- Bad: forced role pick at sign-up, defaulting to student, never changeable.
+- Good: invite link sets the role to student; profile has "Switch to teaching".
 
 ## Output
 

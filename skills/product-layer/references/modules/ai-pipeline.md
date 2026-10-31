@@ -32,6 +32,8 @@ result.
 act with undo → act silently. Move right only when errors are cheap and
 reversible; move left when they cost money, reach others or are permanent.
 **Why.** One autonomy level for all steps is either slow or risky.
+- Bad: the agent publishes to social media without asking.
+- Good: publish is a draft for approval; renaming a scene acts at once with undo.
 
 ## AP-3 · Restate the goal before generating · HIGH
 
@@ -39,6 +41,8 @@ reversible; move left when they cost money, reach others or are permanent.
 audience, constraints, length, style, as an editable summary. Missing must-
 know facts are asked here, with defaults (SR-2).
 **Why.** A misread brief wastes the whole pipeline.
+- Bad: rendering starts straight from a one-line brief.
+- Good: "30 s clip, kids audience, cartoon style, Russian · edit" before the first costly stage.
 
 ## AP-4 · Price and time before commit · CRITICAL
 
@@ -56,6 +60,8 @@ scene, reorder, delete) and regenerate only what they touched. Reject with a
 note is the secondary path.
 **Why.** Reject-and-regenerate for one change costs a full wait and may
 break what was fine.
+- Bad: one wrong scene means "Reject" with a note and a full replan.
+- Good: edit scene 3 inline; only scene 3 regenerates.
 
 ## AP-6 · Long work: progress, leave, notify, cancel · CRITICAL
 
@@ -65,6 +71,8 @@ can leave and are notified (in-app, email, push or bot message) when done or
 when input is needed. Cancel is available and says what is kept.
 **Why.** Users will not watch a progress bar for minutes; without a
 notification they forget to come back.
+- Bad: a spinner for six minutes with no way to leave.
+- Good: "4 of 12 scenes ready · ~3-5 min left · we will notify you" with Cancel.
 
 ## AP-7 · Failures are per item and keep successes · HIGH
 
@@ -72,12 +80,16 @@ notification they forget to come back.
 and a retry for it alone; keep and show everything that succeeded (ST-5).
 The whole run fails only if the result is impossible.
 **Why.** Restarting a batch for one failure wastes time and money.
+- Bad: one failed shot fails the whole clip.
+- Good: shot 7 marked "Could not render, retry"; the other 11 stay.
 
 ## AP-8 · Every gate action responds at once · HIGH
 
 **Rule.** Approve, reject and regenerate switch to a pending state immediately
 and name what is running ("Rewriting the plan"). No double submits.
 **Why.** Silent buttons during model calls get pressed again.
+- Bad: "Approve" looks unchanged for 20 s and gets clicked twice.
+- Good: "Approve" turns pending at once: "Writing lyrics…".
 
 ## AP-9 · Show agent steps, collapsible · MEDIUM
 
@@ -85,6 +97,8 @@ and name what is running ("Rewriting the plan"). No double submits.
 by default after completion. Expose decisions the user may want to change
 (chosen variant, picked music), not internal calls.
 **Why.** Visible steps build trust and explain waits; raw logs do not.
+- Bad: a raw log of tool calls in the chat.
+- Good: "Picked 3 music options · chose 'calm piano' · change" collapsed after the step.
 
 ## AP-10 · Versions instead of overwrite · MEDIUM
 
@@ -93,6 +107,8 @@ compare and go back. Edits after a later stage started say what will be
 redone and what it costs.
 **Why.** Generation is non-deterministic; losing a good version is
 permanent.
+- Bad: regenerating the plan overwrites the approved one.
+- Good: "Plan v2 · compare with v1 · restore v1".
 
 ## AP-11 · Auto mode is a default, gates are opt-in detail · MEDIUM
 
@@ -101,9 +117,13 @@ single choice with a sensible default, not as several settings. Returning
 users get their last choice.
 **Why.** Most users want a result; experts want control. One switch serves
 both.
+- Bad: five pipeline settings on the brief form.
+- Good: one choice "Fast (auto) / With my approvals", last choice remembered.
 
 ## AP-12 · No dead ends after locking · HIGH
 
 **Rule.** When a stage locks earlier inputs, the lock message offers what can
 still be done (edit downstream items, new version from this brief) (FL-2).
 **Why.** "Locked" with no way forward ends the session.
+- Bad: "Brief is locked." with no action.
+- Good: "Brief is locked after scenes are split. Edit a scene, or start a new version."

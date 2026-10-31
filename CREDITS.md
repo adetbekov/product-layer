@@ -10,11 +10,11 @@ Research behind these choices: `docs/research/2026-10-ux-skills-landscape.md`.
 | Source | License | Ideas used | Where |
 |---|---|---|---|
 | [szilu/ux-designer-skill](https://github.com/szilu/ux-designer-skill) | MIT | modal / panel / page decision; suggest → act-with-undo autonomy scale; design every state; Tesler's law; 1-2 onboarding questions, progressive profile | `ia.md` IA-6, `ai-pipeline.md` AP-2, `states.md` ST-1, `step-reduction.md` SR-1, `onboarding.md` ON-2/3 |
-| [ryanthedev/design-for-ai](https://github.com/ryanthedev/design-for-ai) (`ai-native`, `journey`) | see repo | goal contract before generation; flow states; page spec structure | `ai-pipeline.md` AP-3, `states.md` template |
+| [ryanthedev/design-for-ai](https://github.com/ryanthedev/design-for-ai) (`ai-native`, `journey`) | MIT | goal contract before generation; flow states; page spec structure | `ai-pipeline.md` AP-3, `states.md` template |
 | [julianoczkowski/designer-skills](https://github.com/julianoczkowski/designer-skills) (information-architecture) | Apache-2.0 | short IA interview; page content priorities; naming glossary | `ia.md` inventory, IA-4, IA-5 |
 | [rampstackco/claude-skills](https://github.com/rampstackco/claude-skills) (information-architecture) | MIT | top tasks within a few clicks; categories vs tags | `ia.md` IA-1, IA-7 |
 | [ThomasPraun/ux-flow-designer](https://github.com/ThomasPraun/ux-flow-designer) | MIT | use cases with pre/post-conditions and alternative branches; diagram size limit | `flows.md` FL-1, FL-5 |
-| styleseed `ss-flow` (via lingxling/ux-flow) | see repo | no dead ends; entry and exit for every flow | `flows.md` FL-2, FL-3 |
+| [bitjaru/styleseed](https://github.com/bitjaru/styleseed) `ss-flow` (copied as lingxling/ux-flow) | MIT | no dead ends; entry and exit for every flow | `flows.md` FL-2, FL-3 |
 | [wondelai/skills](https://github.com/wondelai/skills) | MIT | steps-to-value; remove → default → defer → combine; Krug / Nielsen heuristics | `step-reduction.md`, `review.md` |
 | cuellarfr design-critique / interaction-design | MIT | keep / cut / automate / hide test per step; frequent full-page forms become inline; chips and bounded sliders over number fields | `step-reduction.md` step test, SR-6, `ia.md` IA-6 |
 | civitai ux-design | Apache-2.0 | state template; screen spec with entry / exit points | `states.md` |
@@ -28,8 +28,8 @@ Research behind these choices: `docs/research/2026-10-ux-skills-landscape.md`.
 | Microsoft HAX guidelines, Google PAIR Guidebook | public guidance | make clear what the system can do; efficient correction; explain AI behaviour | `ai-pipeline.md`, `genui-chat.md` |
 | Vercel agent-skills (react-best-practices) | MIT | rule format: one rule, why, bad / good, impact | all reference files |
 | Vercel web-design-guidelines | MIT | form and navigation checks | `review.md` heuristic pass |
-| Anthropic frontend-design skill | see repo | copy of empty and error states | `states.md` ST-2, ST-4 |
-| AccessLint | see repo | finding format with severity, confidence, what was not verified | `review.md` |
+| [Anthropic frontend-design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design) | Apache-2.0 | copy of empty and error states | `states.md` ST-2, ST-4 |
+| [AccessLint claude-marketplace](https://github.com/accesslint/claude-marketplace) | MIT | finding format with severity, confidence, what was not verified | `review.md` |
 | borghei/Claude-Skills product-designer | MIT + Commons Clause | reviewed, nothing taken | - |
 | Steve Krug, *Don't Make Me Think*; Jakob Nielsen, 10 usability heuristics; Larry Tesler, law of conservation of complexity | books / articles | heuristic pass; ask only what only the user knows | `review.md`, `step-reduction.md` |
 | [Telegram Bot API](https://core.telegram.org/bots/api) | docs | platform facts: bots cannot message users first, edited messages do not notify, 64-byte callback data, deep-link start parameter | `telegram-bot.md` |

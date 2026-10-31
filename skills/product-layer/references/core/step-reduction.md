@@ -35,6 +35,8 @@ works or the guess would be wrong often enough to hurt.
 ("Currency: KZT · change"). Defaults that change money, privacy or who gets
 notified are never hidden.
 **Why.** Silent defaults save a step but cost trust when they are wrong.
+- Bad: currency silently set to USD for a receipt in tenge.
+- Good: "Currency: KZT · change" shown on the receipt card.
 
 ## SR-3 · Defer to the moment of need, then remember · HIGH
 
@@ -50,6 +52,8 @@ answer and reuse it; offer a change instead of asking again.
 answer. Merge questions that users perceive as the same ("concerns" and
 "goals" → one "what do you want to fix").
 **Why.** Overlap makes users wonder what the difference is, and slows them.
+- Bad: asking city after the address was already entered.
+- Good: city filled from the address; one "what do you want to fix" instead of concerns + goals.
 
 ## SR-5 · Combine related steps, split only when answers branch · MEDIUM
 
@@ -92,6 +96,8 @@ and make it editable instead of collecting every parameter upfront.
 **Rule.** Routine actions apply immediately and show an undo (FL-8). The
 system reconciles in the background and reports only failures.
 **Why.** Waiting for a round trip on each tap multiplies wait steps.
+- Bad: each "+" on an item waits for the server before the count changes.
+- Good: the count changes at once; a failed sync shows "Not saved · retry".
 
 ## SR-10 · Fewer screens, not denser screens · MEDIUM
 
@@ -99,6 +105,8 @@ system reconciles in the background and reports only failures.
 Each screen still has one primary action (IA-5). If a combined screen needs
 explanation, split it back.
 **Why.** A screen users must study costs more than a tap.
+- Bad: profile, budget, delivery and payment on one long screen to "save steps".
+- Good: two short screens, each with one primary action.
 
 ## Output
 
