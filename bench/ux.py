@@ -25,6 +25,7 @@ import yaml
 
 SPEC = Path("spec/flow.yaml")
 MISSING = {"", "n/a", "na", "none", "-", "null"}
+DECISION = r"(approv|confirm|consent|agree|accept)"
 CHECKS = ("structure", "dead_ends", "steps", "states", "render", "asks", "nav", "actions")
 
 
@@ -171,11 +172,17 @@ def check_render(spec, rules):
 def check_asks(spec, rules):
     problems = []
     asked = [(str(s["id"]), str(a.get("field", "")).lower()) for s in spec["screens"] for a in s["asks"]]
+    # "approve the plan and price" is a decision on a value the product shows, not a request for that value
+    decisions = [(sid, f) for sid, f in asked if re.match(DECISION, f)]
     forbid = rules.get("forbid_asks", [])
     for flow, patterns in forbid.items() if isinstance(forbid, dict) else [(None, forbid)]:
         path_ids = happy(spec, flow)
         for pattern in patterns:
-            problems += [f"{sid} asks known `{f}`" for sid, f in asked if sid in path_ids and re.search(pattern, f)]
+            problems += [
+                f"{sid} asks known `{f}`"
+                for sid, f in asked
+                if sid in path_ids and re.search(pattern, f) and (sid, f) not in decisions
+            ]
     for pattern in rules.get("require_asks", []):
         if not any(re.search(pattern, f) for _, f in asked):
             problems.append(f"never asks /{pattern}/")

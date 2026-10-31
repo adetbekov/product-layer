@@ -5,7 +5,7 @@ isolated sessions with no skill, with product-layer and with popular UX skills, 
 checks and a blind X/Y review. The protocol follows [lab-forge's bench](https://github.com/adetbekov/lab-forge/tree/main/bench),
 adapted to UX: the agent writes a flow-and-screens spec instead of code.
 
-Latest results: [`results/2026-10-31-smoke`](results/2026-10-31-smoke/notes.md) (pipeline smoke on a stub, not a ranking).
+Latest results: [`results/2026-10-31-v0.1`](results/2026-10-31-v0.1/report.md) (full run of v0.1: 6 cases, 2 repeats, 6 arms, 84 blind verdicts).
 
 ## Run it
 
