@@ -17,19 +17,20 @@ Actions: view / create / edit / approve / delete / share / pay.
 ## RL-1 · Navigation is derived from the role matrix · HIGH
 
 **Rule.** All roles share one IA skeleton; each role sees only sections with
-at least one action for them. Hidden, not disabled. Labels are the same for
-everyone (IA-4).
+at least one action for them, at most 5 top-level sections per role (merge
+or move the rest under the sections that use them). Hidden, not disabled.
+Labels are the same for everyone (IA-4).
 **Why.** Disabled sections are noise; different skeletons per role break
 shared links and support.
-- Bad: students see a greyed-out "Admin" section.
-- Good: students' navigation has no Admin section at all.
+- Bad: students see a greyed-out "Admin" section; tutors get 7 sections.
+- Good: tutor: Home, Schedule, Students, Profile; student: Home, Lessons, Tutors.
 
 ## RL-2 · Each role has its own home · HIGH
 
 **Rule.** The landing page per role shows that role's top tasks (IA-1) and its
 next item (next lesson, pending review, unpaid booking).
 **Why.** A shared generic dashboard makes every role hunt for its work.
-- Bad: teachers and students land on the same generic dashboard.
+- Bad: tutors land on the student dashboard with streaks and XP.
 - Good: teacher home: today's lessons, pending reviews; student home: next lesson, free slots.
 
 ## RL-3 · Role from context, changeable later · HIGH
@@ -127,3 +128,26 @@ in shared content.
 **Why.** Members should not repeat or even see the admin's setup.
 - Bad: every member goes through workspace setup.
 - Good: admin sets name and invites; members land in shared content.
+
+## RL-13 · Objects have states in time · HIGH
+
+**Rule.** Every dated object (lesson, booking, room) is specced in each of
+its states: scheduled (when, how to prepare, join opens at the time),
+live, ended (recording, notes, book again), cancelled, and not found (a bad
+or old link says so and offers the user's real next item). The badge and
+the main action follow the state.
+**Why.** A room that is always "LIVE", or a bad link that silently opens
+another lesson, sends people to the wrong place.
+- Bad: an unknown room id opens the first lesson; the LIVE badge never goes off.
+- Good: "This lesson has ended · Notes · Book the next one"; bad id: "Lesson not found · Your next lesson".
+
+## RL-14 · Only the user's own facts are asked · HIGH
+
+**Rule.** Time slots, availability, goals and prices are the user's to give;
+role, subject, tutor, time zone and language come from the invite, the
+browser or the account. Every control in the spec saves something real;
+a control that changes nothing is removed.
+**Why.** Asking what the product knows costs steps; a control that saves
+nothing breaks trust.
+- Bad: student picks a time zone and a role; a "Notify me" toggle stores nothing.
+- Good: student picks one of the tutor's open slots; everything else is filled in.

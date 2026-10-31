@@ -36,38 +36,46 @@ never as the only way. Typed input only for facts that are not choices.
 
 ## TG-3 · Small keyboards, primary first · HIGH
 
-**Rule.** At most ~6-8 buttons per message, at most 3 per row (1-2 when labels
-are long). The primary action is first and alone on its row; rare actions go
-behind "More", which edits the same message.
+**Rule.** At most ~6-8 buttons per message, at most 3 per row. The primary
+action is first and alone on its row; rare actions go behind "More", which
+edits the same message.
 **Why.** Large keyboards bury the main action on small screens.
 - Bad: 12 buttons in four rows of three.
 - Good: "Select my items" alone on row 1, two secondary on row 2, "More" on row 3.
 
 ## TG-4 · Every tap is answered at once · HIGH
 
-**Rule.** Each callback is acknowledged within ~1 s (a toast or an edit). Slow
-work shows a processing state in the message, with Cancel when it takes more
-than a few seconds.
+**Rule.** Each callback is acknowledged within ~1 s (a toast, a popup or an
+edit). Popups and toasts hold short text only (about 200 characters) and
+never buttons; any action goes on the message keyboard. Slow work shows a
+processing state in the message, with Cancel when it takes more than a few
+seconds.
 **Why.** An unanswered tap leaves a spinner and users tap again.
 - Bad: a tap leaves the button spinning for 10 s.
 - Good: instant toast "Added" and the message updates.
 
-## TG-5 · Group = shared status, DM = personal action · CRITICAL
+## TG-5 · Groups work inside the group · CRITICAL
 
-**Rule.** In a group, post one short shared message per object (a panel) and
-keep editing it; personal choices, payments and private data happen in DM or
-a Mini App, reached by a deep-link button from the panel. Do not post a new
-group message per participant action.
-**Why.** Groups tolerate little bot noise; personal steps in public are
-awkward and spammy.
-- Bad: each participant's choice is a new message in the group.
-- Good: one group panel edited to "3 of 5 chose items"; choices made in DM.
+**Rule.** In a group, each process is one shared card (panel) that the bot
+keeps editing. Anyone in the group can tap its inline buttons; the bot knows
+who tapped, so personal choices (my items, I paid) happen right there, and
+the personal answer (your share, what you picked) comes back as the popup
+answer to that tap. Send someone to a DM only when the step cannot be done
+in the group: a private fact (a card number), a Mini App with a long list,
+or a user the bot must reach later. Do not post a new group message per
+participant action.
+**Why.** Every hop to a DM loses people; a stream of messages floods the
+group. One card plus popups keeps the group quiet and the steps short.
+- Bad: "Pick your items in private" deep link for every friend.
+- Good: friend taps item buttons on the group card, popup "Your share: 4 200 ₸",
+  card edits to "3 of 5 picked".
 
 ## TG-6 · Deep links carry the context · HIGH
 
-**Rule.** Links to the bot use a start parameter that opens the exact object
-and action. A first-time user from such a link lands in that task; language
-and welcome are inferred or shown after (ON-5).
+**Rule.** When a DM or Mini App is needed (TG-5), the link uses a start
+parameter that opens the exact object and action. A first-time user from
+such a link lands in that task; language and welcome are inferred or shown
+after (ON-5).
 **Why.** Every extra screen between a link and the task loses invitees.
 - Bad: an invite link opens `/start` with the generic welcome.
 - Good: `/start join_<id>` opens that bill with "Select your items".
@@ -133,3 +141,31 @@ and has ways around them (FL-7).
 **Why.** Waiting blind is the main reason participants drop out.
 - Bad: participants see their total only after the payer finalizes.
 - Good: "Your share so far: 4 200 ₸" updates as they pick.
+
+## TG-14 · One live card per process per chat · HIGH
+
+**Rule.** A process has one current card in each chat where it appears
+(the group panel, a DM copy). A state change edits every copy, so no chat
+shows a stale state with live buttons.
+**Why.** Two cards with different states make users act on the wrong one.
+- Bad: the group shows "Paid" while the payer's DM still says "Waiting".
+- Good: marking paid edits the group panel and the payer's DM card together.
+
+## TG-15 · Never close what others still owe · CRITICAL
+
+**Rule.** A timer, a new process or "Cancel" must not close or delete an
+object that holds other people's unsettled shares. Warn the owner with the
+choices on the message ("Remind", "Mark settled", "Keep open"), and keep the
+data until someone decides.
+**Why.** Silently lost debts cost real money and trust.
+- Bad: an unpaid bill closes itself after 24 h; "Start new bill" cancels the old one.
+- Good: "2 people still owe on the last bill · Remind · Keep both open".
+
+## TG-16 · Limits keep the input · HIGH
+
+**Rule.** When a quota, rate limit or plan limit blocks an action, keep what
+the user sent (photo, text) and offer another path: wait with a reminder,
+enter items by hand, upgrade. Never "try tomorrow" and drop the input.
+**Why.** Re-sending is the step users skip; the input is the hard part.
+- Bad: "Scan limit reached, try tomorrow." and the photo is gone.
+- Good: "Scan limit reached · Type the items · Remind me tomorrow", photo kept.

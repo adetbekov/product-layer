@@ -24,9 +24,13 @@ user cares about), main steps, and branches - error, cancel, back, empty,
 
 **Rule.** Every screen, message and state has at least one forward action or a
 clear exit. Errors offer a recovery. "Done" screens point to the next task
-(IA-9). A rejected input says what to do instead.
+(IA-9). A rejected input says what to do instead. Each action must reach a
+real, different place: a button that reopens the same empty screen, or leads
+to a stub, is a dead end too. The one exception is an intended end ("account
+deleted", "bill settled"): it says what happened and is marked as the end.
 **Why.** A dead end ends the session; users rarely come back to retry.
-- Bad: "Brief is locked, reject a gate first" when no gate is open.
+- Bad: "Brief is locked, reject a gate first" when no gate is open; an empty
+  cart whose "Back to cart" opens the same empty cart.
 - Good: "Brief is locked after scenes are split. Edit a scene, or start a new
   version from this brief." with both actions.
 
@@ -97,7 +101,8 @@ with an undo (toast or edit in place) for at least ~10 seconds.
 **Why.** Confirmations on routine actions train users to click through the
 dangerous ones.
 - Bad: "Are you sure you want to add this item?"
-- Good: item added, "Undo" visible; "Delete project" asks, naming what is lost.
+- Good: item added, "Undo" visible; "Delete project" asks, naming what is lost,
+  as its own step (a dialog or typed name), not one tap on a page.
 
 ## FL-9 · Back and cancel are always defined · MEDIUM
 
