@@ -1,0 +1,63 @@
+ws	case	arm	rep	step	mode	tokens	weighted_tokens	reported_tokens	input_tokens	output_tokens	cache_read_tokens	cache_write_tokens	tools	ms	cost_usd	solved	check	c_structure	c_dead_ends	c_steps	c_states	c_render	c_asks	c_nav	c_actions	n_screens	n_steps	n_asks	spec_lines	n_files	out_of_scope	questions	reply_words
+betke-skin-quiz-0309bf	betke-skin-quiz	product-layer	1	P1	agent	43134	—	—	—	—	—	—	7	56777	—	True	ok	True	True	True	True	True	True	—	—	6	2	0	159	2	0	0	198
+betke-skin-quiz-0b914e	betke-skin-quiz	design-for-ai	1	P1	agent	30815	—	—	—	—	—	—	4	36662	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a block mapping	False	—	—	—	—	—	—	—	—	—	—	125	2	0	0	146
+betke-skin-quiz-0bacc2	betke-skin-quiz	product-layer+visual	2	P1	agent	47917	—	—	—	—	—	—	6	56464	—	True	ok	True	True	True	True	True	True	—	—	6	2	0	171	2	0	0	221
+betke-skin-quiz-13fc11	betke-skin-quiz	product-layer	2	P1	agent	39254	—	—	—	—	—	—	7	50308	—	True	ok	True	True	True	True	True	True	—	—	6	2	2	145	2	0	0	176
+betke-skin-quiz-304a91	betke-skin-quiz	design-for-ai	2	P1	agent	39858	—	—	—	—	—	—	6	49468	—	False	dead_ends: followup has no way out	True	False	True	True	True	True	—	—	6	2	2	123	2	0	0	161
+betke-skin-quiz-3c0336	betke-skin-quiz	bare	1	P1	agent	27569	—	—	—	—	—	—	4	33293	—	False	dead_ends: followup has no way out	True	False	True	True	True	True	—	—	6	2	2	120	2	0	0	159
+betke-skin-quiz-4d931e	betke-skin-quiz	bare	2	P1	agent	27676	—	—	—	—	—	—	4	29008	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	102	2	0	0	146
+betke-skin-quiz-668d35	betke-skin-quiz	kortix-genui	2	P1	agent	36377	—	—	—	—	—	—	4	39128	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a block mapping	False	—	—	—	—	—	—	—	—	—	—	118	2	0	0	210
+betke-skin-quiz-766598	betke-skin-quiz	szilu	1	P1	agent	37977	—	—	—	—	—	—	5	37438	—	True	ok	True	True	True	True	True	True	—	—	6	2	2	133	2	0	0	178
+betke-skin-quiz-9df511	betke-skin-quiz	product-layer+visual	1	P1	agent	47302	—	—	—	—	—	—	8	62468	—	True	ok	True	True	True	True	True	True	—	—	6	2	0	163	2	0	0	196
+betke-skin-quiz-ccde4f	betke-skin-quiz	szilu	2	P1	agent	41224	—	—	—	—	—	—	5	46111	—	True	ok	True	True	True	True	True	True	—	—	6	2	2	152	2	0	0	242
+betke-skin-quiz-d2961f	betke-skin-quiz	kortix-genui	1	P1	agent	35963	—	—	—	—	—	—	5	41481	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a block mapping	False	—	—	—	—	—	—	—	—	—	—	127	2	0	0	231
+generic-checkout-0e089d	generic-checkout	design-for-ai	2	P1	agent	33213	—	—	—	—	—	—	4	36366	—	True	ok	True	True	True	True	—	True	—	True	11	1	0	181	2	0	0	181
+generic-checkout-45adcd	generic-checkout	szilu	1	P1	agent	35246	—	—	—	—	—	—	9	61973	—	True	ok	True	True	True	True	—	True	—	True	10	2	0	184	2	0	0	211
+generic-checkout-6de441	generic-checkout	bare	1	P1	agent	28156	—	—	—	—	—	—	4	34204	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	157	2	0	0	144
+generic-checkout-766290	generic-checkout	product-layer	1	P1	agent	44260	—	—	—	—	—	—	8	59012	—	True	ok	True	True	True	True	—	True	—	True	8	1	1	185	2	0	0	220
+generic-checkout-a04621	generic-checkout	product-layer+visual	1	P1	agent	42601	—	—	—	—	—	—	6	48076	—	True	ok	True	True	True	True	—	True	—	True	10	1	1	216	2	0	0	191
+generic-checkout-a0a38e	generic-checkout	szilu	2	P1	agent	40339	—	—	—	—	—	—	6	60668	—	True	ok	True	True	True	True	—	True	—	True	12	1	0	253	2	0	0	181
+generic-checkout-c03e5e	generic-checkout	product-layer	2	P1	agent	44633	—	—	—	—	—	—	8	60448	—	False	asks: checkout asks known `phone`; checkout asks known `address`; checkout asks known `card`	True	True	True	True	—	False	—	True	9	1	3	196	2	0	0	251
+generic-checkout-cb9de5	generic-checkout	design-for-ai	1	P1	agent	36316	—	—	—	—	—	—	5	45872	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a block mapping	False	—	—	—	—	—	—	—	—	—	—	159	2	0	0	186
+generic-checkout-d11537	generic-checkout	product-layer+visual	2	P1	agent	42005	—	—	—	—	—	—	5	45758	—	True	ok	True	True	True	True	—	True	—	True	9	2	0	192	2	0	0	184
+generic-checkout-ee734d	generic-checkout	bare	2	P1	agent	31084	—	—	—	—	—	—	5	48697	—	True	ok	True	True	True	True	—	True	—	True	11	1	0	183	2	0	0	212
+generic-settings-2629e1	generic-settings	bare	1	P1	agent	28825	—	—	—	—	—	—	4	36873	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a block collection	False	—	—	—	—	—	—	—	—	—	—	148	2	0	0	156
+generic-settings-275050	generic-settings	szilu	2	P1	agent	36063	—	—	—	—	—	—	5	49104	—	False	dead_ends: deleted has no way out	True	False	True	True	—	True	—	True	7	2	0	129	2	0	0	191
+generic-settings-5795ff	generic-settings	product-layer+visual	1	P1	agent	47695	—	—	—	—	—	—	8	82539	—	True	ok	True	True	True	True	—	True	—	True	11	1	0	210	2	0	0	214
+generic-settings-5ba1d9	generic-settings	szilu	1	P1	agent	36033	—	—	—	—	—	—	4	43825	—	True	ok	True	True	True	True	—	True	—	True	10	2	0	191	2	0	0	196
+generic-settings-676106	generic-settings	product-layer	2	P1	agent	44051	—	—	—	—	—	—	7	63571	—	False	dead_ends: landing has no way out	True	False	True	True	—	True	—	True	11	2	1	218	2	0	0	159
+generic-settings-830b24	generic-settings	bare	2	P1	agent	28629	—	—	—	—	—	—	4	40057	—	False	dead_ends: account-deleted has no way out	True	False	True	True	—	True	—	True	10	2	0	156	2	0	0	168
+generic-settings-a915b1	generic-settings	product-layer	1	P1	agent	40092	—	—	—	—	—	—	6	55063	—	True	ok	True	True	True	True	—	True	—	True	9	2	0	141	2	0	0	179
+generic-settings-b8239a	generic-settings	design-for-ai	2	P1	agent	33183	—	—	—	—	—	—	4	43755	—	False	dead_ends: deleted has no way out	True	False	True	True	—	True	—	True	10	2	1	165	2	0	0	202
+generic-settings-c1d4af	generic-settings	product-layer+visual	2	P1	agent	47744	—	—	—	—	—	—	8	65979	—	False	dead_ends: delete-done has no way out	True	False	True	True	—	True	—	True	7	1	0	125	2	0	0	201
+generic-settings-d207a7	generic-settings	design-for-ai	1	P1	agent	37949	—	—	—	—	—	—	5	52139	—	False	states: export lacks ['loading']	True	True	True	False	—	True	—	True	8	2	1	143	2	0	0	230
+gentoon-approve-2cad9b	gentoon-approve	szilu	2	P1	agent	34715	—	—	—	—	—	—	4	36801	—	True	ok	True	True	True	True	—	True	—	True	7	2	1	141	2	0	0	188
+gentoon-approve-3e99bb	gentoon-approve	szilu	1	P1	agent	34234	—	—	—	—	—	—	7	54014	—	True	ok	True	True	True	True	—	True	—	True	7	2	1	150	2	0	0	168
+gentoon-approve-414752	gentoon-approve	design-for-ai	2	P1	agent	41613	—	—	—	—	—	—	6	47596	—	True	ok	True	True	True	True	—	True	—	True	7	2	3	177	2	0	0	225
+gentoon-approve-4dead5	gentoon-approve	product-layer	1	P1	agent	43696	—	—	—	—	—	—	6	51203	—	True	ok	True	True	True	True	—	True	—	True	8	2	2	193	2	0	0	205
+gentoon-approve-62d80b	gentoon-approve	product-layer	2	P1	agent	42628	—	—	—	—	—	—	6	54582	—	True	ok	True	True	True	True	—	True	—	True	7	2	1	171	2	0	0	158
+gentoon-approve-7a8a5f	gentoon-approve	product-layer+visual	2	P1	agent	40897	—	—	—	—	—	—	8	58386	—	True	ok	True	True	True	True	—	True	—	True	7	2	3	183	2	0	0	210
+gentoon-approve-a7866f	gentoon-approve	design-for-ai	1	P1	agent	36798	—	—	—	—	—	—	4	43256	—	True	ok	True	True	True	True	—	True	—	True	9	2	1	161	2	0	0	231
+gentoon-approve-bcb58c	gentoon-approve	product-layer+visual	1	P1	agent	28021	—	—	—	—	—	—	4	31795	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a block mapping	False	—	—	—	—	—	—	—	—	—	—	153	2	0	0	195
+gentoon-approve-ded2b0	gentoon-approve	bare	1	P1	agent	27695	—	—	—	—	—	—	3	30273	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	129	2	0	0	153
+gentoon-approve-f320e9	gentoon-approve	bare	2	P1	agent	28199	—	—	—	—	—	—	4	39932	—	True	ok	True	True	True	True	—	True	—	True	7	2	1	169	2	0	0	197
+stb-split-flow-0f7bab	stb-split-flow	product-layer+visual	1	P1	agent	56856	—	—	—	—	—	—	10	136389	—	False	asks: never asks /item|dish|ate|position|order|what/	True	True	True	True	—	False	—	—	16	2	2	355	2	0	0	273
+stb-split-flow-14a19a	stb-split-flow	design-for-ai	2	P1	agent	34224	—	—	—	—	—	—	5	53989	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	202	2	0	0	155
+stb-split-flow-25d2ae	stb-split-flow	bare	2	P1	agent	29382	—	—	—	—	—	—	4	49801	—	False	asks: parse-review asks known `corrections to items, prices or the service charge (tap a row to edit)`; payout-details asks known `how friends should pay (card number or phone for transfer, bank name optional)`	True	True	True	True	—	False	—	—	11	4	2	188	2	0	0	172
+stb-split-flow-52f22a	stb-split-flow	bare	1	P1	agent	31428	—	—	—	—	—	—	4	70861	—	False	dead_ends: all-settled has no way out	True	False	True	True	—	True	—	—	12	2	2	236	2	0	0	195
+stb-split-flow-7f7c28	stb-split-flow	szilu	1	P1	agent	36444	—	—	—	—	—	—	4	56962	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	184	2	0	0	185
+stb-split-flow-884796	stb-split-flow	product-layer	1	P1	agent	56282	—	—	—	—	—	—	11	132386	—	True	ok	True	True	True	True	—	True	—	—	15	3	0	344	2	0	0	257
+stb-split-flow-8abdb7	stb-split-flow	design-for-ai	1	P1	agent	39150	—	—	—	—	—	—	8	85109	—	False	dead_ends: all-settled has no way out	True	False	True	True	—	True	—	—	16	3	0	267	2	0	0	240
+stb-split-flow-9297db	stb-split-flow	product-layer+visual	2	P1	agent	56607	—	—	—	—	—	—	12	104101	—	True	ok	True	True	True	True	—	True	—	—	14	2	1	246	2	0	0	331
+stb-split-flow-9ab205	stb-split-flow	product-layer	2	P1	agent	55176	—	—	—	—	—	—	13	112868	—	True	ok	True	True	True	True	—	True	—	—	13	3	1	294	2	0	0	300
+stb-split-flow-ab419a	stb-split-flow	szilu	2	P1	agent	46151	—	—	—	—	—	—	11	97597	—	True	ok	True	True	True	True	—	True	—	—	12	3	2	260	2	0	0	255
+warmplace-onboarding-1c6667	warmplace-onboarding	product-layer	2	P1	agent	57478	—	—	—	—	—	—	11	141879	—	False	nav: tutor: 6 top-level sections > 5	True	True	True	True	—	True	False	—	17	5	5	397	2	0	0	334
+warmplace-onboarding-500ef8	warmplace-onboarding	bare	1	P1	agent	32948	—	—	—	—	—	—	5	60316	—	False	steps: student: 5 steps > 4	True	True	False	True	—	True	True	—	13	8	9	241	2	0	0	224
+warmplace-onboarding-7aa33e	warmplace-onboarding	design-for-ai	1	P1	agent	36884	—	—	—	—	—	—	6	65032	—	False	structure: spec/flow.yaml is not valid YAML: while parsing a flow sequence	False	—	—	—	—	—	—	—	—	—	—	237	2	0	0	227
+warmplace-onboarding-7ad94c	warmplace-onboarding	szilu	2	P1	agent	38286	—	—	—	—	—	—	7	60978	—	False	steps: student: 5 steps > 4 | nav: tutor: 7 top-level sections > 5	True	True	False	True	—	True	False	—	16	9	6	218	2	0	0	210
+warmplace-onboarding-91ed27	warmplace-onboarding	product-layer+visual	2	P1	agent	47722	—	—	—	—	—	—	8	89342	—	False	nav: tutor: 6 top-level sections > 5	True	True	True	True	—	True	False	—	17	7	7	335	2	0	0	310
+warmplace-onboarding-dd19c2	warmplace-onboarding	product-layer+visual	1	P1	agent	48036	—	—	—	—	—	—	9	104267	—	True	ok	True	True	True	True	—	True	True	—	15	5	10	297	2	0	0	264
+warmplace-onboarding-e22eca	warmplace-onboarding	product-layer	1	P1	agent	55109	—	—	—	—	—	—	7	128880	—	False	asks: never asks /slot|availab|time|schedule/ | nav: tutor: 7 top-level sections > 5	True	True	True	True	—	False	False	—	20	8	5	391	2	0	0	379
+warmplace-onboarding-f2ea2b	warmplace-onboarding	szilu	1	P1	agent	41916	—	—	—	—	—	—	7	65033	—	False	steps: student: 6 steps > 4 | asks: never asks /slot|availab|time|schedule/ | nav: tutor: 6 top-level sections > 5	True	True	False	True	—	False	False	—	15	10	10	255	1	0	0	333
+warmplace-onboarding-f98c53	warmplace-onboarding	bare	2	P1	agent	34145	—	—	—	—	—	—	6	69014	—	False	steps: student: 5 steps > 4 | asks: never asks /slot|availab|time|schedule/ | nav: tutor: 7 top-level sections > 5	True	True	False	True	—	False	False	—	13	8	9	239	2	0	0	234
+warmplace-onboarding-fa8911	warmplace-onboarding	design-for-ai	2	P1	agent	29670	—	—	—	—	—	—	3	47354	—	False	steps: student: 5 steps > 4 | asks: role-choice asks known `role`	True	True	False	True	—	False	True	—	12	9	8	180	2	0	0	191

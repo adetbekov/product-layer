@@ -136,6 +136,14 @@ def test_asks_only_on_the_happy_path_and_per_flow(tmp_path):
     assert check(tmp_path, data, {"require_asks": ["slot"]})["asks"] == ["never asks /slot/"]
 
 
+def test_approving_a_shown_value_is_not_asking_for_it(tmp_path):
+    data = spec()
+    data["screens"][0]["asks"] = [{"field": "Approval of the plan and price"}]
+    assert check(tmp_path, data, {"forbid_asks": ["price"]})["asks"] == []
+    data["screens"][0]["asks"] = [{"field": "price you want to pay"}]
+    assert check(tmp_path, data, {"forbid_asks": ["price"]})["asks"] == ["a asks known `price you want to pay`"]
+
+
 def test_nav_and_min_actions(tmp_path):
     data = spec(nav={"a": ["x"], "b": list("123456")})
     data["screens"][0]["moment"] = "plan"
