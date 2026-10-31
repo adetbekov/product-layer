@@ -1,0 +1,565 @@
+engine	run	step	command	ms	wall_ms
+playwright	A-p01	0	open	7983	8076
+playwright	A-p01	1	click e14	6295	6368
+playwright	A-p01	2	click e18	5733	5835
+playwright	A-p01	3	click e7	7176	7267
+playwright	A-p01	4	click e51	8709	8938
+playwright	A-p01	5	fill e56 aigerim@example.com	6305	6395
+playwright	A-p01	6	fill e58 oatmilk42	5641	5718
+playwright	A-p02	0	open	7201	7300
+playwright	A-p02	1	click e14	7056	7146
+playwright	A-p02	2	click e18	5617	5729
+playwright	A-p02	3	click e7	7110	7179
+playwright	A-p02	4	click e51	9005	9129
+playwright	A-p02	5	fill e56 aigerim@example.com	6107	6251
+playwright	A-p02	6	fill e58 oatmilk42	5320	5381
+playwright	A-p02	7	click e60	6113	6193
+playwright	A-p02	8	click e72	6759	6916
+playwright	A-p03	0	open	6995	7102
+playwright	A-p03	1	click e14	6546	6628
+playwright	A-p03	2	click e18	5426	5535
+playwright	A-p03	3	click e7	5616	5821
+playwright	A-p03	4	click e51	9137	9529
+playwright	A-p03	5	fill e56 aigerim@example.com	6521	6639
+playwright	A-p03	6	fill e58 oatmilk42	6013	6149
+playwright	A-p03	7	click e60	6253	6403
+playwright	A-p03	8	click e72	5992	6066
+playwright	A-p04	0	open	7239	7364
+playwright	A-p04	1	click e14	6982	7072
+playwright	A-p04	2	click e18	5454	5526
+playwright	A-p04	3	click e7	6950	7009
+playwright	A-p04	4	click e51	7786	7927
+playwright	A-p04	5	fill e56 aigerim@example.com	6344	6530
+playwright	A-p04	6	fill e58 oatmilk42	5771	5909
+playwright	A-p05	0	open	7507	7594
+playwright	A-p05	1	click e14	6472	6603
+playwright	A-p05	2	click e18	6655	6775
+playwright	A-p05	3	click e7	7119	7232
+playwright	A-p05	4	click e51	6415	6532
+playwright	A-p05	5	fill e56 aigerim@example.com	5357	5453
+playwright	A-p05	6	fill e58 oatmilk42	5785	5953
+playwright	A-p06	0	open	7602	7680
+playwright	A-p06	1	click e14	6388	6488
+playwright	A-p06	2	click e18	6721	6816
+playwright	A-p06	3	click e7	6861	6961
+playwright	A-p06	4	click e51	5954	6036
+playwright	A-p06	5	fill e56 aigerim@example.com	6202	6301
+playwright	A-p06	6	fill e58 oatmilk42	5627	5715
+playwright	A-p07	0	open	6887	6978
+playwright	A-p07	1	click e14	7117	7201
+playwright	A-p07	2	click e18	6862	6980
+playwright	A-p07	3	click e7	6128	6249
+playwright	A-p07	4	click e51	6409	6513
+playwright	A-p07	5	fill e56 aigerim@example.com	5079	5166
+playwright	A-p07	6	fill e58 oatmilk42	4932	5013
+playwright	A-p08	0	open	7205	7297
+playwright	A-p08	1	click e14	7130	7229
+playwright	A-p08	2	click e18	6343	6433
+playwright	A-p08	3	click e7	6458	6541
+playwright	A-p08	4	click e51	5963	6038
+playwright	A-p08	5	fill e56 aigerim@example.com	5150	5228
+playwright	A-p08	6	fill e58 oatmilk42	5001	5090
+playwright	A-p08	7	click e60	6611	6689
+playwright	A-p08	8	click e72	5979	6079
+playwright	A-p09	0	open	5060	5118
+playwright	A-p09	1	click e14	5759	5826
+playwright	A-p09	2	click e18	6359	6492
+playwright	A-p09	3	click e7	5776	5915
+playwright	A-p09	4	click e51	5503	5571
+playwright	A-p09	5	fill e56 aigerim@example.com	4900	4984
+playwright	A-p09	6	fill e58 oatmilk42	5601	5686
+playwright	A-p09	7	click e60	6018	6123
+playwright	A-p09	8	click e72	5672	5834
+playwright	A-p10	0	open	6068	6186
+playwright	A-p10	1	click e14	5925	5997
+playwright	A-p10	2	click e18	5726	5827
+playwright	A-p10	3	click e7	5742	5804
+playwright	A-p10	4	click e51	6028	6145
+playwright	A-p10	5	fill e56 aigerim@example.com	5715	5875
+playwright	A-p10	6	fill e58 oatmilk42	5646	5760
+playwright	A-p11	0	open	6884	6978
+playwright	A-p11	1	click e14	5750	5836
+playwright	A-p11	2	click e18	6146	6259
+playwright	A-p11	3	click e7	5843	5955
+playwright	A-p11	4	click e51	6110	6281
+playwright	A-p11	5	fill e56 aigerim@example.com	6041	6176
+playwright	A-p11	6	fill e58 oatmilk42	5421	5514
+playwright	A-p12	0	open	4992	5066
+playwright	A-p12	1	click e14	5598	5682
+playwright	A-p12	2	click e18	6244	6346
+playwright	A-p12	3	click e7	6501	6649
+playwright	A-p12	4	click e51	5649	5730
+playwright	A-p12	5	fill e56 aigerim@example.com	5735	5823
+playwright	A-p12	6	fill e58 oatmilk42	5308	5395
+playwright	A-p12	7	click e60	5479	5569
+playwright	A-p12	8	click e72	5321	5386
+playwright	A-p13	0	open	5497	5572
+playwright	A-p13	1	click e14	6015	6082
+playwright	A-p13	2	click e18	5902	5968
+playwright	A-p13	3	click e7	5819	5922
+playwright	A-p13	4	click e51	5308	5420
+playwright	A-p13	5	fill e56 aigerim@example.com	4546	4646
+playwright	A-p13	6	fill e58 oatmilk42	4948	5078
+playwright	A-p13	7	click e60	5978	6127
+playwright	A-p13	8	click e72	5535	5622
+playwright	A-p14	0	open	5135	5313
+playwright	A-p14	1	click e14	6026	6118
+playwright	A-p14	2	click e18	5051	5128
+playwright	A-p14	3	click e7	5243	5378
+playwright	A-p14	4	click e51	5600	5689
+playwright	A-p14	5	fill e56 aigerim@example.com	5434	5524
+playwright	A-p14	6	fill e58 oatmilk42	4705	4832
+playwright	A-p14	7	click e60	5644	5747
+playwright	A-p14	8	click e72	5955	6075
+playwright	A-p15	0	open	6453	6547
+playwright	A-p15	1	click e14	5558	5632
+playwright	A-p15	2	click e18	5382	5466
+playwright	A-p15	3	click e7	5467	5562
+playwright	A-p15	4	click e51	6014	6143
+playwright	A-p15	5	fill e56 aigerim@example.com	5233	5331
+playwright	A-p15	6	fill e58 oatmilk42	4943	5005
+playwright	A-p15	7	click e60	5853	5949
+playwright	A-p15	8	click e72	5514	5597
+playwright	A-p16	0	open	5873	5970
+playwright	A-p16	1	click e14	5872	6014
+playwright	A-p16	2	click e18	5421	5525
+playwright	A-p16	3	click e7	5995	6118
+playwright	A-p16	4	click e51	5586	5652
+playwright	A-p16	5	fill e56 aigerim@example.com	6682	6767
+playwright	A-p16	6	fill e58 oatmilk42	5055	5239
+playwright	A-p16	7	click e60	5380	5443
+playwright	A-p16	8	click e72	6319	6403
+playwright	A-p17	0	open	6544	6610
+playwright	A-p17	1	click e14	5874	5960
+playwright	A-p17	2	click e18	6859	6960
+playwright	A-p17	3	click e7	5255	5383
+playwright	A-p17	4	click e51	5486	5607
+playwright	A-p17	5	fill e56 aigerim@example.com	6127	6223
+playwright	A-p17	6	fill e58 oatmilk42	4556	4695
+playwright	A-p18	0	open	5003	5092
+playwright	A-p18	1	click e14	6840	6950
+playwright	A-p18	2	click e18	5286	5352
+playwright	A-p18	3	click e7	6022	6103
+playwright	A-p18	4	click e51	6391	6497
+playwright	A-p18	5	fill e56 aigerim@example.com	4588	4678
+playwright	A-p18	6	fill e58 oatmilk42	5201	5286
+playwright	A-p19	0	open	6539	6627
+playwright	A-p19	1	click e14	5510	5610
+playwright	A-p19	2	click e18	5546	5631
+playwright	A-p19	3	click e7	6468	6580
+playwright	A-p19	4	click e51	5277	5436
+playwright	A-p19	5	fill e56 aigerim@example.com	5004	5068
+playwright	A-p19	6	fill e58 oatmilk42	5307	5377
+playwright	A-p19	7	click e60	5107	5186
+playwright	A-p19	8	click e72	5245	5306
+playwright	A-p20	0	open	4831	4918
+playwright	A-p20	1	click e14	5559	5629
+playwright	A-p20	2	click e18	5774	5862
+playwright	A-p20	3	click e7	4851	4940
+playwright	A-p20	4	click e51	5428	5516
+playwright	A-p20	5	fill e56 aigerim@example.com	5048	5132
+playwright	A-p20	6	fill e58 oatmilk42	4671	4771
+playwright	A-p20	7	click e60	5373	5450
+playwright	A-p20	8	click e72	5695	5778
+playwright	B-p01	0	open	6394	6458
+playwright	B-p01	1	click e14	5951	6041
+playwright	B-p01	2	click e18	5162	5225
+playwright	B-p01	3	click e7	5703	5794
+playwright	B-p01	4	click e51	5640	5721
+playwright	B-p01	5	click e63	5462	5546
+playwright	B-p02	0	open	5138	5218
+playwright	B-p02	1	click e14	5279	5365
+playwright	B-p02	2	click e18	5728	5837
+playwright	B-p02	3	click e7	5426	5522
+playwright	B-p02	4	click e51	5431	5493
+playwright	B-p02	5	click e63	5705	5790
+playwright	B-p03	0	open	4939	5078
+playwright	B-p03	1	click e14	5425	5500
+playwright	B-p03	2	click e18	5869	5993
+playwright	B-p03	3	click e7	5655	5754
+playwright	B-p03	4	click e51	5312	5407
+playwright	B-p03	5	click e63	5544	5617
+playwright	B-p04	0	open	5080	5169
+playwright	B-p04	1	click e14	5821	5898
+playwright	B-p04	2	click e18	5226	5287
+playwright	B-p04	3	click e7	5429	5588
+playwright	B-p04	4	click e51	5499	5608
+playwright	B-p04	5	click e63	5117	5211
+playwright	B-p05	0	open	6277	6330
+playwright	B-p05	1	click e14	5883	6026
+playwright	B-p05	2	click e18	5444	5534
+playwright	B-p05	3	click e7	5369	5497
+playwright	B-p05	4	click e51	5450	5519
+playwright	B-p05	5	click e63	5252	5316
+playwright	B-p06	0	open	6108	6239
+playwright	B-p06	1	click e14	5435	5518
+playwright	B-p06	2	click e18	5316	5401
+playwright	B-p06	3	click e7	5295	5427
+playwright	B-p06	4	click e51	5360	5447
+playwright	B-p06	5	click e63	5261	5340
+playwright	B-p07	0	open	5987	6071
+playwright	B-p07	1	click e14	5180	5247
+playwright	B-p07	2	click e18	5842	5922
+playwright	B-p07	3	click e7	5575	5660
+playwright	B-p07	4	click e51	5373	5447
+playwright	B-p07	5	click e63	5013	5084
+playwright	B-p08	0	open	6018	6213
+playwright	B-p08	1	click e14	5799	5875
+playwright	B-p08	2	click e18	5107	5171
+playwright	B-p08	3	click e7	5326	5384
+playwright	B-p08	4	click e51	5176	5274
+playwright	B-p08	5	click e63	5234	5305
+playwright	B-p09	0	open	5241	5328
+playwright	B-p09	1	click e14	5316	5411
+playwright	B-p09	2	click e18	5448	5545
+playwright	B-p09	3	click e7	5178	5280
+playwright	B-p09	4	click e51	5214	5314
+playwright	B-p09	5	click e63	5228	5320
+playwright	B-p10	0	open	6361	6445
+playwright	B-p10	1	click e14	5334	5416
+playwright	B-p10	2	click e18	5287	5373
+playwright	B-p10	3	click e7	5200	5301
+playwright	B-p10	4	click e51	5432	5503
+playwright	B-p10	5	click e63	5363	5442
+playwright	B-p11	0	open	5974	6027
+playwright	B-p11	1	click e14	5029	5110
+playwright	B-p11	2	click e18	5117	5205
+playwright	B-p11	3	click e7	5530	5612
+playwright	B-p11	4	click e51	5510	5607
+playwright	B-p11	5	click e63	5225	5278
+playwright	B-p12	0	open	4983	5060
+playwright	B-p12	1	click e14	6157	6237
+playwright	B-p12	2	click e18	5058	5114
+playwright	B-p12	3	click e7	5392	5457
+playwright	B-p12	4	click e51	5459	5548
+playwright	B-p12	5	click e63	5377	5479
+playwright	B-p13	0	open	5370	5448
+playwright	B-p13	1	click e14	5015	5098
+playwright	B-p13	2	click e18	5746	5885
+playwright	B-p13	3	click e7	5541	5715
+playwright	B-p13	4	click e51	5462	5541
+playwright	B-p13	5	click e63	5598	5666
+playwright	B-p14	0	open	5002	5107
+playwright	B-p14	1	click e14	5126	5195
+playwright	B-p14	2	click e18	5795	5847
+playwright	B-p14	3	click e7	5668	5758
+playwright	B-p14	4	click e51	5255	5363
+playwright	B-p14	5	click e63	5614	5738
+playwright	B-p15	0	open	6263	6381
+playwright	B-p15	1	click e14	5453	5546
+playwright	B-p15	2	click e18	5806	5884
+playwright	B-p15	3	click e7	5952	6033
+playwright	B-p15	4	click e51	5795	5907
+playwright	B-p15	5	click e63	5670	5753
+playwright	B-p16	0	open	5927	5984
+playwright	B-p16	1	click e14	5835	5902
+playwright	B-p16	2	click e18	5635	5706
+playwright	B-p16	3	click e7	5739	5843
+playwright	B-p16	4	click e51	5521	5588
+playwright	B-p16	5	click e63	5179	5273
+playwright	B-p17	0	open	6702	6837
+playwright	B-p17	1	click e14	5581	5659
+playwright	B-p17	2	click e18	5449	5535
+playwright	B-p17	3	click e7	5434	5519
+playwright	B-p17	4	click e51	5423	5489
+playwright	B-p17	5	click e63	6057	6153
+playwright	B-p18	0	open	5390	5477
+playwright	B-p18	1	click e14	5551	5632
+playwright	B-p18	2	click e18	5927	6015
+playwright	B-p18	3	click e7	5245	5325
+playwright	B-p18	4	click e51	5371	5429
+playwright	B-p18	5	click e63	5773	5865
+playwright	B-p19	0	open	4918	5088
+playwright	B-p19	1	click e14	5381	5464
+playwright	B-p19	2	click e18	5950	6044
+playwright	B-p19	3	click e7	4934	4993
+playwright	B-p19	4	click e51	4889	4963
+playwright	B-p19	5	click e63	4927	4998
+playwright	B-p20	0	open	5441	5502
+playwright	B-p20	1	click e14	4940	5021
+playwright	B-p20	2	click e18	4814	4885
+playwright	B-p20	3	click e7	5111	5196
+playwright	B-p20	4	click e51	4708	4767
+playwright	B-p20	5	click e63	4899	4964
+cdp	A-p01	0	open	2559	2778
+cdp	A-p01	1	click e14	437	578
+cdp	A-p01	2	click e18	371	458
+cdp	A-p01	3	click e7	407	502
+cdp	A-p01	4	click e51	448	543
+cdp	A-p01	5	fill e56 aigerim@example.com	385	482
+cdp	A-p01	6	fill e58 oatmilk42	392	463
+cdp	A-p02	0	open	2280	2541
+cdp	A-p02	1	click e14	467	695
+cdp	A-p02	2	click e18	369	488
+cdp	A-p02	3	click e7	397	483
+cdp	A-p02	4	click e51	402	503
+cdp	A-p02	5	fill e56 aigerim@example.com	394	514
+cdp	A-p02	6	fill e58 oatmilk42	372	467
+cdp	A-p02	7	click e60	528	778
+cdp	A-p02	8	click e72	488	685
+cdp	A-p03	0	open	2229	2452
+cdp	A-p03	1	click e14	530	695
+cdp	A-p03	2	click e18	396	510
+cdp	A-p03	3	click e7	398	469
+cdp	A-p03	4	click e51	413	521
+cdp	A-p03	5	fill e56 aigerim@example.com	427	518
+cdp	A-p03	6	fill e58 oatmilk42	372	439
+cdp	A-p03	7	click e60	411	498
+cdp	A-p03	8	click e72	520	794
+cdp	A-p04	0	open	2312	2550
+cdp	A-p04	1	click e14	403	545
+cdp	A-p04	2	click e18	419	543
+cdp	A-p04	3	click e7	400	492
+cdp	A-p04	4	click e51	440	546
+cdp	A-p04	5	fill e56 aigerim@example.com	445	548
+cdp	A-p04	6	fill e58 oatmilk42	376	470
+cdp	A-p05	0	open	1649	1791
+cdp	A-p05	1	click e14	669	834
+cdp	A-p05	2	click e18	440	714
+cdp	A-p05	3	click e7	432	534
+cdp	A-p05	4	click e51	403	488
+cdp	A-p05	5	fill e56 aigerim@example.com	410	537
+cdp	A-p05	6	fill e58 oatmilk42	395	516
+cdp	A-p06	0	open	1645	1773
+cdp	A-p06	1	click e14	505	768
+cdp	A-p06	2	click e18	407	600
+cdp	A-p06	3	click e7	386	490
+cdp	A-p06	4	click e51	386	446
+cdp	A-p06	5	fill e56 aigerim@example.com	398	475
+cdp	A-p06	6	fill e58 oatmilk42	400	533
+cdp	A-p07	0	open	1475	1622
+cdp	A-p07	1	click e14	400	488
+cdp	A-p07	2	click e18	370	452
+cdp	A-p07	3	click e7	432	504
+cdp	A-p07	4	click e51	447	576
+cdp	A-p07	5	fill e56 aigerim@example.com	401	483
+cdp	A-p07	6	fill e58 oatmilk42	612	828
+cdp	A-p08	0	open	1429	1538
+cdp	A-p08	1	click e14	387	497
+cdp	A-p08	2	click e18	375	435
+cdp	A-p08	3	click e7	425	526
+cdp	A-p08	4	click e51	401	528
+cdp	A-p08	5	fill e56 aigerim@example.com	399	507
+cdp	A-p08	6	fill e58 oatmilk42	593	819
+cdp	A-p08	7	click e60	690	844
+cdp	A-p08	8	click e72	468	578
+cdp	A-p09	0	open	1684	1809
+cdp	A-p09	1	click e14	409	498
+cdp	A-p09	2	click e18	421	534
+cdp	A-p09	3	click e7	408	512
+cdp	A-p09	4	click e51	418	556
+cdp	A-p09	5	fill e56 aigerim@example.com	381	479
+cdp	A-p09	6	fill e58 oatmilk42	410	513
+cdp	A-p09	7	click e60	406	510
+cdp	A-p09	8	click e72	432	551
+cdp	A-p10	0	open	1707	1811
+cdp	A-p10	1	click e14	460	626
+cdp	A-p10	2	click e18	386	468
+cdp	A-p10	3	click e7	451	569
+cdp	A-p10	4	click e51	414	503
+cdp	A-p10	5	fill e56 aigerim@example.com	405	483
+cdp	A-p10	6	fill e58 oatmilk42	403	509
+cdp	A-p11	0	open	1252	1392
+cdp	A-p11	1	click e14	394	490
+cdp	A-p11	2	click e18	408	536
+cdp	A-p11	3	click e7	431	541
+cdp	A-p11	4	click e51	419	531
+cdp	A-p11	5	fill e56 aigerim@example.com	400	511
+cdp	A-p11	6	fill e58 oatmilk42	438	563
+cdp	A-p12	0	open	1035	1155
+cdp	A-p12	1	click e14	426	551
+cdp	A-p12	2	click e18	378	478
+cdp	A-p12	3	click e7	441	553
+cdp	A-p12	4	click e51	422	529
+cdp	A-p12	5	fill e56 aigerim@example.com	579	776
+cdp	A-p12	6	fill e58 oatmilk42	599	893
+cdp	A-p12	7	click e60	605	729
+cdp	A-p12	8	click e72	417	540
+cdp	A-p13	0	open	1172	1351
+cdp	A-p13	1	click e14	482	602
+cdp	A-p13	2	click e18	514	877
+cdp	A-p13	3	click e7	453	597
+cdp	A-p13	4	click e51	412	564
+cdp	A-p13	5	fill e56 aigerim@example.com	426	624
+cdp	A-p13	6	fill e58 oatmilk42	424	662
+cdp	A-p13	7	click e60	398	507
+cdp	A-p13	8	click e72	380	494
+cdp	A-p14	0	open	2078	2283
+cdp	A-p14	1	click e14	422	527
+cdp	A-p14	2	click e18	397	507
+cdp	A-p14	3	click e7	618	730
+cdp	A-p14	4	click e51	443	580
+cdp	A-p14	5	fill e56 aigerim@example.com	369	452
+cdp	A-p14	6	fill e58 oatmilk42	388	558
+cdp	A-p14	7	click e60	422	556
+cdp	A-p14	8	click e72	477	646
+cdp	A-p15	0	open	2001	2121
+cdp	A-p15	1	click e14	429	564
+cdp	A-p15	2	click e18	450	565
+cdp	A-p15	3	click e7	500	715
+cdp	A-p15	4	click e51	405	543
+cdp	A-p15	5	fill e56 aigerim@example.com	428	537
+cdp	A-p15	6	fill e58 oatmilk42	429	547
+cdp	A-p15	7	click e60	499	675
+cdp	A-p15	8	click e72	391	509
+cdp	A-p16	0	open	1373	1469
+cdp	A-p16	1	click e14	411	525
+cdp	A-p16	2	click e18	393	488
+cdp	A-p16	3	click e7	480	604
+cdp	A-p16	4	click e51	467	591
+cdp	A-p16	5	fill e56 aigerim@example.com	386	557
+cdp	A-p16	6	fill e58 oatmilk42	430	629
+cdp	A-p16	7	click e60	629	907
+cdp	A-p16	8	click e72	393	485
+cdp	A-p17	0	open	1302	1391
+cdp	A-p17	1	click e14	398	617
+cdp	A-p17	2	click e18	440	607
+cdp	A-p17	3	click e7	453	600
+cdp	A-p17	4	click e51	447	555
+cdp	A-p17	5	fill e56 aigerim@example.com	407	561
+cdp	A-p17	6	fill e58 oatmilk42	431	683
+cdp	A-p18	0	open	1295	1400
+cdp	A-p18	1	click e14	445	613
+cdp	A-p18	2	click e18	402	516
+cdp	A-p18	3	click e7	406	549
+cdp	A-p18	4	click e51	409	716
+cdp	A-p18	5	fill e56 aigerim@example.com	427	545
+cdp	A-p18	6	fill e58 oatmilk42	376	588
+cdp	A-p19	0	open	1520	1612
+cdp	A-p19	1	click e14	405	532
+cdp	A-p19	2	click e18	383	506
+cdp	A-p19	3	click e7	511	642
+cdp	A-p19	4	click e51	463	598
+cdp	A-p19	5	fill e56 aigerim@example.com	443	634
+cdp	A-p19	6	fill e58 oatmilk42	412	552
+cdp	A-p19	7	click e60	432	540
+cdp	A-p19	8	click e72	411	504
+cdp	A-p20	0	open	1181	1292
+cdp	A-p20	1	click e14	471	595
+cdp	A-p20	2	click e18	415	516
+cdp	A-p20	3	click e7	425	538
+cdp	A-p20	4	click e51	426	517
+cdp	A-p20	5	fill e56 aigerim@example.com	379	484
+cdp	A-p20	6	fill e58 oatmilk42	399	526
+cdp	A-p20	7	click e60	450	647
+cdp	A-p20	8	click e72	423	599
+cdp	B-p01	0	open	1213	1275
+cdp	B-p01	1	click e14	391	483
+cdp	B-p01	2	click e18	410	504
+cdp	B-p01	3	click e7	469	566
+cdp	B-p01	4	click e51	451	606
+cdp	B-p01	5	click e63	433	600
+cdp	B-p02	0	open	1101	1191
+cdp	B-p02	1	click e14	412	499
+cdp	B-p02	2	click e18	418	600
+cdp	B-p02	3	click e7	433	633
+cdp	B-p02	4	click e51	712	1122
+cdp	B-p02	5	click e63	472	647
+cdp	B-p03	0	open	1230	1396
+cdp	B-p03	1	click e14	565	696
+cdp	B-p03	2	click e18	536	853
+cdp	B-p03	3	click e7	406	661
+cdp	B-p03	4	click e51	494	597
+cdp	B-p03	5	click e63	400	495
+cdp	B-p04	0	open	1483	1614
+cdp	B-p04	1	click e14	426	570
+cdp	B-p04	2	click e18	426	534
+cdp	B-p04	3	click e7	414	504
+cdp	B-p04	4	click e51	476	564
+cdp	B-p04	5	click e63	468	591
+cdp	B-p05	0	open	1610	1749
+cdp	B-p05	1	click e14	399	493
+cdp	B-p05	2	click e18	409	524
+cdp	B-p05	3	click e7	393	494
+cdp	B-p05	4	click e51	529	643
+cdp	B-p05	5	click e63	463	681
+cdp	B-p06	0	open	1050	1143
+cdp	B-p06	1	click e14	387	476
+cdp	B-p06	2	click e18	483	642
+cdp	B-p06	3	click e7	489	672
+cdp	B-p06	4	click e51	493	647
+cdp	B-p06	5	click e63	611	808
+cdp	B-p07	0	open	1537	1638
+cdp	B-p07	1	click e14	470	611
+cdp	B-p07	2	click e18	556	827
+cdp	B-p07	3	click e7	412	541
+cdp	B-p07	4	click e51	449	594
+cdp	B-p07	5	click e63	411	507
+cdp	B-p08	0	open	1538	1692
+cdp	B-p08	1	click e14	442	645
+cdp	B-p08	2	click e18	444	591
+cdp	B-p08	3	click e7	465	563
+cdp	B-p08	4	click e51	459	569
+cdp	B-p08	5	click e63	455	644
+cdp	B-p09	0	open	1531	1653
+cdp	B-p09	1	click e14	465	607
+cdp	B-p09	2	click e18	391	546
+cdp	B-p09	3	click e7	432	531
+cdp	B-p09	4	click e51	500	646
+cdp	B-p09	5	click e63	482	634
+cdp	B-p10	0	open	1311	1429
+cdp	B-p10	1	click e14	441	567
+cdp	B-p10	2	click e18	432	590
+cdp	B-p10	3	click e7	416	511
+cdp	B-p10	4	click e51	554	661
+cdp	B-p10	5	click e63	487	671
+cdp	B-p11	0	open	1517	1608
+cdp	B-p11	1	click e14	476	633
+cdp	B-p11	2	click e18	452	612
+cdp	B-p11	3	click e7	603	730
+cdp	B-p11	4	click e51	476	610
+cdp	B-p11	5	click e63	373	440
+cdp	B-p12	0	open	1362	1463
+cdp	B-p12	1	click e14	581	734
+cdp	B-p12	2	click e18	445	638
+cdp	B-p12	3	click e7	382	470
+cdp	B-p12	4	click e51	461	541
+cdp	B-p12	5	click e63	614	827
+cdp	B-p13	0	open	1546	1719
+cdp	B-p13	1	click e14	407	556
+cdp	B-p13	2	click e18	377	467
+cdp	B-p13	3	click e7	378	457
+cdp	B-p13	4	click e51	461	647
+cdp	B-p13	5	click e63	404	630
+cdp	B-p14	0	open	1120	1224
+cdp	B-p14	1	click e14	362	450
+cdp	B-p14	2	click e18	412	622
+cdp	B-p14	3	click e7	561	816
+cdp	B-p14	4	click e51	407	542
+cdp	B-p14	5	click e63	545	691
+cdp	B-p15	0	open	1402	1493
+cdp	B-p15	1	click e14	545	654
+cdp	B-p15	2	click e18	516	867
+cdp	B-p15	3	click e7	484	699
+cdp	B-p15	4	click e51	436	561
+cdp	B-p15	5	click e63	398	481
+cdp	B-p16	0	open	1732	1832
+cdp	B-p16	1	click e14	435	534
+cdp	B-p16	2	click e18	470	605
+cdp	B-p16	3	click e7	395	512
+cdp	B-p16	4	click e51	487	645
+cdp	B-p16	5	click e63	445	631
+cdp	B-p17	0	open	1991	2156
+cdp	B-p17	1	click e14	440	664
+cdp	B-p17	2	click e18	366	449
+cdp	B-p17	3	click e7	429	557
+cdp	B-p17	4	click e51	658	922
+cdp	B-p17	5	click e63	502	876
+cdp	B-p18	0	open	1118	1306
+cdp	B-p18	1	click e14	375	481
+cdp	B-p18	2	click e18	403	527
+cdp	B-p18	3	click e7	448	647
+cdp	B-p18	4	click e51	566	738
+cdp	B-p18	5	click e63	412	519
+cdp	B-p19	0	open	1328	1464
+cdp	B-p19	1	click e14	452	756
+cdp	B-p19	2	click e18	405	543
+cdp	B-p19	3	click e7	411	517
+cdp	B-p19	4	click e51	417	509
+cdp	B-p19	5	click e63	367	455
+cdp	B-p20	0	open	1273	1564
+cdp	B-p20	1	click e14	392	482
+cdp	B-p20	2	click e18	388	465
+cdp	B-p20	3	click e7	385	462
+cdp	B-p20	4	click e51	377	439
+cdp	B-p20	5	click e63	416	514

@@ -1,0 +1,27 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - link "Pantry" [ref=e3]:
+      - /url: "#/"
+    - navigation [ref=e5]:
+      - text: Hi, Aigerim
+      - link "Cart (2)" [ref=e7]:
+        - /url: "#/cart"
+  - main [ref=e8]:
+    - heading "Groceries" [level=1] [ref=e9]
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e12]: Oat milk 1 L
+        - generic [ref=e13]: 1 290 ₸
+        - button "Add Oat milk 1 L to cart" [ref=e14]: Added ✓
+      - generic [ref=e15]:
+        - generic [ref=e16]: Rye bread
+        - generic [ref=e17]: 650 ₸
+        - button "Add Rye bread to cart" [active] [ref=e18]: Added ✓
+      - generic [ref=e19]:
+        - generic [ref=e20]: Eggs, 10 pcs
+        - generic [ref=e21]: 990 ₸
+        - button "Add Eggs, 10 pcs to cart" [ref=e22]: Add to cart
+      - generic [ref=e23]:
+        - generic [ref=e24]: Green apples 1 kg
+        - generic [ref=e25]: 890 ₸
+        - button "Add Green apples 1 kg to cart" [ref=e26]: Add to cart

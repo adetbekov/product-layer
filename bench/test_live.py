@@ -2,6 +2,7 @@
 
 import importlib.util
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -298,3 +299,192 @@ def test_crowd_aggregate_counts_tiers_and_d1_cost(tmp_path):
     assert res["cost_d1_usd"] == pytest.approx(0.00015)
     assert res["cost_usd"] == pytest.approx(round(0.1 * 0.10 + 0.01 * 0.50 + 0.00015, 4))
     assert "d1 3 (75%)" in (tmp_path / "funnel.md").read_text()
+
+
+class FakeCDP:
+    """Records raw CDP calls of pc.CDP; page expressions answer from `targets`."""
+
+    def __init__(self, targets=None, history=(0, 2)):
+        self.calls, self.evals, self.targets, self.history = [], [], targets or {}, history
+
+    def call(self, method, params=None, timeout=60):
+        self.calls.append((method, params or {}))
+        if method == "Page.getNavigationHistory":
+            i, n = self.history
+            return {"currentIndex": i, "entries": [{"id": 100 + k} for k in range(n)]}
+        return {}
+
+    def eval(self, expr, timeout=60):
+        self.evals.append(expr)
+        ref = next((r for r in self.targets if f'"{r}"' in expr), None)
+        if expr.startswith("(ref =>") and "scrollIntoView" in expr:
+            return self.targets.get(ref) or {"error": f"Ref {ref} not found in the current page snapshot."}
+        if "values" in expr:
+            return {"selected": ["Today"]}
+        return True
+
+
+def fake_cdp(monkeypatch, **kw):
+    pc = load("pc")
+    eng = pc.CDP("s")
+    fake = FakeCDP(**kw)
+    monkeypatch.setattr(eng, "call", fake.call)
+    monkeypatch.setattr(eng, "eval", fake.eval)
+    return pc, eng, fake
+
+
+BOX = {"x": 50, "y": 20, "w": 80, "h": 30, "top": 5, "left": 10, "disabled": False, "checked": False,
+       "editable": False}
+
+
+def test_cdp_translates_commands_to_devtools_calls(monkeypatch):
+    pc, eng, fake = fake_cdp(monkeypatch, targets={"e12": BOX, "e3": {**BOX, "editable": True},
+                                                   "e5": {**BOX, "checked": True}})
+    assert eng.act(["click", "@e12"])[0]
+    assert [(m, p.get("type"), p.get("x")) for m, p in fake.calls] == [
+        ("Input.dispatchMouseEvent", "mouseMoved", 50), ("Input.dispatchMouseEvent", "mousePressed", 50),
+        ("Input.dispatchMouseEvent", "mouseReleased", 50)]
+    fake.calls.clear()
+    assert eng.act(["fill", "e3", "aigerim@example.com"])[0]
+    assert fake.calls == [("Input.insertText", {"text": "aigerim@example.com"})] and "el.focus()" in fake.evals[-1]
+    ok, error, _ = eng.act(["fill", "e12", "x"])
+    assert not ok and "not an <input>" in error
+    fake.calls.clear()
+    eng.act(["check", "e5"])  # already checked: nothing to click
+    eng.act(["press", "Enter"])
+    assert [p["type"] for _, p in fake.calls] == ["keyDown", "keyUp"] and fake.calls[0][1]["text"] == "\r"
+    fake.calls.clear()
+    eng.act(["go-back"])  # first history entry: nothing to go back to
+    assert [m for m, _ in fake.calls] == ["Page.getNavigationHistory"]
+    ok, error, _ = eng.act(["click", "e99"])
+    assert not ok and "not found" in error
+    ok, error, _ = eng.act(["drag", "e1", "e2"])
+    assert not ok and "unknown command" in error
+    assert eng.act(["select", "e12", "Today"])[0] and '["Today"]' in fake.evals[-1]
+
+
+def test_cdp_go_back_and_disabled(monkeypatch):
+    _, eng, fake = fake_cdp(monkeypatch, targets={"e1": {**BOX, "disabled": True}}, history=(1, 2))
+    eng.act(["go-back"])
+    assert fake.calls[-1] == ("Page.navigateToHistoryEntry", {"entryId": 100})
+    ok, error, _ = eng.act(["click", "e1"])
+    assert not ok and error == "element is disabled"
+    covered = {**BOX, "covered": '<div class="modal"> intercepts pointer events'}
+    _, eng, _ = fake_cdp(monkeypatch, targets={"e2": covered})
+    assert "intercepts pointer events" in eng.act(["click", "e2"])[1]
+
+
+def test_cdp_key_events():
+    cdp = load("cdp")
+    down, up = cdp.key_events("Control+a")
+    assert down["type"] == "rawKeyDown" and "text" not in down and down["modifiers"] == 2 and up["type"] == "keyUp"
+    down, _ = cdp.key_events("Shift+Tab")
+    assert down["modifiers"] == 8 and down["code"] == "Tab"
+    assert cdp.key_events("x")[0]["text"] == "x" and cdp.key_events("Space")[0]["key"] == " "
+    with pytest.raises(ValueError):
+        cdp.key_events("Hyper")
+
+
+CDP_NODES = [
+    {"d": 0, "role": "generic", "name": "", "ref": "e1", "attrs": []},
+    {"d": 1, "role": "banner", "name": "", "ref": "e2", "attrs": []},
+    {"d": 2, "role": "link", "name": "Pantry", "ref": "e3", "attrs": [], "url": "#/"},
+    {"d": 2, "text": "Hi, Aigerim"},
+    {"d": 2, "role": "link", "name": "Cart (2)", "ref": "e7", "attrs": ["active"], "url": "#/cart"},
+    {"d": 1, "role": "main", "name": "", "ref": "e8", "attrs": []},
+    {"d": 2, "role": "heading", "name": "Your cart", "ref": "e26", "attrs": ["level=1"]},
+    {"d": 2, "role": "generic", "name": "", "ref": "e32", "attrs": [], "tail": "1"},
+    {"d": 2, "role": "strong", "name": "", "ref": "e43", "attrs": [], "tail": "Total: 1 940 ₸"},
+    {"d": 2, "role": "textbox", "name": "Promo code", "ref": "e30", "attrs": [], "placeholder": "e.g. FRESH10"},
+    {"d": 2, "role": "textbox", "name": "Say \"hi\"", "ref": "e33", "attrs": [], "tail": "abc"},
+    {"d": 2, "role": "combobox", "name": "Delivery time", "ref": "e34", "attrs": []},
+    {"d": 3, "role": "option", "name": "As soon as possible", "attrs": ["selected"]},
+    {"d": 2, "role": "button", "name": "Add Oat milk to cart", "ref": "e31", "attrs": [], "tail": "Add to cart"},
+]
+
+
+def test_cdp_snapshot_reads_like_playwright():
+    cdp, d1, pc = load("cdp"), load("d1"), load("pc")
+    snap = cdp.yaml(CDP_NODES)
+    assert '    - link "Pantry" [ref=e3]:\n      - /url: "#/"\n' in snap and "    - text: Hi, Aigerim\n" in snap
+    assert '- generic [ref=e32]: "1"' in snap and '- strong [ref=e43]: "Total: 1 940 ₸"' in snap
+    assert '- textbox "Promo code" [ref=e30]:\n      - /placeholder: e.g. FRESH10' in snap
+    assert '- heading "Your cart" [level=1] [ref=e26]\n' in snap and '      - option "As soon as possible" [selected]' in snap
+    cs = d1.controls(snap)
+    assert [(c["role"], c["name"], c["ref"]) for c in cs] == [
+        ("link", "Pantry", "e3"), ("link", "Cart (2)", "e7"), ("textbox", "Promo code", "e30"),
+        ("textbox", 'Say "hi"', "e33"), ("combobox", "Delivery time", "e34"), ("button", "Add Oat milk to cart", "e31")]
+    assert "Your cart" in d1.page_text(snap)
+    _, clicks, types = d1.policy(snap)
+    assert {c["ref"] for c in clicks} == {"e3", "e7", "e31"} and {t["ref"] for t in types} == {"e30", "e33", "e34"}
+    moved = cdp.yaml([{**n, "ref": n["ref"] + "0"} if n.get("ref") else n for n in CDP_NODES])
+    assert pc.norm(snap) == pc.norm(moved) and not pc.changes(snap, moved)  # new refs alone are no change
+
+
+@pytest.fixture()
+def shop():
+    cdp = load("cdp")
+    try:
+        cdp.find_chrome()
+    except RuntimeError:
+        pytest.skip("no Chrome")
+    port = 8790 + (hash(str(BENCH)) % 50)
+    srv = subprocess.Popen([sys.executable, "-m", "http.server", str(port), "--bind", "127.0.0.1"],
+                           cwd=BENCH / "cases" / "check-shop" / "fixture", stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL)
+    yield f"http://127.0.0.1:{port}/"
+    srv.terminate()
+
+
+def test_cdp_engine_live_on_the_shop(shop, tmp_path, monkeypatch):
+    import time
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("PC_CDP_HOME", str(tmp_path / "h"))
+    session = f"t{int(time.time() * 1000) % 100000}"
+    pc_cmd = [sys.executable, str(SCRIPTS / "pc.py")]
+    env_args = ["--engine", "cdp", "--session", session]
+
+    def pc(*args):
+        sub, rest = args[0], list(args[1:])
+        out = subprocess.run([*pc_cmd, sub, *env_args, *rest], capture_output=True, text=True, timeout=90,
+                             env={**__import__("os").environ, "PC_RUN": str(tmp_path / "run")})
+        return out.returncode, out.stdout + out.stderr
+
+    for _ in range(50):  # the http server needs a moment
+        if pc("open", shop + "?variant=b")[0] == 0:
+            break
+        time.sleep(0.1)
+    try:
+        d1 = load("d1")
+        snap = (tmp_path / "run" / "last.json").read_text()
+        controls = d1.controls(json.loads(snap)["snap"])
+        add = next(c["ref"] for c in controls if c["name"] == "Add Oat milk 1 L to cart")
+        code, out = pc("do", "--", "click", add)
+        assert code == 0 and "Cart (1)" in out and "Added ✓" in out
+        cart = next(c["ref"] for c in d1.controls(json.loads((tmp_path / "run" / "last.json").read_text())["snap"])
+                    if c["name"].startswith("Cart"))
+        code, out = pc("do", "--", "click", cart)
+        assert "#/cart  (changed)" in out and 'textbox "Promo code"' in out
+        promo = re.search(r'textbox "Promo code" \[ref=(e\d+)\]', out).group(1)
+        code, out = pc("do", "--", "fill", promo, "FRESH10")
+        assert "FRESH10" in out
+        code, out = pc("do", "--", "click", "e1")  # the page body: nothing happens
+        assert "changed: false" in out
+        code, out = pc("do", "--", "go-back")
+        assert "(changed)" in out
+        log = [json.loads(line) for line in (tmp_path / "run" / "log.jsonl").read_text().splitlines()]
+        assert all(e["engine"] == "cdp" and e["ms"] > 0 for e in log)
+        code, out = pc("look")
+        assert code == 0 and "screen:" in out
+    finally:
+        pc("close")
+
+
+def test_engine_replay_maps_refs_through_controls():
+    import engines
+
+    pw = '- button "Add" [ref=e3]\n- button "Add" [ref=e5]\n- link "Cart (1)" [ref=e6]'
+    cdp = '- button "Add" [ref=e14]\n- button "Add" [ref=e18]\n- link "Cart (1)" [ref=e7]'
+    assert engines.find(cdp, engines.target(pw, "e5")) == "e18"
+    assert engines.find(cdp, engines.target(pw, "e6")) == "e7" and engines.target(pw, "e9") is None

@@ -52,6 +52,7 @@ Research behind these choices: `docs/research/2026-10-ux-skills-landscape.md`.
 | [microsoft/playwright-cli](https://github.com/microsoft/playwright-cli) | Apache-2.0 | browser engine (pinned 0.1.23), snapshots to files | `scripts/pc.py` |
 | [vercel-labs/agent-browser](https://github.com/vercel-labs/agent-browser) | Apache-2.0 | second browser engine (0.27.0): `@e` refs, `wait --fn` | `scripts/pc.py` |
 | [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast) | MIT | indexed element table; one decision-model request with an operation question plus speculative target questions; text written by an LLM only when the operation needs it | `scripts/d1.py` |
+| [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast) Browser Harness | MIT | a long-lived direct CDP session instead of a browser CLI per action; the page state read in one `evaluate`; real input events through `Input.*` (code written from scratch) | `scripts/cdp.py`, `scripts/pc.py --engine cdp` |
 | [Liquid AI d1 / systemone API](https://docs.liquid.ai) | docs | choice / noul / score questions, thresholds with an unsure band, images as `data:` URLs | `scripts/d1.py` |
 | borghei/Claude-Skills `qa-browser-automation` | MIT + Commons Clause | reviewed, nothing taken | - |
 | Skyvern | AGPL-3.0 | reviewed, nothing taken | - |
