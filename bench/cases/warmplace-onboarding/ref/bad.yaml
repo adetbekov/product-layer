@@ -1,0 +1,19 @@
+product: Tutoring platform
+flows:
+  - {id: student, entry: invite, done: room}
+  - {id: tutor, entry: signup, done: dashboard}
+nav:
+  student: [Home, Calendar, Lessons, Board, Documents, Messages, Payments, Marketplace, Settings]
+screens:
+  - {id: invite, surface: page, actions: [{label: Sign up, to: signup}]}
+  - id: signup
+    surface: page
+    moment: role
+    asks: [{field: role}, {field: time zone}, {field: country}]
+    actions: [{label: Next, to: details}]
+  - id: details
+    surface: page
+    asks: [{field: subjects}, {field: level}]
+    actions: [{label: Next, to: dashboard}]
+  - {id: dashboard, surface: page, moment: dashboard, actions: [{label: Lessons, to: room}]}
+  - {id: room, surface: page, moment: room, states: {loading: Connecting}, actions: [{label: Leave, to: dashboard}]}

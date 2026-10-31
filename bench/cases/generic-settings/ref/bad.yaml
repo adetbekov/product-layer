@@ -1,0 +1,35 @@
+product: Notes
+flows:
+  - {id: digest, entry: notes, done: saved}
+screens:
+  - id: notes
+    surface: page
+    actions: [{label: Account, to: account}]
+  - id: account
+    surface: page
+    moment: settings
+    actions: [{label: Edit profile, to: profile}]
+  - id: profile
+    surface: page
+    asks:
+      - {field: email, why: confirm identity}
+      - {field: time zone, why: digest timing}
+    actions: [{label: Notifications, to: notifications}]
+  - id: notifications
+    surface: page
+    moment: digest
+    actions: [{label: Frequency weekly, to: confirm}]
+  - id: confirm
+    surface: modal
+    actions: [{label: Save all changes, to: saved}]
+  - id: saved
+    surface: page
+    actions: [{label: Back, to: notes}]
+  - id: export
+    surface: page
+    moment: export
+    states: {loading: Preparing}
+  - id: delete
+    surface: page
+    moment: delete
+    actions: [{label: Delete, to: notes}]

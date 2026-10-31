@@ -1,0 +1,3 @@
+ws	case	arm	rep	step	mode	tokens	weighted_tokens	reported_tokens	input_tokens	output_tokens	cache_read_tokens	cache_write_tokens	tools	ms	cost_usd	solved	check	c_structure	c_dead_ends	c_steps	c_states	c_render	c_asks	c_nav	c_actions	n_screens	n_steps	n_asks	spec_lines	n_files	out_of_scope	questions	reply_words
+generic-settings-2629e1	generic-settings	bare	1	P1	agent	29855	—	—	—	—	—	—	4	34783	—	False	dead_ends: deleted has no way out	True	False	True	True	—	True	—	True	11	2	0	190	2	0	0	221
+generic-settings-a915b1	generic-settings	product-layer	1	P1	agent	28855	—	—	—	—	—	—	4	29423	—	True	ok	True	True	True	True	—	True	—	True	5	2	1	108	2	0	0	152

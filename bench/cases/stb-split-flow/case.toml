@@ -1,0 +1,24 @@
+title = "Telegram bot: split a restaurant bill in a group chat"
+review = "Telegram limits the surface to bot messages, inline keyboards and Mini App pages. Judge whether the payer and each friend reach their goal in few taps inside the group, whether the bot asks only what it cannot read from the receipt or from Telegram, and whether a bad photo and an unparsed receipt are handled."
+brief = """
+# Bill-splitting Telegram bot
+
+A Telegram bot for splitting a restaurant bill among friends. It works in private chats and in group chats (users
+mention the bot). An AI model reads items and prices from a receipt photo. Each person picks what they ate, the bot
+computes each share (including the service charge, split in proportion), each person marks their payment as sent, and
+the payer confirms they got it.
+
+What Telegram gives the bot: the group's members who interact with it, their names and usernames, their language.
+What the receipt gives: items, quantities, prices, service charge, total. The bot cannot know who ate what, or how
+the payer wants to be paid (card number, phone transfer), unless they told it before.
+
+Pain points from user interviews:
+- in the group the bot posts many messages; the chat gets noisy;
+- a blurry photo fails silently and the payer waits;
+- friends have to open a private chat with the bot before they can pick items.
+"""
+
+[[steps]]
+id = "P1"
+kind = "spec"
+prompt = "Design the flow of our bill-splitting Telegram bot in a group chat (context in BRIEF.md). Name two flows: `payer` (from sending the receipt photo to the split posted in the group) and `participant` (a friend, from that group post to having marked their payment as sent). Tag screens with these moments: `parse` (the bot reading the photo), `select` (a friend picking items), `share` (a friend's amount and how to pay), `confirm` (the payer confirming payments)."

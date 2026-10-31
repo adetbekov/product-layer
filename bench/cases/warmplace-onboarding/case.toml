@@ -1,0 +1,24 @@
+title = "Two-sided tutoring SaaS: student and tutor onboarding, section IA"
+review = "Two roles share one product but need different navigation. Judge whether each role reaches its first real outcome quickly, whether the top-level sections per role are few and named for what people do, whether sign-up asks only what the product cannot derive, and whether an empty dashboard and a failing camera or microphone are handled."
+brief = """
+# Live tutoring platform
+
+A web platform for live online lessons: a shared whiteboard with documents, a built-in video room, scheduling and
+payments; later a tutor marketplace. Two roles:
+
+- Student (or a parent for a child): wants to get to a first lesson with a tutor they were invited by, or to find one.
+- Tutor: wants a profile students can book, open time slots, and to run lessons on the board.
+
+Most students arrive through an invite link from their tutor. The browser gives the time zone and language; the
+invite link carries the tutor and the subject. Sign-in is by email magic link or Google.
+
+Today, after sign-up both roles see the same dashboard with 9 top-level items (Home, Calendar, Lessons, Board,
+Documents, Messages, Payments, Marketplace, Settings), and onboarding is a 6-page form (name, email, time zone,
+country, role, subjects, level, goals, availability, avatar) before anything works. The first lesson often starts with
+"I can't hear you": the video room has no device check.
+"""
+
+[[steps]]
+id = "P1"
+kind = "spec"
+prompt = "Design onboarding and the top-level IA of our tutoring platform (context in BRIEF.md). Name two flows: `student` (from opening a tutor's invite link to being in the first lesson room) and `tutor` (from sign-up to a bookable profile with open slots). Give `nav` for the roles `student` and `tutor`. Tag screens with these moments: `role` (where the role is chosen or inferred), `dashboard` (each role's home), `room` (the lesson video room)."

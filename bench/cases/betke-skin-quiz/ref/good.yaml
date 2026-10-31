@@ -1,0 +1,65 @@
+product: Skincare advisor
+flows:
+  - {id: onboarding, entry: greet, done: picks}
+screens:
+  - id: greet
+    surface: chat-message
+    moment: greet
+    render: text
+    purpose: One short line on what the advisor does, then straight to the first question
+    actions: [{label: next message, to: skin-type, by: system}]
+  - id: skin-type
+    surface: chat-message
+    moment: skin-type
+    render: block
+    block: choice
+    purpose: Single-choice chips; "not sure" offers a selfie instead
+    asks: [{field: skin type, why: only the user knows}]
+    actions:
+      - {label: Combination, to: concerns}
+      - {label: Not sure, to: selfie}
+  - id: selfie
+    surface: chat-message
+    render: block
+    block: photo request
+    purpose: Optional selfie to infer the skin type
+    states:
+      loading: "Looking at your photo..."
+      error: "Couldn't read the photo. Try again or pick a type"
+    actions:
+      - {label: Take photo, to: concerns}
+      - {label: Pick myself, to: skin-type}
+  - id: concerns
+    surface: chat-message
+    moment: concerns
+    render: block
+    block: choice
+    purpose: Multi-choice chips with a Done chip
+    asks: [{field: skin concerns, why: only the user knows}]
+    actions: [{label: Done, to: picks}]
+  - id: picks
+    surface: chat-message
+    moment: picks
+    render: block
+    block: cards
+    purpose: 3 product cards with one-line why, price, add to shelf
+    states:
+      loading: "Picking products for combination skin..."
+      empty: "Nothing in the catalog fits all concerns. Showing closest picks / change concerns"
+      error: "Couldn't load products. Retry"
+    actions:
+      - {label: "How do I use them?", to: routine}
+      - {label: Change concerns, to: concerns}
+  - id: routine
+    surface: chat-message
+    moment: routine
+    render: block
+    block: steps
+    purpose: Morning and evening steps in order
+    actions: [{label: free-text question, to: followup}]
+  - id: followup
+    surface: chat-message
+    moment: followup
+    render: text
+    purpose: A direct short answer in prose
+    actions: [{label: another question, to: followup}, {label: back to picks, to: picks}]

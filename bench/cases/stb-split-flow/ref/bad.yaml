@@ -1,0 +1,26 @@
+product: Split the bill bot
+flows:
+  - {id: payer, entry: private-chat, done: split-post}
+  - {id: participant, entry: split-post, done: paid}
+screens:
+  - {id: private-chat, surface: chat, actions: [{label: /new, to: members}]}
+  - id: members
+    surface: bot-message
+    asks: [{field: participants, why: to split}]
+    actions: [{label: Next, to: photo}]
+  - id: photo
+    surface: bot-message
+    moment: parse
+    actions: [{label: Send photo, to: total}]
+  - id: total
+    surface: bot-message
+    asks: [{field: total amount, why: check}]
+    actions: [{label: Post, to: split-post}]
+  - {id: split-post, surface: bot-message, actions: [{label: Open bot, to: start}]}
+  - {id: start, surface: chat, actions: [{label: /start, to: select}]}
+  - id: select
+    surface: bot-message
+    moment: select
+    asks: [{field: dishes}]
+    actions: [{label: Done, to: paid}]
+  - {id: paid, surface: bot-message, moment: share, actions: [{label: Paid, to: split-post}]}

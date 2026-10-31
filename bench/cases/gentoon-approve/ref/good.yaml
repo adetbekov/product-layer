@@ -1,0 +1,48 @@
+product: Clip engine
+flows:
+  - {id: create, entry: brief, done: ready}
+screens:
+  - id: brief
+    surface: page
+    moment: brief
+    purpose: One text box; length, aspect and style are defaults shown as editable chips
+    asks: [{field: song idea / brief, why: the creative input only the user has}]
+    states:
+      error: "Couldn't start. Retry"
+    actions: [{label: Draft plan, to: plan}]
+  - id: plan
+    surface: page
+    moment: plan
+    purpose: Readable plan (concept, scenes, lyrics) and the price before anything is spent
+    shows: [concept, scenes, lyrics, price for this clip]
+    states:
+      loading: "Drafting the plan... scenes appear as they are written"
+      error: "Couldn't draft a plan. Retry / edit brief"
+    actions:
+      - {label: Approve and generate, to: storyboard}
+      - {label: Revise with a note, to: plan}
+      - {label: Edit brief, to: brief}
+  - id: storyboard
+    surface: page
+    moment: storyboard
+    purpose: Scene cards fill in as shots finish; failed shots can be regenerated alone
+    states:
+      loading: "Scene 3 of 8 generating, about 4 min left; you can leave, we'll notify"
+      error: "Shot 5 failed. Regenerate shot (free)"
+    actions:
+      - {label: all shots done, to: assembling, by: system}
+      - {label: Regenerate shot, to: storyboard}
+  - id: assembling
+    surface: page
+    purpose: Assembling the MP4
+    states:
+      loading: "Assembling your clip..."
+      error: "Assembly failed. Retry"
+    actions: [{label: assembled, to: ready, by: system}]
+  - id: ready
+    surface: page
+    moment: ready
+    purpose: Play, download, share
+    actions:
+      - {label: Download MP4, to: ready}
+      - {label: New clip, to: brief}

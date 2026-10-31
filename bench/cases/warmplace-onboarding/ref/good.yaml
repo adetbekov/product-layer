@@ -1,0 +1,70 @@
+product: Tutoring platform
+flows:
+  - {id: student, entry: invite, done: room}
+  - {id: tutor, entry: landing, done: profile-live}
+nav:
+  student: [Lessons, Messages, Payments]
+  tutor: [Schedule, Students, Board, Earnings]
+screens:
+  - id: invite
+    surface: page
+    moment: role
+    purpose: Invite link page; role (student) and tutor come from the link
+    shows: [tutor name and photo, subject, next free slots]
+    actions: [{label: Continue with Google, to: book}]
+  - id: book
+    surface: page
+    purpose: Pick one of the tutor's slots, shown in the browser's time zone
+    asks: [{field: lesson slot, why: only the student knows when they are free}]
+    states:
+      empty: "No free slots this week. Message the tutor"
+      error: "Couldn't load slots. Retry"
+    actions:
+      - {label: Book, to: student-dashboard}
+      - {label: Message tutor, to: student-dashboard}
+  - id: student-dashboard
+    surface: page
+    moment: dashboard
+    purpose: Next lesson first, with a Join button at lesson time
+    states:
+      empty: "No lessons yet. Book with your tutor / find a tutor"
+      loading: skeleton
+    actions: [{label: Join lesson, to: device-check}]
+  - id: device-check
+    surface: modal
+    purpose: Camera and mic preview before entering
+    actions: [{label: Join, to: room}]
+  - id: room
+    surface: page
+    moment: room
+    purpose: Video and board side by side
+    states:
+      loading: "Connecting..."
+      error: "Microphone blocked. How to allow it / rejoin"
+    actions: [{label: Leave, to: student-dashboard}]
+  - id: landing
+    surface: page
+    moment: role
+    purpose: The "Teach on the platform" entry sets the tutor role
+    actions: [{label: Sign up with Google, to: tutor-subjects}]
+  - id: tutor-subjects
+    surface: page
+    purpose: What and for how much
+    asks:
+      - {field: subjects taught, why: only the tutor knows}
+      - {field: hourly price, why: the tutor sets it}
+    actions: [{label: Next, to: tutor-slots}]
+  - id: tutor-slots
+    surface: page
+    purpose: Weekly availability grid, prefilled with evenings
+    asks: [{field: availability, why: only the tutor knows}]
+    actions: [{label: Publish profile, to: profile-live}]
+  - id: profile-live
+    surface: page
+    moment: dashboard
+    purpose: Tutor home; share invite link is the first action
+    states:
+      empty: "No students yet. Copy your invite link"
+    actions:
+      - {label: Copy invite link, to: profile-live}
+      - {label: Edit slots, to: tutor-slots}

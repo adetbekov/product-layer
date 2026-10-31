@@ -1,0 +1,31 @@
+product: Skincare advisor
+flows:
+  - {id: onboarding, entry: greet, done: picks}
+screens:
+  - id: greet
+    surface: chat-message
+    moment: greet
+    render: block
+    block: card
+    asks: [{field: phone number}, {field: preferred language}]
+    actions: [{label: Start, to: skin-type}]
+  - id: skin-type
+    surface: chat-message
+    moment: skin-type
+    render: text
+    asks: [{field: skin type}]
+    actions: [{label: reply, to: concerns}]
+  - id: concerns
+    surface: chat-message
+    moment: concerns
+    render: text
+    actions: [{label: reply, to: budget}]
+  - {id: budget, surface: chat-message, actions: [{label: reply, to: picks}]}
+  - id: picks
+    surface: chat-message
+    moment: picks
+    render: text
+    states: {loading: wait}
+    actions: [{label: next, to: routine}]
+  - {id: routine, surface: chat-message, moment: routine, render: text, actions: [{label: ask, to: followup}]}
+  - {id: followup, surface: chat-message, moment: followup, render: block, actions: [{label: ask, to: followup}]}
