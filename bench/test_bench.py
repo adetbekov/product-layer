@@ -1,6 +1,8 @@
 """Tests for the bench and its hidden checks: python -m pytest bench"""
 
+import importlib.util
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -16,6 +18,13 @@ from report import build
 
 BENCH = Path(__file__).resolve().parent
 CASES = sorted(p.name for p in (BENCH / "cases").iterdir() if (p / "case.toml").exists())
+
+
+def load_rules(case):
+    spec = importlib.util.spec_from_file_location(f"check_{case}", BENCH / "cases" / case / "check.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.RULES
 
 
 def run_check(case, tmp_path, spec=None):
@@ -288,3 +297,15 @@ def test_report_without_verdicts():
     text, tsv = build(rows, {}, ["a", "b"])
     assert "No verdicts yet." in text and "| Solved, hidden checks | 1/1 | 0/0 |" in text
     assert tsv.splitlines()[1].split("\t")[:5] == ["w", "c", "a", "1", "P1"]
+
+
+def test_warmplace_student_may_pick_a_tutors_slot(tmp_path):
+    rules = load_rules("warmplace-onboarding")["forbid_asks"]["student"]
+    for field, bad in [
+        ("one of the tutor's open slots", False),
+        ("name the tutor will see", False),
+        ("tutor", True),
+        ("which subject", True),
+        ("subjects", True),
+    ]:
+        assert any(re.search(p, field) for p in rules) is bad, field
