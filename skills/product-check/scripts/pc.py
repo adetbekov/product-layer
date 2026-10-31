@@ -1,24 +1,30 @@
 #!/usr/bin/env python3
-"""Thin wrapper over Playwright CLI for product-check. Stdlib only.
+"""Thin wrapper over a browser CLI for product-check: Playwright CLI or agent-browser, one interface. Stdlib only.
 
 Every action is logged, followed by a wait for chat streams and a snapshot; the command prints what changed and
 marks actions that changed nothing on the page.
 
     pc.py open URL [--session S] [--mobile] [--slow]
-    pc.py do [--session S] [--note TEXT] -- click e12        # any playwright-cli command after --
+    pc.py do [--session S] [--note TEXT] [--tier T] -- click e12   # engine command after --; refs as e12 or @e12
+    pc.py look [--session S] [--ask]                          # screenshot <= 512 px; --ask: d1 vision questions
     pc.py shot NAME [--session S] [--ref e5]                  # shots/NAME.png in the current folder
     pc.py inventory [--session S] [--all]                     # components inside chat messages
     pc.py metrics [--session S]                               # stream timings of the last action
     pc.py end --outcome done|quit|blocked [--reason TEXT]     # crowd personas close their run with this
     pc.py close [--session S]
 
-Session: $PC_SESSION, else one per working folder. Run folder: $PC_RUN or ./pc-run/<session> (log.jsonl,
-snapshots, end.json). $PC_BUDGET caps the number of actions (a persona's patience): past it, `do` refuses and asks
-the persona to end. Binary: $PC_PLAYWRIGHT_CLI, else
-`playwright-cli` on PATH, else `npx -y @playwright/cli@0.1.23`.
+Engine: --engine or $PC_ENGINE, `playwright` (default) or `agent-browser`. Commands after `do --` use Playwright CLI
+names (click, fill, select, check, press, go-back, ...); pc.py translates them for agent-browser. Session:
+$PC_SESSION, else one per working folder. Run folder: $PC_RUN or ./pc-run/<session> (log.jsonl, snapshots, looks,
+end.json). $PC_BUDGET caps the number of actions (a persona's patience): past it, `do` refuses and asks the persona
+to end. $PC_LOOK=1 takes a look after every open / do and prints its path. $PC_TIER labels who decided each action
+(d1, haiku, sonnet; crowd.py sets it). Binaries: $PC_PLAYWRIGHT_CLI, else `playwright-cli` on PATH, else
+`npx -y @playwright/cli@0.1.23`; $PC_AGENT_BROWSER, else `agent-browser` on PATH, else
+`npx -y agent-browser@0.27.0`.
 """
 
 import argparse
+import base64
 import difflib
 import hashlib
 import json
@@ -32,6 +38,8 @@ import time
 from pathlib import Path
 
 PINNED = "@playwright/cli@0.1.23"
+PINNED_AB = "agent-browser@0.27.0"
+LOOK_PX = 512
 MSG = '[aria-busy],[data-streaming]'
 STREAM_WAIT = """async page => {
   await page.waitForTimeout(300);
@@ -89,12 +97,32 @@ SLOW = """async page => {
 }"""
 
 
-def binary():
-    if env := os.environ.get("PC_PLAYWRIGHT_CLI"):
-        return shlex.split(env)
-    if path := shutil.which("playwright-cli"):
-        return [path]
-    return ["npx", "-y", PINNED]
+CDP_LOOK = """const [ws_url, page_url, px] = process.argv.slice(1);
+const ws = new WebSocket(ws_url); let id = 0; const wait = {};
+const send = (method, params = {}, sessionId) => new Promise(ok => {
+  wait[++id] = ok; ws.send(JSON.stringify({ id, method, params, sessionId })); });
+ws.onmessage = e => { const m = JSON.parse(e.data); if (m.id && wait[m.id]) wait[m.id](m.result || {}); };
+ws.onopen = async () => {
+  const pages = (await send('Target.getTargets')).targetInfos.filter(t => t.type === 'page');
+  const t = pages.find(t => t.url === page_url) || pages[0];
+  const { sessionId } = await send('Target.attachToTarget', { targetId: t.targetId, flatten: true });
+  const r = await send('Runtime.evaluate', { expression: '[innerWidth, innerHeight]', returnByValue: true }, sessionId);
+  const [w, h] = r.result.value, s = Math.min(1, px / Math.max(w, h));
+  const shot = await send('Page.captureScreenshot',
+    { format: 'jpeg', quality: 70, clip: { x: 0, y: 0, width: w, height: h, scale: s } }, sessionId);
+  process.stdout.write(shot.data); process.exit(0);
+};
+setTimeout(() => process.exit(2), 20000);"""
+PW_LOOK = """async page => {
+  const cdp = await page.context().newCDPSession(page);
+  const [w, h] = await page.evaluate(() => [innerWidth, innerHeight]);
+  const s = Math.min(1, %d / Math.max(w, h));
+  const r = await cdp.send('Page.captureScreenshot',
+    { format: 'jpeg', quality: 70, clip: { x: 0, y: 0, width: w, height: h, scale: s } });
+  return r.data;
+}""" % LOOK_PX
+REF = re.compile(r"@?(e\d+)")
+AB_NAMES = {"go-back": "back", "go-forward": "forward"}
 
 
 def run_dir(session):
@@ -103,38 +131,180 @@ def run_dir(session):
     return path
 
 
-def cli(session, *args, timeout=120):
-    out = subprocess.run(
-        [*binary(), f"-s={session}", *args],
-        cwd=run_dir(session),
-        capture_output=True,
-        text=True,
-        check=False,
-        timeout=timeout,
-    )
-    text = (out.stdout + out.stderr).strip()
-    ok = out.returncode == 0 and "### Error" not in text
-    return ok, text
-
-
 def result(text):
     """The value printed under '### Result' by eval / run-code."""
     m = re.search(r"### Result\n(.*?)(\n### |\Z)", text, re.S)
     return m.group(1).strip() if m else ""
 
 
-def snapshot(session):
-    """Current URL, snapshot text (also saved under snaps/) and console error count."""
-    ok, text = cli(session, "snapshot")
-    url = re.search(r"Page URL: (\S+)", text)
-    body = re.search(r"```yaml\n(.*?)```", text, re.S)
-    errors = re.search(r"Console: (\d+) errors", text)
-    snaps = run_dir(session) / "snaps"
+def unjson(raw):
+    try:
+        value = json.loads(raw)
+    except ValueError:
+        return raw
+    return value if isinstance(value, str) else raw
+
+
+class Playwright:
+    """Playwright CLI. Refs are e12; page code runs through run-code."""
+
+    name = "playwright"
+
+    def __init__(self, session):
+        self.session = session
+
+    def binary(self):
+        if env := os.environ.get("PC_PLAYWRIGHT_CLI"):
+            return shlex.split(env)
+        if path := shutil.which("playwright-cli"):
+            return [path]
+        return ["npx", "-y", PINNED]
+
+    def cli(self, *args, timeout=120):
+        out = subprocess.run([*self.binary(), f"-s={self.session}", *args], cwd=run_dir(self.session),
+                             capture_output=True, text=True, check=False, timeout=timeout)
+        text = (out.stdout + out.stderr).strip()
+        return out.returncode == 0 and "### Error" not in text, text
+
+    def open(self, url, mobile=False):
+        ok, text = self.cli("open", url, *(["--mobile"] if mobile else []))
+        return ok, text
+
+    def act(self, cmd):
+        """(ok, error or None, raw output) of one action."""
+        ok, text = self.cli(*[REF.sub(r"\1", c) if REF.fullmatch(c) else c for c in cmd])
+        error = re.search(r"### Error\n(.+)", text)
+        return ok, error.group(1) if error else None, text
+
+    def js(self, fn, timeout=120):
+        """Value of a page function `() => ...`, as printed by the engine."""
+        return result(self.cli("eval", fn, timeout=timeout)[1])
+
+    def snapshot(self):
+        ok, text = self.cli("snapshot")
+        url = re.search(r"Page URL: (\S+)", text)
+        body = re.search(r"```yaml\n(.*?)```", text, re.S)
+        errors = re.search(r"Console: (\d+) errors", text)
+        return (url.group(1) if url else ""), (body.group(1) if body else text), (int(errors.group(1)) if errors else 0)
+
+    def settle(self, timeout_ms):
+        ok, text = self.cli("run-code", STREAM_WAIT % (timeout_ms, OBSERVER), timeout=timeout_ms / 1000 + 30)
+        try:
+            return int(result(text))
+        except ValueError:
+            return None
+
+    def screenshot(self, dest, ref=None):
+        return self.cli("screenshot", *([REF.sub(r"\1", ref)] if ref else []), f"--filename={dest}")
+
+    def look(self):
+        raw = unjson(result(self.cli("run-code", PW_LOOK)[1]))
+        return base64.b64decode(raw) if raw else b""
+
+    def slow(self):
+        self.cli("run-code", SLOW)
+
+    def close(self):
+        return self.cli("close")[1]
+
+
+class AgentBrowser:
+    """agent-browser (vercel-labs, Apache-2.0). Refs are @e12; waits use `wait --fn`; looks go through CDP."""
+
+    name = "agent-browser"
+
+    def __init__(self, session):
+        self.session = session
+
+    def binary(self):
+        if env := os.environ.get("PC_AGENT_BROWSER"):
+            return shlex.split(env)
+        if path := shutil.which("agent-browser"):
+            return [path]
+        return ["npx", "-y", PINNED_AB]
+
+    def cli(self, *args, timeout=120):
+        out = subprocess.run([*self.binary(), "--session", self.session, "--json", *args], cwd=run_dir(self.session),
+                             capture_output=True, text=True, check=False, timeout=timeout)
+        try:
+            data = json.loads(out.stdout.strip().splitlines()[-1])
+        except (ValueError, IndexError):
+            data = {"success": False, "error": (out.stdout + out.stderr).strip()[-500:] or "no output"}
+        return bool(data.get("success")), data
+
+    def open(self, url, mobile=False):
+        ok, data = self.cli("open", url)
+        if ok and mobile:
+            self.cli("set", "viewport", "390", "844")
+        return ok, json.dumps(data)
+
+    def act(self, cmd):
+        name, *rest = cmd
+        args = [AB_NAMES.get(name, name)] + [REF.sub(r"@\1", c) if REF.fullmatch(c) else c for c in rest]
+        ok, data = self.cli(*args)
+        return ok, None if ok else str(data.get("error")), json.dumps(data, ensure_ascii=False)
+
+    def js(self, fn, timeout=120):
+        ok, data = self.cli("eval", f"({fn})()", timeout=timeout)
+        value = (data.get("data") or {}).get("result")
+        return value if isinstance(value, str) else json.dumps(value)
+
+    def snapshot(self):
+        ok, data = self.cli("snapshot")
+        d = data.get("data") or {}
+        url = d.get("origin") or (self.cli("get", "url")[1].get("data") or {}).get("url", "")
+        errors = (self.cli("errors")[1].get("data") or {}).get("errors") or []
+        return url, d.get("snapshot", ""), len(errors)
+
+    def settle(self, timeout_ms):
+        self.cli("eval", f"({OBSERVER})()")
+        self.cli("wait", "300")
+        t = time.time()
+        ok, _ = self.cli("wait", "--fn", "!document.querySelector('[aria-busy=\"true\"],[data-streaming=\"true\"]')",
+                         timeout=timeout_ms / 1000 + 30)
+        self.cli("eval", f"({OBSERVER})()")
+        return round((time.time() - t) * 1000) if ok else -1
+
+    def screenshot(self, dest, ref=None):
+        ok, data = self.cli("screenshot", *([REF.sub(r"@\1", ref)] if ref else []), str(dest))
+        return ok, json.dumps(data)
+
+    def look(self):
+        cdp = (self.cli("get", "cdp-url")[1].get("data") or {}).get("cdpUrl") or ""
+        url = (self.cli("get", "url")[1].get("data") or {}).get("url") or ""
+        node = shutil.which("node")
+        if cdp.startswith("ws") and node:
+            out = subprocess.run([node, "-e", CDP_LOOK, cdp, url, str(LOOK_PX)], capture_output=True, text=True,
+                                 check=False, timeout=40)
+            if out.returncode == 0 and out.stdout:
+                return base64.b64decode(out.stdout)
+        # no node 22: full-size viewport JPEG, more d1 tokens but the same answers
+        dest = run_dir(self.session) / "look-full.jpg"
+        self.cli("screenshot", str(dest), "--screenshot-format", "jpeg", "--screenshot-quality", "60")
+        return dest.read_bytes() if dest.exists() else b""
+
+    def slow(self):
+        print("warning: --slow (network throttling) needs --engine playwright", file=sys.stderr)
+
+    def close(self):
+        return json.dumps(self.cli("close")[1])
+
+
+ENGINES = {"playwright": Playwright, "agent-browser": AgentBrowser}
+
+
+def engine(a):
+    return ENGINES[a.engine](a.session)
+
+
+def snapshot(eng):
+    """Current URL, snapshot text (also saved under snaps/), its relative path and console error count."""
+    url, body, errors = eng.snapshot()
+    snaps = run_dir(eng.session) / "snaps"
     snaps.mkdir(exist_ok=True)
     file = snaps / f"{len(list(snaps.glob('*.yml'))):03d}.yml"
-    file.write_text(body.group(1) if body else text)
-    return (url.group(1) if url else ""), file.read_text(), str(file.relative_to(run_dir(session))), (
-        int(errors.group(1)) if errors else 0)
+    file.write_text(body)
+    return url, body, str(file.relative_to(run_dir(eng.session))), errors
 
 
 def norm(snap):
@@ -174,52 +344,100 @@ def recall(session):
     return json.loads(path.read_text()) if path.exists() else {"url": "", "snap": ""}
 
 
-def settle(session, timeout_ms=30000):
-    ok, text = cli(session, "run-code", STREAM_WAIT % (timeout_ms, OBSERVER), timeout=timeout_ms / 1000 + 30)
-    try:
-        return int(result(text))
-    except ValueError:
-        return None
+def take_look(eng, ask=False, snap=None):
+    """Save a <= 512 px screenshot under looks/; with ask, d1 compares the screen with the tree's controls."""
+    raw = eng.look()
+    if not raw:
+        return None, None
+    looks = run_dir(eng.session) / "looks"
+    looks.mkdir(exist_ok=True)
+    file = looks / f"{len(list(looks.glob('*.jpg'))):03d}.jpg"
+    file.write_bytes(raw)
+    seen = None
+    if ask:
+        import d1
+
+        cs = d1.controls(snap if snap is not None else recall(eng.session)["snap"])
+        answers, usage = d1.ask(None, d1.vision(cs[:d1.MAX_TARGETS], each=ask == "each"), images=[raw])
+        seen = {"look": str(file.relative_to(run_dir(eng.session))), "controls_in_tree": len(cs),
+                "names": {c["ref"]: f"{c['role']} '{c['name']}'" for c in cs}, "answers": answers,
+                "cost_usd": usage.get("cost")}
+        with open(run_dir(eng.session) / "looks.jsonl", "a") as f:
+            f.write(json.dumps(seen, ensure_ascii=False) + "\n")
+    return file, seen
+
+
+def print_look(file, seen):
+    if not file:
+        print("look: no screenshot (engine returned nothing)")
+        return
+    print(f"screen: {file}")
+    if seen:
+        a, names = seen["answers"], seen["names"]
+        line = (f"screen vs tree: {seen['controls_in_tree']} controls in the tree; "
+                f"control on screen but not in the tree p={a['unlisted']['noul']:.2f}; "
+                f"screen shows {a['screen']['choice']} ({a['screen']['confidence']:.2f})")
+        if "main" in a:
+            ref = a["main"]["choice"]
+            line += f"; looks like the main action: {names.get(ref, ref)} [{ref}] ({a['main']['confidence']:.2f})"
+        print(line)
+        unseen = [f"{names.get(k[5:], k[5:])} [{k[5:]}] p={v['noul']:.2f}" for k, v in a.items()
+                  if k.startswith("seen_") and v["noul"] < 0.5]
+        if unseen:
+            print("in the tree but hard to see on screen: " + "; ".join(unseen) + " - open the screenshot and check")
+
+
+def want_look():
+    return os.environ.get("PC_LOOK") in ("1", "ask")
 
 
 def cmd_open(a):
-    args = ["open", a.url] + (["--mobile"] if a.mobile else [])
-    ok, text = cli(a.session, *args)
+    eng = engine(a)
+    ok, text = eng.open(a.url, a.mobile)
     if not ok:
         sys.exit(text[-2000:])
     if a.slow:
-        cli(a.session, "run-code", SLOW)
-    wait = settle(a.session)
-    url, snap, file, errors = snapshot(a.session)
+        eng.slow()
+    wait = eng.settle(30000)
+    url, snap, file, errors = snapshot(eng)
     remember(a.session, url, snap, errors)
-    log(a.session, {"i": 0, "t": time.time(), "cmd": args, "url": url, "ok": True, "changed": True,
-                    "snapshot": file, "wait_ms": wait, "console_errors": errors})
+    look, seen = take_look(eng, os.environ.get("PC_LOOK") == "ask" and "each", snap) if want_look() else (
+        None, None)
+    log(a.session, {"i": 0, "t": time.time(), "cmd": ["open", a.url], "url": url, "ok": True, "changed": True,
+                    "snapshot": file, "wait_ms": wait, "console_errors": errors, "engine": eng.name,
+                    "look": look and str(look.relative_to(run_dir(a.session)))})
     print(f"url: {url}\nsnapshot: {run_dir(a.session) / file}\n{snap}")
+    if want_look():
+        print_look(look, seen)
 
 
 def cmd_do(a):
     if not a.cmd:
-        sys.exit("usage: pc.py do -- <playwright-cli command>")
+        sys.exit("usage: pc.py do -- <command>")
     done = sum(1 for e in read_log(run_dir(a.session) / "log.jsonl") if e["i"] and e["ok"])  # failed refs are free
     if (limit := os.environ.get("PC_BUDGET")) and done >= int(limit):
         print(f"out of patience: {done} of {limit} actions used. End now: pc.py end --outcome quit --reason '...'")
         sys.exit(3)
+    eng = engine(a)
     before = recall(a.session)
-    cli(a.session, "eval", "() => { if (window.__pc) window.__pc.t0 = Date.now(); }")
-    ok, text = cli(a.session, *a.cmd)
-    wait = settle(a.session)
-    url, snap, file, errors = snapshot(a.session)
+    eng.js("() => { if (window.__pc) window.__pc.t0 = Date.now(); }")
+    ok, error, _ = eng.act(a.cmd)
+    wait = eng.settle(30000)
+    url, snap, file, errors = snapshot(eng)
     diff = changes(before["snap"], snap)
     changed = bool(diff) or url != before["url"]
-    error = re.search(r"### Error\n(.+)", text)
     steps = len(read_log(run_dir(a.session) / "log.jsonl"))
+    look, seen = take_look(eng, os.environ.get("PC_LOOK") == "ask" and "each", snap) if want_look() else (
+        None, None)
     log(a.session, {"i": steps, "t": time.time(), "cmd": a.cmd, "url": url, "ok": ok, "changed": changed,
-                    "error": error.group(1) if error else None, "snapshot": file, "wait_ms": wait, "console_errors": errors, "note": a.note})
+                    "error": error, "snapshot": file, "wait_ms": wait, "console_errors": errors, "note": a.note,
+                    "engine": eng.name, "tier": a.tier,
+                    "look": look and str(look.relative_to(run_dir(a.session)))})
     remember(a.session, url, snap, errors)
     print(f"step {steps}: {' '.join(a.cmd)} -> {'ok' if ok else 'ERROR'}")
     if error:
-        print(f"error: {error.group(1)}")
-        if "not found" in error.group(1):
+        print(f"error: {error}")
+        if "not found" in error.lower() or "unknown ref" in error.lower():
             print("refs change when the page re-renders; current page:\n" + snap)
     if wait == -1:
         print("warning: a chat stream was still busy after the timeout")
@@ -235,25 +453,31 @@ def cmd_do(a):
     if errors > before.get("errors", 0):
         print(f"console: {errors} errors (was {before.get('errors', 0)}) - read them with: pc.py do -- console error")
     print(f"snapshot: {run_dir(a.session) / file}")
+    if want_look():
+        print_look(look, seen)
+
+
+def cmd_look(a):
+    eng = engine(a)
+    file, seen = take_look(eng, "each" if a.ask else False)
+    print_look(file, seen)
 
 
 def cmd_shot(a):
     dest = Path("shots", f"{a.name}.png").resolve()
     dest.parent.mkdir(exist_ok=True)
-    ok, text = cli(a.session, "screenshot", *([a.ref] if a.ref else []), f"--filename={dest}")
+    ok, text = engine(a).screenshot(dest, a.ref)
     if not ok or not dest.exists():
-        sys.exit(text[-2000:])
+        sys.exit(str(text)[-2000:])
     print(dest.relative_to(Path.cwd().resolve()))
 
 
 def cmd_inventory(a):
-    ok, text = cli(a.session, "eval", INVENTORY % (MSG, "0" if a.all else "-1"))
-    print(result(text) or text[-2000:])
+    print(engine(a).js(INVENTORY % (MSG, "0" if a.all else "-1")))
 
 
 def cmd_metrics(a):
-    ok, text = cli(a.session, "eval", "() => JSON.stringify(window.__pc || null)")
-    raw = result(text)
+    raw = engine(a).js("() => JSON.stringify(window.__pc || null)")
     try:
         data = json.loads(json.loads(raw)) if raw.startswith('"') else json.loads(raw)
     except ValueError:
@@ -273,12 +497,12 @@ def cmd_metrics(a):
 def cmd_end(a):
     entry = {"outcome": a.outcome, "reason": a.reason, "t": time.time()}
     (run_dir(a.session) / "end.json").write_text(json.dumps(entry, ensure_ascii=False))
-    cli(a.session, "close")
+    engine(a).close()
     print(f"ended: {a.outcome}")
 
 
 def cmd_close(a):
-    print(cli(a.session, "close")[1][-500:])
+    print(engine(a).close()[-500:])
 
 
 def main(argv=None):
@@ -286,10 +510,11 @@ def main(argv=None):
     sub = p.add_subparsers(dest="command", required=True)
     # one browser per working folder by default, so parallel runs in other folders never share a session
     session = os.environ.get("PC_SESSION") or "pc-" + hashlib.sha1(os.getcwd().encode()).hexdigest()[:6]
-    for name, fn in [("open", cmd_open), ("do", cmd_do), ("shot", cmd_shot), ("inventory", cmd_inventory),
-                     ("metrics", cmd_metrics), ("end", cmd_end), ("close", cmd_close)]:
+    for name, fn in [("open", cmd_open), ("do", cmd_do), ("look", cmd_look), ("shot", cmd_shot),
+                     ("inventory", cmd_inventory), ("metrics", cmd_metrics), ("end", cmd_end), ("close", cmd_close)]:
         s = sub.add_parser(name)
         s.add_argument("--session", default=session)
+        s.add_argument("--engine", choices=sorted(ENGINES), default=os.environ.get("PC_ENGINE", "playwright"))
         s.set_defaults(fn=fn)
         if name == "open":
             s.add_argument("url")
@@ -297,10 +522,14 @@ def main(argv=None):
             s.add_argument("--slow", action="store_true", help="emulate a slow mobile network (Chromium)")
         if name == "do":
             s.add_argument("--note", default=None, help="why you did it (persona think-aloud)")
+            s.add_argument("--tier", default=os.environ.get("PC_TIER"), help="who decided: d1, haiku, sonnet")
             s.add_argument("cmd", nargs=argparse.REMAINDER)
         if name == "shot":
             s.add_argument("name")
             s.add_argument("--ref", default=None)
+        if name == "look":
+            s.add_argument("--ask", action="store_true",
+                           help="ask d1 what the screen shows that the tree does not, and which controls are unseen")
         if name == "inventory":
             s.add_argument("--all", action="store_true", help="every message, not only the last")
         if name == "end":
@@ -311,6 +540,8 @@ def main(argv=None):
         a.cmd = a.cmd[1:]
     a.fn(a)
 
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # d1.py next to this file
 
 if __name__ == "__main__":
     main()

@@ -13,8 +13,17 @@ Chat UIs: also run `genui-walk.md`.
 2. **Tasks and optimum.** List 3-5 top tasks. Take the optimal action count
    from the product-layer spec (`Steps to value` table) when there is one;
    otherwise write your own shortest path after a first look, before walking.
-3. **Session.** `pc.py open URL` (add `--mobile` for phone personas). Keep the
-   printed snapshot path; `pc.py` logs every action in `pc-run/<session>/`.
+3. **Session.** `export PC_LOOK=ask` (needs `LIQUID_AI_API_KEY`; without it
+   use `PC_LOOK=1`), then `pc.py open URL` (add `--mobile` for phone
+   personas). Keep the printed snapshot path; `pc.py` logs every action in
+   `pc-run/<session>/`.
+4. **Eyes, not only the tree.** With `PC_LOOK` every `open` and `do` also
+   saves a screenshot of at most 512 px and prints `screen: <path>`. Open it
+   (Read) at every new screen: the accessibility tree lists what exists, the
+   screen shows what a person can see and reach. With `PC_LOOK=ask` d1 also
+   prints `screen vs tree`: a control on screen missing from the tree, which
+   control looks like the main action, and controls in the tree that are hard
+   to see. Treat each as a lead for WK-9, then confirm it on the screenshot.
 
 ## Walking
 
@@ -103,6 +112,25 @@ repeats the effect without warning.
 them with `pc.py do -- console error`.
 **Why.** Errors often explain a silent control or a broken state.
 **Bug if.** An error appears during a task step. Report it with the step.
+
+## WK-9 · The screen matches the tree · HIGH
+
+**Check.** On every screen compare the screenshot with the snapshot:
+1. A control you can see but the tree does not list (canvas, svg, custom
+   slider or picker): operate it by position (`pc.py do -- mousemove`, then
+   `mousedown` / `mouseup`, or `run-code` with `page.mouse.click`), then try
+   Tab and Enter. Record whether a keyboard or screen-reader user can use it.
+2. A control the tree lists but you cannot see (off screen, covered, zero
+   size, same colour as the background): scroll, resize to mobile, look again.
+3. The main action of the screen: is it the one that looks main? A primary
+   action that is pale or looks disabled while a secondary one is bold is a
+   finding.
+**Why.** Agents that read only the tree click what no person can see and
+skip what has no role; users see the opposite. Hierarchy decides where a
+hurried person taps.
+**Bug if.** A needed control is missing from the tree or has no keyboard
+access, a listed control cannot be seen or reached, or the main action looks
+secondary or disabled (`ST-4`, `GC-7`).
 
 ## Recording a finding
 

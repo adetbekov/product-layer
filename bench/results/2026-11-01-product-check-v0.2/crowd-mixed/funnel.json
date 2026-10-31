@@ -1,0 +1,995 @@
+{
+ "goal": "Buy oat milk and rye bread and get them delivered as soon as possible, paying with your saved card.",
+ "optimal": 5,
+ "driver": "mixed",
+ "variants": {
+  "A": {
+   "n": 20,
+   "funnel": {
+    "catalog": 20,
+    "cart": 20,
+    "confirm_account": 20,
+    "checkout": 11,
+    "done": 11
+   },
+   "completed": 11,
+   "completed_hard": 3,
+   "hard": 12,
+   "dropoff": [
+    [
+     "confirm_account",
+     9
+    ]
+   ],
+   "median_actions_done": 8,
+   "dead_clicks": [],
+   "claims_vs_page": 0,
+   "personas": [
+    {
+     "persona": "p01",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Checkout kept asking me to re-enter my account details on a confirm page; I was out of patience before it got me to the order.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Checkout",
+      "Site wants my account details again; fine, my email is the one I know",
+      "Now the password, the one I always use"
+     ]
+    },
+    {
+     "persona": "p02",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль, его я помню, это пароль от аккаунта.",
+      "Жму продолжить, чтобы подтвердить аккаунт.",
+      "Адрес правильный, доставка как можно скорее, оплата картой 4242. Оформляю заказ."
+     ]
+    },
+    {
+     "persona": "p03",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Now the password",
+      "Click Continue to confirm",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p04",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Checkout kept asking me to log in again and re-enter email and password; I ran out of patience before it went through, so I'm leaving.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Checkout",
+      "It wants my login again, fine, typing my email",
+      "Now the password, it's oatmilk42"
+     ]
+    },
+    {
+     "persona": "p05",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Ушла на подтверждение аккаунта: сайт попросил снова ввести email и пароль, и терпение закончилось до оформления заказа.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "Корзина: молоко и хлеб, итого 1 940 ₸. Промокода нет, иду к оформлению.",
+      "Сайт просит войти заново ради безопасности. Странно, но email у меня есть, ввожу.",
+      "Теперь пароль."
+     ]
+    },
+    {
+     "persona": "p06",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Checkout kept asking me to re-enter my account details before I could pay; I ran out of patience and gave up before getting the oat milk and rye bread delivered.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Checkout",
+      "Ugh, it wants my details again before checkout. Fine, I know them.",
+      "Now the password."
+     ]
+    },
+    {
+     "persona": "p07",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Checkout made me re-enter my login for a security check, and I ran out of patience before getting back to the order.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Checkout",
+      "Ugh, it wants my login again. Fine, typing my email.",
+      "Now my password."
+     ]
+    },
+    {
+     "persona": "p08",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и хлеб, доставка через 30 минут, оплата картой 4242.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль.",
+      "Жму Продолжить.",
+      "Доставка как можно скорее и карта уже выбраны. Оформляю заказ."
+     ]
+    },
+    {
+     "persona": "p09",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Now the password, the one I use for this account.",
+      "Clicking Continue to confirm my account.",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p10",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Out of patience: stuck on a re-login confirm page before checkout, had to type email and password again",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Checkout",
+      "Page asks to re-enter account details, I have them, fill email",
+      "Now the password, it is oatmilk42"
+     ]
+    },
+    {
+     "persona": "p11",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Попросили заново ввести почту и пароль для подтверждения, потом терпение закончилось, не дошла до заказа молока и хлеба",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Checkout",
+      "Надо ввести почту и пароль, чтобы продолжить",
+      "Теперь пароль"
+     ]
+    },
+    {
+     "persona": "p12",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и ржаной хлеб, доставка как можно скорее, оплата картой 4242, курьер через ~30 минут",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль",
+      "Нажимаю Продолжить",
+      "Доставка как можно скорее и карта 4242 уже выбраны, адрес верный. Оформляю заказ"
+     ]
+    },
+    {
+     "persona": "p13",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль от аккаунта",
+      "Нажимаю Continue, чтобы продолжить",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p14",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Now I type my password to confirm the account.",
+      "Both fields are filled, so I press Continue.",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p15",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Order placed for ASAP delivery to my Almaty address, paid with the saved card 4242; the site confirmed a courier in about 30 minutes.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Now my password, oatmilk42.",
+      "Both fields are filled in. I'll press Continue.",
+      "Address is right, delivery is as soon as possible, paying with the card. I'll place the order."
+     ]
+    },
+    {
+     "persona": "p16",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и ржаной хлеб, доставка через 30 минут, оплата картой 4242.",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль.",
+      "Нажму Continue.",
+      "Адрес верный, доставка как можно скорее, оплата картой 4242. Оформляю заказ."
+     ]
+    },
+    {
+     "persona": "p17",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Pantry kept asking me to re-confirm my account on every step, and I ran out of patience before reaching the cart or checkout.",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Checkout",
+      "The page wants me to confirm my account, so I'll enter my email.",
+      "Now the password, the one I use for this account."
+     ]
+    },
+    {
+     "persona": "p18",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account"
+     ],
+     "done": false,
+     "claimed": "quit",
+     "reason": "Сайт попросил повторно ввести почту и пароль, я ввел, но терпение закончилось и заказ так и не оформился",
+     "actions": 6,
+     "last_stage": "confirm_account",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/confirm",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Checkout",
+      "Сайт просит ввести почту и пароль еще раз, ввожу свои данные",
+      "Теперь пароль"
+     ]
+    },
+    {
+     "persona": "p19",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль от аккаунта",
+      "(d1) click Continue",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p20",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "confirm_account",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 8,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/#/done",
+     "dead_clicks": [],
+     "notes": [
+      "Теперь пароль от аккаунта",
+      "Жму Продолжить",
+      "(d1) click Place order"
+     ]
+    }
+   ]
+  },
+  "B": {
+   "n": 20,
+   "funnel": {
+    "catalog": 20,
+    "cart": 20,
+    "checkout": 20,
+    "done": 20
+   },
+   "completed": 20,
+   "completed_hard": 12,
+   "hard": 12,
+   "dropoff": [],
+   "median_actions_done": 5.0,
+   "dead_clicks": [],
+   "claims_vs_page": 0,
+   "personas": [
+    {
+     "persona": "p01",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p02",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "Адрес верный, доставка как можно скорее, карта 4242 выбрана. Итого 1 940 ₸. Нажимаю оформить."
+     ]
+    },
+    {
+     "persona": "p03",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p04",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p05",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "Заказ оформлен: молоко и хлеб, доставка как можно скорее, оплата сохранённой картой 4242",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "Доставка как можно скорее и карта 4242 уже выбраны, итог 1 940 ₸ — ок, оформляю"
+     ]
+    },
+    {
+     "persona": "p06",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p07",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p08",
+     "hard": true,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p09",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p10",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p11",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p12",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p13",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p14",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p15",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p16",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p17",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p18",
+     "hard": true,
+     "patience": "hurried",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p19",
+     "hard": false,
+     "patience": "patient",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    },
+    {
+     "persona": "p20",
+     "hard": false,
+     "patience": "normal",
+     "reached": [
+      "catalog",
+      "cart",
+      "checkout",
+      "done"
+     ],
+     "done": true,
+     "claimed": "done",
+     "reason": "(d1) goal reached",
+     "actions": 5,
+     "last_stage": "done",
+     "last_url": "http://127.0.0.1:8711/check-shop/?variant=b#/done",
+     "dead_clicks": [],
+     "notes": [
+      "(d1) click Cart (2)",
+      "(d1) click Checkout",
+      "(d1) click Place order"
+     ]
+    }
+   ]
+  }
+ },
+ "direction": {
+  "better": "B",
+  "interval90": [
+   0.25,
+   0.65
+  ],
+  "note": "direction only; simulated completion is not a conversion forecast"
+ },
+ "steps_by_tier": {
+  "d1": 210,
+  "haiku": 60,
+  "sonnet": 0
+ },
+ "share_by_tier": {
+  "d1": 0.778,
+  "haiku": 0.222,
+  "sonnet": 0.0
+ },
+ "d1_asked_for_sonnet": 0,
+ "cost_claude_usd": 0.1033,
+ "cost_d1_usd": 0.01215,
+ "cost_usd": 0.1155,
+ "cost_per_persona_usd": 0.00289,
+ "sessions_with_usage": 40
+}

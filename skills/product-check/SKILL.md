@@ -9,7 +9,9 @@ product-layer decides what to show and where, before visual work. This skill
 runs after the UI is built: it walks the real interface and reports where the
 product fails its user. It never edits the product and never judges looks.
 
-Engine: Playwright CLI through `scripts/pc.py` (setup in `README.md`).
+Engine: Playwright CLI or agent-browser through `scripts/pc.py`, one
+interface (setup in `README.md`). Decisions: Liquid d1-ultra for easy crowd
+steps, Claude Haiku for the rest, Sonnet for walk and stuck steps.
 
 ## Fixed principles
 
@@ -22,11 +24,13 @@ Engine: Playwright CLI through `scripts/pc.py` (setup in `README.md`).
    hesitation or detour is a finding candidate.
 4. **No visible change is a bug.** If an action changes nothing on the page
    (`pc.py` marks it `changed: false`) and no feedback appears, report it.
-5. **Stay in the persona.** Decide as the locked persona, not as a developer.
+5. **Look, do not only read the tree.** The tree shows what exists; the
+   screenshot shows what a person sees. Compare them on every screen.
+6. **Stay in the persona.** Decide as the locked persona, not as a developer.
    "A developer would know..." means you drifted: redo the step.
-6. **Direction, not numbers.** Crowd runs give the direction of an A/B effect
+7. **Direction, not numbers.** Crowd runs give the direction of an A/B effect
    and the problem list. Never report simulated conversion as a forecast.
-7. **Cite rules.** Link each finding to a product-layer rule id when one fits
+8. **Cite rules.** Link each finding to a product-layer rule id when one fits
    (`FL-2` dead end, `SR-4` asked twice, `GC-7` controls, `TG-11` old buttons).
 
 ## Router
@@ -50,17 +54,20 @@ Engine: Playwright CLI through `scripts/pc.py` (setup in `README.md`).
 
 **walk** - one agent, 5-10 well-evidenced findings.
 1. Lock the persona and list 3-5 top tasks with the optimal step count.
-2. `pc.py open URL`, then walk each task from its real entry point with
-   `pc.py do`. Read the diff it prints after every action.
-3. Run the checks in `walk.md` (and `genui-walk.md` for chat).
+2. `export PC_LOOK=ask`, `pc.py open URL`, then walk each task from its real
+   entry point with `pc.py do`. Read the diff and open the screenshot it
+   prints after every action.
+3. Run the checks in `walk.md` (and `genui-walk.md` for chat), including
+   WK-9 screen vs tree.
 4. Record each finding when found, with `pc.py shot`, in `report.md`.
 5. Dedup with a fresh subagent, then write the verdict.
 
 **crowd** - many personas, one isolated browser each.
 1. `scripts/personas.py sample` builds personas, at least a third of them hard.
 2. `scripts/crowd.py plan` writes one persona prompt per persona and variant.
-3. Run them: `crowd.py run` (Claude Haiku over the API, parallel) or one fresh
-   cheap-model subagent per prompt when no API key is set.
+3. Run them: `crowd.py run` (d1-ultra first, Haiku and Sonnet on escalation,
+   parallel) or one fresh Haiku subagent per prompt when no Anthropic key is
+   set; it calls `./act auto` and decides only the steps d1 hands back.
 4. `crowd.py aggregate` gives the funnel and drop-off points per variant.
 5. Report clusters with the noise filter from `report.md`.
 
